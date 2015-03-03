@@ -26,6 +26,10 @@
             android:name="com.example.team11xtremexpensetracker.AddDestionation"
             android:label="@string/title_activity_add_destionation" >
         </activity>
+        <activity
+            android:name="com.example.team11xtremexpensetracker.ViewDestinationActivity"
+            android:label="@string/title_activity_view_destination" >
+        </activity>
     </application>
 
 </manifest>

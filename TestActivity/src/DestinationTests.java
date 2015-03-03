@@ -11,12 +11,9 @@ public class DestinationTests extends TestCase {
 		assertTrue("Dest Name", dest1.getDest().equals("Maui"));
 		assertFalse("Dest Name", dest1.getDest().equals("Mall"));
 		
-		assertTrue("Dest Name", dest2.getDest().equals("Florida"));
-		
-		
+		assertTrue("Dest Name", dest2.getDest().equals("Florida"));	
 	}
-	
-	public void testReason(){
+	public void testDestReason(){
 		Destination dest1 = new Destination("Maui");
 		Destination dest2 = new Destination("Florida");
 		
@@ -25,4 +22,5 @@ public class DestinationTests extends TestCase {
 		assertTrue("Dest Reason", dest1.getReason().equals("Work"));
 		assertTrue("Dest Reason Default", dest2.getReason().equals(""));
 	}
+	
 }
