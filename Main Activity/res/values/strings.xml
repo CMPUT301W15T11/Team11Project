@@ -8,5 +8,6 @@
     <string name="title_activity_view_destination">ViewDestinationActivity</string>
     <string name="title_activity_add_claim">AddClaim</string>
     <string name="title_activity_view_claim">ViewClaimActivity</string>
+    <string name="title_activity_list_claim">ListClaimActivity</string>
 
 </resources>

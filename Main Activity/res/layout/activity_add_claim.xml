@@ -14,7 +14,7 @@
             android:id="@+id/textViewEnterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Enter Name:" />
 
         <EditText
             android:id="@+id/editTextEnterName"
@@ -29,14 +29,14 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/claimantButton"
+        android:id="@+id/startDatePickerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="29.88"
         android:text="Start Date Picker" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/endDatePickerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="29.99"
@@ -48,7 +48,7 @@
         android:layout_weight="10" >
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/addClaimDoneButton"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
