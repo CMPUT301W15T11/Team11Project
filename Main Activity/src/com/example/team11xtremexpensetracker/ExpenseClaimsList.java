@@ -3,6 +3,8 @@ package com.example.team11xtremexpensetracker;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import android.location.GpsStatus.Listener;
+
 public class ExpenseClaimsList {
 	private ArrayList<ExpenseClaim> expenseClaimsList;
 	private ArrayList<ExpenseClaim> submittedClaimsList;
@@ -19,7 +21,7 @@ public class ExpenseClaimsList {
 		
 	}
 	
-	public deleteClaim(ExpenseClaim claim){
+	public void deleteClaim(ExpenseClaim claim){
 		expenseClaimsList.remove(claim);
 	}
 	
@@ -35,7 +37,7 @@ public class ExpenseClaimsList {
 		return submittedClaimsList;
 	}
 	
-	public sort(){
+	public void sort(){
 		
 	}
 

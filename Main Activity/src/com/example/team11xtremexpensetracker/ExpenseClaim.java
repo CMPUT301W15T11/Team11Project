@@ -3,7 +3,7 @@ package com.example.team11xtremexpensetracker;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ExpenseClaimModel {
+public class ExpenseClaim {
 	private String claimantName;
 	private String name;
 	private Calendar startDate;
