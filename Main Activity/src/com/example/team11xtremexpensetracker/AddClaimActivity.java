@@ -30,7 +30,7 @@ public class AddClaimActivity extends Activity {
 		startDatePickerButton = (Button) findViewById(R.id.startDatePickerButton);
 		endDatePickerButton = (Button) findViewById(R.id.endDatePickerButton);
 		doneButton = (Button) findViewById(R.id.addClaimDoneButton);
-		
+		/*
 		startDatePickerButton.setOnClickListener(new View.OnClickListener() {	
 			Calendar c = Calendar.getInstance();
 			@Override
@@ -47,7 +47,7 @@ public class AddClaimActivity extends Activity {
 				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), true).show();
 			}
 			
-		});
+		});  
 		
 		endDatePickerButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
@@ -63,14 +63,14 @@ public class AddClaimActivity extends Activity {
 				
 			}
 		});
-		
+		*/
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.add_claim, menu);
-		return true;
+		return true; 
 	}
 
 }
