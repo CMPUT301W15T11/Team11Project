@@ -42,6 +42,24 @@
             android:name="com.example.team11xtremexpensetracker.ViewClaimActivity"
             android:label="@string/title_activity_view_claim" >
         </activity>
+        
+                <activity
+            android:name=".AddItemActivity"
+            android:label="AddItemActivity">
+        </activity>
+        <activity
+            android:name=".EditItemActivity"
+            android:label="EditItemActivity">
+        </activity>
+        <activity
+            android:name=".ViewItemActivity"
+            android:label="ViewItemActivity">
+        </activity>
+
+        <activity
+            android:name=".ItemlistActivity"
+            android:label="ItemlistActivity">
+        </activity>
     </application>
 
 </manifest>
