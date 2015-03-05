@@ -8,13 +8,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ListClaimsActivity" >
 
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
+        android:orientation="vertical" >
 
-    </ListView>
+        <Button
+            android:id="@+id/buttonAddClaim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <ListView
+            android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
+    </LinearLayout>
 
 </RelativeLayout>
