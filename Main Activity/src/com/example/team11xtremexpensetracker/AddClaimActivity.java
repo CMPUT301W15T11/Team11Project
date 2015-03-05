@@ -33,7 +33,6 @@ public class AddClaimActivity extends Activity {
 		startDatePickerButton = (Button) findViewById(R.id.startDatePickerButton);
 		endDatePickerButton = (Button) findViewById(R.id.endDatePickerButton);
 		doneButton = (Button) findViewById(R.id.addClaimDoneButton);
-<<<<<<< HEAD
 		/*
 =======
 		editTextEnterName = (EditText)findViewById(R.id.editTextEnterName);
