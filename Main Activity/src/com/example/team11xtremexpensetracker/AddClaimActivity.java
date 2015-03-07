@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddClaimActivity extends Activity {
 	
@@ -33,14 +34,15 @@ public class AddClaimActivity extends Activity {
 		startDatePickerButton = (Button) findViewById(R.id.startDatePickerButton);
 		endDatePickerButton = (Button) findViewById(R.id.endDatePickerButton);
 		doneButton = (Button) findViewById(R.id.addClaimDoneButton);
-		/*
-=======
-		editTextEnterName = (EditText)findViewById(R.id.editTextEnterName);
 		
-		// set linstener
->>>>>>> 5f6dc11b65bcc1c3cf501143869f59f13f38ec35
+		editTextEnterName = (EditText)findViewById(R.id.editTextEnterName);
+		startDate=Calendar.getInstance();
+		endDate=Calendar.getInstance();
+		// set listener
+
 		startDatePickerButton.setOnClickListener(new View.OnClickListener() {	
 			Calendar c = Calendar.getInstance();
+			
 			@Override
 			public void onClick(View v) {
 				new SingleDatePickerDialog(AddClaimActivity.this, 0, new SingleDatePickerDialog.OnDateSetListener() {
@@ -78,9 +80,15 @@ public class AddClaimActivity extends Activity {
 		});
 		
 		
-		endDatePickerButton.setOnClickListener(new View.OnClickListener() {	
+		doneButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
+				if(startDate.after(endDate)){
+					Toast.makeText(AddClaimActivity.this,"Start date should be earlier than end date\n"+"        Submit Denied",Toast.LENGTH_SHORT).show();
+					startDatePickerButton.setText("Choose start Date");
+					return;
+				}
+				newClaim = new ExpenseClaim();
 				Intent intent = new Intent();
 				newClaim.setStartDate(startDate);
 				newClaim.setEndDate(endDate);
@@ -91,7 +99,7 @@ public class AddClaimActivity extends Activity {
 				AddClaimActivity.this.startActivity(intent);
 			}
 		});
-		*/
+		
 	}
 
 	@Override

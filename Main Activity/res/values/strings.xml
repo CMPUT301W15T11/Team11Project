@@ -9,4 +9,7 @@
     <string name="title_activity_add_claim">AddClaimActivity</string>
     <string name="title_activity_view_claim">ViewClaimActivity</string>
     <string name="title_activity_list_claims">ListClaimsActivity</string>
+    <string name="tag_hint">Type the tag here</string>
+    <string name="tag_add_button">Add New Tag</string>
+    <string name="title_activity_view_tag">TagActivity</string>
 </resources>

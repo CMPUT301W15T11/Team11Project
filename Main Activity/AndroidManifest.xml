@@ -59,6 +59,9 @@
             android:name=".ItemlistActivity"
             android:label="ItemlistActivity">
         </activity>
+        <activity 
+            android:name="com.example.team11xtremexpensetracker.TagActivity"
+            android:label="@string/title_activity_view_tag"></activity>
     </application>
 
 </manifest>
