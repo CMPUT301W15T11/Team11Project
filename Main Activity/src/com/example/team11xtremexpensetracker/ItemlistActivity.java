@@ -43,10 +43,12 @@ public class ItemlistActivity extends Activity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
+		/*
 		datafile = this.loadFromFile();
 		
 		itemlistAdapter = new ItemlistAdapter(this,datafile.getItemlist());
 		itemlistview.setAdapter(itemlistAdapter);
+		*/
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -31,6 +33,8 @@ public class EditItemActivity extends Activity{
 	private ArrayAdapter<String> categoryAdapter;
 	private Spinner unitspinner;
 	private ArrayAdapter<String> unitAdapter;
+	private Button edititemdate;
+	private Calendar editdate;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -82,7 +86,29 @@ public class EditItemActivity extends Activity{
 		itemnamestr = datafile.getItemlist().get(itemID).getItem();
 		itemname = (EditText)findViewById(R.id.edititemname);
 		itemname.setText(itemnamestr);
-		
+		//=======datepicker
+		editdate=Calendar.getInstance();
+		edititemdate = (Button)findViewById(R.id.edititemdate);
+		edititemdate.setOnClickListener(new View.OnClickListener() {
+			Calendar c = Calendar.getInstance();
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new SingleDatePickerDialog(EditItemActivity.this, 0, new SingleDatePickerDialog.OnDateSetListener() {
+
+					@Override
+					public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
+							int startDayOfMonth) {
+						String textString_start = String.format("%d-%d-%d", startYear, startMonthOfYear + 1,
+								startDayOfMonth);
+						edititemdate.setText(textString_start);
+						editdate.set(startYear, startMonthOfYear+1, startDayOfMonth);
+						
+					}
+				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), true).show();
+				
+			}
+		});
 		
 		//==========================================================================================================
 		//============================confirm the edit
@@ -103,7 +129,7 @@ public class EditItemActivity extends Activity{
 				
 				Intent backIntent = new Intent();
 				backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				backIntent.setClass(EditItemActivity.this,ItemlistActivity.class);
+				backIntent.setClass(EditItemActivity.this,ViewClaimActivity.class);
 				startActivity(backIntent);
 				
 			}

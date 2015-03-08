@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.google.gson.Gson; 
 import com.google.gson.reflect.TypeToken;
@@ -22,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,11 +44,14 @@ public class AddItemActivity extends Activity{
 	private ArrayAdapter<String> categoryAdapter;
 	private Spinner unitspinner;
 	private ArrayAdapter<String> unitAdapter;
+	private Button additemdate;
+	private Calendar adddate;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_item);
+		
 
 		//==========================================================================================================
 		//============================spinner created for category and unit		
@@ -90,8 +95,33 @@ public class AddItemActivity extends Activity{
 		unitspinner = (Spinner)findViewById(R.id.additemunit);
 		categoryspinner = (Spinner)findViewById(R.id.additemcategory);
 		
+		//button add date
+		adddate=Calendar.getInstance();
+		additemdate = (Button)findViewById(R.id.additemdate);
+		additemdate.setOnClickListener(new View.OnClickListener() {
+			Calendar c = Calendar.getInstance();
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new SingleDatePickerDialog(AddItemActivity.this, 0, new SingleDatePickerDialog.OnDateSetListener() {
+
+					@Override
+					public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
+							int startDayOfMonth) {
+						String textString_start = String.format("%d-%d-%d", startYear, startMonthOfYear + 1,
+								startDayOfMonth);
+						additemdate.setText(textString_start);
+						adddate.set(startYear, startMonthOfYear+1, startDayOfMonth);
+						
+					}
+				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), true).show();
+				
+			}
+		});
+		
 		//Button Add
 		Button itemadd = (Button)findViewById(R.id.confirmadd);
+		
 		
 		itemadd.setOnClickListener(new View.OnClickListener() {
 			
@@ -114,7 +144,7 @@ public class AddItemActivity extends Activity{
 				
 				Intent backIntent = new Intent();
 				backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				backIntent.setClass(AddItemActivity.this, ItemlistActivity.class);
+				backIntent.setClass(AddItemActivity.this, ViewClaimActivity.class);
 				startActivity(backIntent);
 				
 			}

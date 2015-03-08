@@ -86,7 +86,7 @@ public class ViewItemActivity extends Activity{
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Intent backIntent = new Intent(ViewItemActivity.this,ItemlistActivity.class);
+			Intent backIntent = new Intent(ViewItemActivity.this,ViewClaimActivity.class);
 			startActivity(backIntent);
 			
 		}
