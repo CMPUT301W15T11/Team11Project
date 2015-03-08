@@ -1,17 +1,11 @@
 package com.example.team11xtremexpensetracker;
 
-import java.util.Calendar;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-<<<<<<< HEAD
-=======
-import android.widget.DatePicker;
->>>>>>> origin/master
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,15 +33,9 @@ public class ViewClaimActivity extends Activity {
 		// get widgets
 		tagsButton = (Button) findViewById(R.id.buttonClaimTags);
 		ApproveOrSubmitButton = (Button) findViewById(R.id.buttonApproveSubmit);
-<<<<<<< HEAD
 		menuButton = (Button) findViewById(R.id.ViewClaimMenuButton);
 		addExpenseButton = (Button) findViewById(R.id.buttonClaimAddExpense);
 		expenseView = (ListView) findViewById(R.id.expenseListView);
-=======
-		menuButton = (Button) findViewById(R.id.startDatePickerButton);
-		addExpenseButton = (Button) findViewById(R.id.buttonClaimAddExpense);
-		expenseView = (ListView) findViewById(R.id.claimsListView);
->>>>>>> origin/master
 		nameView = (TextView) findViewById(R.id.textViewClaimName);
 		dateRangeView = (TextView) findViewById(R.id.textViewClaimDateRange);
 		
@@ -58,12 +46,9 @@ public class ViewClaimActivity extends Activity {
 			public void onClick(View v) {
 				// TODO: save claim id into intent
 				// TODO: jump to tags activity
-<<<<<<< HEAD
 				Intent intent = new Intent();
 				intent.setClass(ViewClaimActivity.this,TagActivity.class);
 				ViewClaimActivity.this.startActivity(intent);
-=======
->>>>>>> origin/master
 			}
 			
 		});
@@ -116,9 +101,5 @@ public class ViewClaimActivity extends Activity {
 		return true;
 	}
 
-<<<<<<< HEAD
 
 }
-=======
-}
->>>>>>> origin/master
