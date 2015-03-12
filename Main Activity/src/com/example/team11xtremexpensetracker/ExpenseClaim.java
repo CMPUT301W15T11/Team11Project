@@ -15,8 +15,24 @@ public class ExpenseClaim {
 	private Double totalCurrency;
 	private Boolean isEditable;
 	private String approverName;
+	private ArrayList<Item>Itemlist;
 	// getters and setters
+	// item list
+	public ArrayList<Item> getItemlist() {
+		return Itemlist;
+	}
+	public void setItemlist(ArrayList<Item> itemlist) {
+		Itemlist = itemlist;
+	}
+	
+	public void additem(Item newItem){
+		this.Itemlist.add(newItem);
+	}
+	public Item getItemById(int ID){
+		return Itemlist.get(ID);
+	}
 	// ClaimantName
+	
 	public String getClaimantName() {
 		return claimantName;
 	}

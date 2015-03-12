@@ -34,7 +34,7 @@ import android.widget.ListView;
 
 public class ItemlistActivity extends Activity {
 	private static final String FILENAME = "save.sav";
-	private Itemlist datafile;
+	private ClaimsList datafile;
 	private ItemlistAdapter itemlistAdapter;
 	private ListView itemlistview;
 	//==========================================================================================================
@@ -119,12 +119,12 @@ public class ItemlistActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						Item item = datafile.getItemlist().get(itemID);
-						datafile.getItemlist().remove(item);
+						//Item item = datafile.getItemlist().get(itemID);
+						//datafile.getItemlist().remove(item);
 						saveInFile();
 						itemlistAdapter.clear();
 						datafile = loadFromFile();
-						itemlistAdapter.addAll(datafile.getItemlist());
+						//itemlistAdapter.addAll(datafile.getItemlist());
 						itemlistAdapter.notifyDataSetChanged();
 						
 						
@@ -174,13 +174,13 @@ public class ItemlistActivity extends Activity {
 	
 	//==========================================================================================================
 	//============================Gson
-	private Itemlist loadFromFile(){
+	private ClaimsList loadFromFile(){
 		Gson gson = new Gson();
-		datafile = new Itemlist();
+		datafile = new ClaimsList();
 		try{
 			FileInputStream fis = openFileInput(FILENAME);
 			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<Itemlist>(){}.getType();
+			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
 			datafile = gson.fromJson(in, typeOfT);
 			fis.close();
 		} catch(FileNotFoundException e){
@@ -211,4 +211,5 @@ public class ItemlistActivity extends Activity {
 		
 		
 	}
+	
 }

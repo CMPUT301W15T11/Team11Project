@@ -161,12 +161,12 @@ public class ViewClaimActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						Item item = datafile.getClaimByID(claimID).get(itemID);
-						datafile.getClaimByID(claimID).remove(item);
+						//Item item = datafile.getClaimByID(claimID).get(itemID);
+						//datafile.getClaimByID(claimID).remove(item);
 						saveInFile();
 						itemlistAdapter.clear();
 						datafile = loadFromFile();
-						itemlistAdapter.addAll(datafile.getItemlist());
+						//itemlistAdapter.addAll(datafile.getItemlist());
 						itemlistAdapter.notifyDataSetChanged();
 						
 						
@@ -207,7 +207,7 @@ public class ViewClaimActivity extends Activity {
 		try{
 			FileInputStream fis = openFileInput(FILENAME);
 			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<Itemlist>(){}.getType();
+			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
 			datafile = gson.fromJson(in, typeOfT);
 			fis.close();
 		} catch(FileNotFoundException e){

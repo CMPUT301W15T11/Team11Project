@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 public class ViewItemActivity extends Activity{
 	private static final String FILENAME = "save.sav";
-	private Itemlist datafile;
+	private ClaimsList datafile;
 	private TextView itemname;
 	private String itemnamestr;
 	private String itemunitstr;
@@ -44,15 +44,15 @@ public class ViewItemActivity extends Activity{
 		Intent intent = getIntent();
 		final int itemID = intent.getIntExtra("itemID",0);
 		
-		itemnamestr = datafile.getItemlist().get(itemID).getItem().toString();
+		//itemnamestr = datafile.getItemlist().get(itemID).getItem().toString();
 		itemname = (TextView)findViewById(R.id.itemnameView);
 		itemname.setText(itemnamestr);
 		
-		itemunitstr = datafile.getItemlist().get(itemID).getUnit().toString();
+		//itemunitstr = datafile.getItemlist().get(itemID).getUnit().toString();
 		itemunit = (TextView)findViewById(R.id.unitView);
 		itemunit.setText(itemunitstr);
 		
-		itemcategorystr = datafile.getItemlist().get(itemID).getCategory().toString();
+		//itemcategorystr = datafile.getItemlist().get(itemID).getCategory().toString();
 		itemcategory = (TextView)findViewById(R.id.categoryView);
 		itemcategory.setText(itemcategorystr);
 		
@@ -95,13 +95,13 @@ public class ViewItemActivity extends Activity{
 	
 	//==========================================================================================================
 	//============================Gson	
-	private Itemlist loadFromFile(){
+	private ClaimsList loadFromFile(){
 		Gson gson = new Gson();
-		datafile = new Itemlist();
+		datafile = new ClaimsList();
 		try{
 			FileInputStream fis = openFileInput(FILENAME);
 			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<Itemlist>(){}.getType();
+			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
 			datafile = gson.fromJson(in, typeOfT);
 			fis.close();
 		} catch(FileNotFoundException e){

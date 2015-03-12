@@ -138,7 +138,7 @@ public class AddClaimActivity extends Activity {
 		try{
 			FileInputStream fis = openFileInput(FILENAME);
 			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<Itemlist>(){}.getType();
+			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
 			datafile = gson.fromJson(in, typeOfT);
 			fis.close();
 		} catch(FileNotFoundException e){

@@ -25,7 +25,7 @@ import android.widget.Spinner;
 
 public class EditItemActivity extends Activity{
 	private static final String FILENAME = "save.sav";
-	private Itemlist datafile;
+	private ClaimsList datafile;
 	private EditText itemname;
 	private String itemnamestr;
 	private Item currentitem;
@@ -82,8 +82,9 @@ public class EditItemActivity extends Activity{
 		Intent intent = getIntent();
 		final int itemID = intent.getIntExtra("itemID", 0);
 		datafile = loadFromFile();
-		currentitem = datafile.getItemlist().get(itemID);
-		itemnamestr = datafile.getItemlist().get(itemID).getItem();
+		// TODO: 
+		//currentitem = datafile.getItemlist().get(itemID);
+		//itemnamestr = datafile.getItemlist().get(itemID).getItem();
 		itemname = (EditText)findViewById(R.id.edititemname);
 		itemname.setText(itemnamestr);
 		//=======datepicker
@@ -145,13 +146,13 @@ public class EditItemActivity extends Activity{
 	//==========================================================================================================
 	//============================Gson	
 	
-	private Itemlist loadFromFile(){
+	private ClaimsList loadFromFile(){
 		Gson gson = new Gson();
-		datafile = new Itemlist();
+		datafile = new ClaimsList();
 		try{
 			FileInputStream fis = openFileInput(FILENAME);
 			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<Itemlist>(){}.getType();
+			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
 			datafile = gson.fromJson(in, typeOfT);
 			fis.close();
 		} catch(FileNotFoundException e){
@@ -182,7 +183,6 @@ public class EditItemActivity extends Activity{
 		
 		
 	}
-	
 	
 	
 	

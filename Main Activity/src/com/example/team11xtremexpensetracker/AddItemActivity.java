@@ -31,7 +31,7 @@ import android.widget.Toast;
 
 public class AddItemActivity extends Activity{
 	private static final String FILENAME = "save.sav";
-	private Itemlist datafile;
+	private ClaimsList datafile;
 	private EditText itemname;
 	private String itemnamestr;
 	private String itemunitstr;
@@ -139,7 +139,7 @@ public class AddItemActivity extends Activity{
 				newItem.setCategory(itemcategorystr);
 				
 				
-				datafile.additem(newItem);
+				//datafile.(newItem);
 				saveInFile();
 				
 				Intent backIntent = new Intent();
@@ -176,13 +176,13 @@ public class AddItemActivity extends Activity{
 		//==========================================================================================================
 		//============================Gson
 	}
-	private Itemlist loadFromFile(){
+	private ClaimsList loadFromFile(){
 		Gson gson = new Gson();
-		datafile = new Itemlist();
+		datafile = new ClaimsList();
 		try{
 			FileInputStream fis = openFileInput(FILENAME);
 			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<Itemlist>(){}.getType();
+			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
 			datafile = gson.fromJson(in, typeOfT);
 			fis.close();
 		} catch(FileNotFoundException e){
