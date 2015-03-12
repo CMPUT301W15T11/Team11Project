@@ -1,6 +1,16 @@
 package com.example.team11xtremexpensetracker;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.util.Calendar;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -10,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class AddClaimActivity extends Activity {
@@ -23,13 +34,18 @@ public class AddClaimActivity extends Activity {
 	private Button doneButton;
 	private Intent intent;
 	private EditText editTextEnterName;
-	
+	private static final String FILENAME = "save.sav";
+	private ClaimsList datafile;
+
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_claim);
+		datafile = this.loadFromFile();
+		
+
 		// get widgets
 		startDatePickerButton = (Button) findViewById(R.id.startDatePickerButton);
 		endDatePickerButton = (Button) findViewById(R.id.endDatePickerButton);
@@ -94,7 +110,12 @@ public class AddClaimActivity extends Activity {
 				newClaim.setEndDate(endDate);
 				String claimName = editTextEnterName.getText().toString();
 				newClaim.setName(claimName);
+				datafile.addClaim(newClaim);
+				int claimID = datafile.getLength()-1;
 				// TODO: save in file
+				
+				saveInFile();
+				intent.putExtra("claimID", claimID);
 				intent.setClass(AddClaimActivity.this,ViewClaimActivity.class);
 				AddClaimActivity.this.startActivity(intent);
 			}
@@ -108,5 +129,46 @@ public class AddClaimActivity extends Activity {
 		getMenuInflater().inflate(R.menu.add_claim, menu);
 		return true; 
 	}
+	
+	//==========================================================================================================
+	//============================Gson
+	private ClaimsList loadFromFile(){
+		Gson gson = new Gson();
+		datafile = new ClaimsList();
+		try{
+			FileInputStream fis = openFileInput(FILENAME);
+			InputStreamReader in = new InputStreamReader(fis);
+			Type typeOfT = new TypeToken<Itemlist>(){}.getType();
+			datafile = gson.fromJson(in, typeOfT);
+			fis.close();
+		} catch(FileNotFoundException e){
+			e.printStackTrace();
+			
+		}catch (IOException e){
+			e.printStackTrace();
+		}
+		return datafile;
+	}
+	private void saveInFile(){
+		Gson gson = new Gson();
+		try{
+			FileOutputStream fos = openFileOutput(FILENAME,0);
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+			gson.toJson(datafile,osw);
+			osw.flush();
+			fos.close();
+			
+			
+		} catch(FileNotFoundException e){
+			e.printStackTrace();
+			
+		}catch (IOException e){
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
 
 }

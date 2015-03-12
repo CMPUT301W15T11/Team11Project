@@ -55,5 +55,10 @@ public class ClaimsList {
 	public void sort(){
 		
 	}
-
+	public int getLength(){
+		return allClaimsList.size();
+	}
+	public ExpenseClaim getClaimByID(int ID){
+		return allClaimsList.get(ID);
+	}
 }

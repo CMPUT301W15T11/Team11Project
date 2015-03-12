@@ -40,9 +40,10 @@ public class ViewClaimActivity extends Activity {
 	private TextView dateRangeView;
 	//===
 	private static final String FILENAME = "save.sav";
-	private Itemlist datafile;
+	private ClaimsList datafile;
 	private ItemlistAdapter itemlistAdapter;
 	private ListView itemlistview;
+	private int claimID;
 	
 
 	@Override
@@ -51,10 +52,9 @@ public class ViewClaimActivity extends Activity {
 		super.onStart();
 		//==listView
 		datafile = this.loadFromFile();
-		
-		itemlistAdapter = new ItemlistAdapter(this,datafile.getItemlist());
-		itemlistview.setAdapter(itemlistAdapter);
-		
+	
+		Intent intent = getIntent();
+		claimID = intent.getIntExtra("claimID",0);
 	}
 
 	@SuppressLint("CutPasteId")
@@ -161,8 +161,8 @@ public class ViewClaimActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						Item item = datafile.getItemlist().get(itemID);
-						datafile.getItemlist().remove(item);
+						Item item = datafile.getClaimByID(claimID).get(itemID);
+						datafile.getClaimByID(claimID).remove(item);
 						saveInFile();
 						itemlistAdapter.clear();
 						datafile = loadFromFile();
@@ -201,9 +201,9 @@ public class ViewClaimActivity extends Activity {
 	}
 	//==========================================================================================================
 	//============================Gson
-	private Itemlist loadFromFile(){
+	private ClaimsList loadFromFile(){
 		Gson gson = new Gson();
-		datafile = new Itemlist();
+		datafile = new ClaimsList();
 		try{
 			FileInputStream fis = openFileInput(FILENAME);
 			InputStreamReader in = new InputStreamReader(fis);
