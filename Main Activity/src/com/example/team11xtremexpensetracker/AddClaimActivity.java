@@ -35,7 +35,7 @@ public class AddClaimActivity extends Activity {
 	private Intent intent;
 	private EditText editTextEnterName;
 	private ClaimListController claimListController;
-
+	
 	
 	
 	@Override
