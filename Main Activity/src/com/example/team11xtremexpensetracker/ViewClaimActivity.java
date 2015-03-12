@@ -19,11 +19,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViewClaimActivity extends Activity {
 	private ExpenseClaim currentClaim;
@@ -67,7 +69,6 @@ public class ViewClaimActivity extends Activity {
 		// get widgets
 		tagsButton = (Button) findViewById(R.id.buttonClaimTags);
 		ApproveOrSubmitButton = (Button) findViewById(R.id.buttonApproveSubmit);
-		menuButton = (Button) findViewById(R.id.ViewClaimMenuButton);
 		addExpenseButton = (Button) findViewById(R.id.buttonClaimAddExpense);
 		expenseView = (ListView) findViewById(R.id.expenseListView);
 		nameView = (TextView) findViewById(R.id.textViewClaimName);
@@ -99,18 +100,6 @@ public class ViewClaimActivity extends Activity {
 			
 		});
 		
-		menuButton.setOnClickListener(new View.OnClickListener() {	
-			// TODO: NOT FINISHED. more function will be added, for now it can 
-			// only edit current claim
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent();
-				// TODO: save claim id into intent for editing
-				intent.setClass(ViewClaimActivity.this,AddClaimActivity.class);
-				ViewClaimActivity.this.startActivity(intent);
-			}
-			
-		});
 		
 		addExpenseButton = (Button)findViewById(R.id.buttonClaimAddExpense);
 		addExpenseButton.setOnClickListener(new View.OnClickListener() {	
@@ -237,6 +226,13 @@ public class ViewClaimActivity extends Activity {
 		
 		
 		
+	}
+	public void editClaim(MenuItem menuItem){
+		Toast.makeText(this, "Edit", Toast.LENGTH_LONG).show();
+		Intent intent = new Intent();
+		// TODO: save claim id into intent for editing
+		intent.setClass(ViewClaimActivity.this,AddClaimActivity.class);
+		ViewClaimActivity.this.startActivity(intent);
 	}
 
 

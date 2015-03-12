@@ -24,13 +24,6 @@
             android:layout_weight="0.44"
             android:text="Approved/Submitted" />
 
-        <Button
-            android:id="@+id/ViewClaimMenuButton"
-            android:layout_width="31dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.03"
-            android:text=".." />
-
     </LinearLayout>
 
     <TextView

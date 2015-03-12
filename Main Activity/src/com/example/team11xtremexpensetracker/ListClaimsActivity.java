@@ -22,7 +22,7 @@ import android.widget.Toast;
 public class ListClaimsActivity extends Activity {
 	private static final String FILENAME = "save.sav";
 	private ClaimsList datafile;
-	private ListClaimsAdapter listClaimAdapter;
+	//private ListClaimsAdapter listClaimAdapter;
 	private ListView claimsListView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
