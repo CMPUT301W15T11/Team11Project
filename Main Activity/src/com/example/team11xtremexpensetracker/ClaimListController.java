@@ -14,7 +14,7 @@ public class ClaimListController {
 		return claimsList;
 	}
 	
-	public void addClaim(ExpenseClaim claim){
+	public static void addClaim(ExpenseClaim claim){
 		getClaimsList().addClaim(claim);
 	}
 }

@@ -34,8 +34,7 @@ public class AddClaimActivity extends Activity {
 	private Button doneButton;
 	private Intent intent;
 	private EditText editTextEnterName;
-	private static final String FILENAME = "save.sav";
-	private ClaimsList datafile;
+	private ClaimListController claimListController;
 
 	
 	
@@ -43,8 +42,7 @@ public class AddClaimActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_claim);
-		datafile = this.loadFromFile();
-		
+
 
 		// get widgets
 		startDatePickerButton = (Button) findViewById(R.id.startDatePickerButton);
@@ -110,14 +108,12 @@ public class AddClaimActivity extends Activity {
 				newClaim.setEndDate(endDate);
 				String claimName = editTextEnterName.getText().toString();
 				newClaim.setName(claimName);
-				datafile.addClaim(newClaim);
-				int claimID = datafile.getLength()-1;
-				// TODO: save in file
-				
-				saveInFile();
+				ClaimListController.getClaimsList().addClaim(newClaim);
+				int claimID = (ClaimListController.getClaimsList().getClaims().size())-1;
 				intent.putExtra("claimID", claimID);
 				intent.setClass(AddClaimActivity.this,ViewClaimActivity.class);
 				AddClaimActivity.this.startActivity(intent);
+				finish();
 			}
 		});
 		
@@ -128,46 +124,6 @@ public class AddClaimActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.add_claim, menu);
 		return true; 
-	}
-	
-	//==========================================================================================================
-	//============================Gson
-	private ClaimsList loadFromFile(){
-		Gson gson = new Gson();
-		datafile = new ClaimsList();
-		try{
-			FileInputStream fis = openFileInput(FILENAME);
-			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
-			datafile = gson.fromJson(in, typeOfT);
-			fis.close();
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		return datafile;
-	}
-	private void saveInFile(){
-		Gson gson = new Gson();
-		try{
-			FileOutputStream fos = openFileOutput(FILENAME,0);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			gson.toJson(datafile,osw);
-			osw.flush();
-			fos.close();
-			
-			
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		
-		
-		
 	}
 
 
