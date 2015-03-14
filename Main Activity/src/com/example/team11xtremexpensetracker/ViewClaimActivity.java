@@ -70,7 +70,6 @@ public class ViewClaimActivity extends Activity {
 		tagsButton = (Button) findViewById(R.id.buttonClaimTags);
 		ApproveOrSubmitButton = (Button) findViewById(R.id.buttonApproveSubmit);
 		addExpenseButton = (Button) findViewById(R.id.buttonClaimAddExpense);
-		expenseView = (ListView) findViewById(R.id.expenseListView);
 		nameView = (TextView) findViewById(R.id.textViewClaimName);
 		dateRangeView = (TextView) findViewById(R.id.textViewClaimDateRange);
 		//Expense Item list view
@@ -235,5 +234,10 @@ public class ViewClaimActivity extends Activity {
 		ViewClaimActivity.this.startActivity(intent);
 	}
 
+	//Method called by pressing "add expense" button.
+	//This is how button method calls SHOULD be implemented. 
+	public void addExpenseItem(View v){
+		
+	}
 
 }
