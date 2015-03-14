@@ -45,7 +45,7 @@ public class ViewClaimActivity extends Activity {
 	private ClaimsList datafile;
 	private ItemlistAdapter itemlistAdapter;
 	private ListView itemlistview;
-	private int claimID;
+	private int claimID; //The index of the claim in ClaimsList
 	
 
 	@Override
@@ -65,6 +65,15 @@ public class ViewClaimActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_claim);
 		
+		//Get current claim
+		Intent intent = getIntent();
+		claimID = intent.getIntExtra("claimID", 0);
+		if (claimID >= 0){
+			currentClaim = new ClaimListController().getClaimsList().getClaimByID(claimID);
+		}
+		
+		
+	
 		// TODO: load from file
 		// get widgets
 		tagsButton = (Button) findViewById(R.id.buttonClaimTags);
@@ -74,7 +83,14 @@ public class ViewClaimActivity extends Activity {
 		dateRangeView = (TextView) findViewById(R.id.textViewClaimDateRange);
 		//Expense Item list view
 		itemlistview = (ListView)findViewById(R.id.expenseListView);
-
+		
+		//populate name and dateRange fields.
+		nameView.setText(currentClaim.getName());
+		dateRangeView.setText(currentClaim.getDateRange());
+		Toast.makeText(this, "DateRange: " + currentClaim.getDateRange(), Toast.LENGTH_LONG).show();
+		//nameView.setText("Name 1");
+		//dateRangeView.setText("Date 1");
+		
 		
 		// create listeners
 		tagsButton.setOnClickListener(new View.OnClickListener() {	
@@ -114,7 +130,7 @@ public class ViewClaimActivity extends Activity {
 		
 		
 		// show name and date range
-		nameView.setText(claimName);
+		//nameView.setText(claimName);
 		
 		
 		//set Listener for itemlist view

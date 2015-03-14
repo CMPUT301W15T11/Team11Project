@@ -64,8 +64,8 @@ public class AddClaimActivity extends Activity {
 					@Override
 					public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
 							int startDayOfMonth) {
-						String textString_start = String.format("%d-%d-%d", startYear, startMonthOfYear + 1,
-								startDayOfMonth);
+						String textString_start = String.format("%d/%d/%d", startMonthOfYear + 1,
+								startDayOfMonth, startYear);
 						startDatePickerButton.setText(textString_start);
 						startDate.set(startYear, startMonthOfYear+1, startDayOfMonth);
 						
@@ -84,8 +84,8 @@ public class AddClaimActivity extends Activity {
 					@Override
 					public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
 							int startDayOfMonth) {
-						String textString_start = String.format("%d-%d-%d", startYear, startMonthOfYear + 1,
-								startDayOfMonth);
+						String textString_start = String.format("%d/%d/%d", startMonthOfYear + 1,
+								startDayOfMonth, startYear);
 						endDatePickerButton.setText(textString_start);
 						endDate.set(startYear, startMonthOfYear+1, startDayOfMonth);
 					}

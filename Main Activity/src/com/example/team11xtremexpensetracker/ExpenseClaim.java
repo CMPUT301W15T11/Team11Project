@@ -60,6 +60,21 @@ public class ExpenseClaim {
 	public void setEndDate(Calendar endDate) {
 		this.endDate = endDate;
 	}
+	public String getDateRange(){
+		//should return a string 
+		//of format "startDate - EndDate
+		int month1 = this.startDate.get(Calendar.MONTH);
+		int day1 = this.startDate.get(Calendar.DAY_OF_MONTH);
+		int year1 = this.startDate.get(Calendar.YEAR);
+		int month2 = this.endDate.get(Calendar.MONTH);
+		int day2 = this.endDate.get(Calendar.DAY_OF_MONTH);
+		int year2 = this.endDate.get(Calendar.YEAR);
+		
+		String returnString = String.format("%d/%d/%d - %d/%d/%d", month1, day1, year1, month2, day2, year2);
+		return returnString;
+		//return this.startDate.set(startYear, startMonthOfYear+1, startDayOfMonth).toString() + " - " + this.endDate.set(startYear, startMonthOfYear+1, startDayOfMonth).toString();
+	}
+	
 	// destinations
 	public ArrayList<Destination> getDestinations() {
 		return destinations;
