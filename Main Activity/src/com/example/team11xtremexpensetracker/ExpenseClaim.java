@@ -102,5 +102,9 @@ public class ExpenseClaim {
 	public void setApproverName(String approverName) {
 		this.approverName = approverName;
 	}
+	//Used to display information in list view
+	public String toString() {
+		return this.name;
+	}
 	
 }
