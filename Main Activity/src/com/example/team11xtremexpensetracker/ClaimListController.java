@@ -11,6 +11,7 @@ public class ClaimListController {
 		if (claimsList == null){
 			claimsList = new ClaimsList();
 		}
+		claimsList.sort();
 		return claimsList;
 	}
 	

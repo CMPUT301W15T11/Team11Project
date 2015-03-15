@@ -2,6 +2,8 @@ package com.example.team11xtremexpensetracker;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ClaimsList {
 	private ArrayList<ExpenseClaim> allClaimsList;
@@ -52,9 +54,14 @@ public class ClaimsList {
 		listeners.remove(listener);
 	}
 	
-	public void sort(){
-		
+	public void sort(){ // Src: http://stackoverflow.com/questions/5927109/sort-objects-in-arraylist-by-date
+		Collections.sort(allClaimsList, new Comparator<ExpenseClaim>() {
+			public int compare(ExpenseClaim o1, ExpenseClaim o2) {
+				return o1.getStartDate().compareTo(o2.getStartDate());
+			}
+			});
 	}
+	
 	public int getLength(){
 		return allClaimsList.size();
 	}

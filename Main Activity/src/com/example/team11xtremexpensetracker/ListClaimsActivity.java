@@ -45,7 +45,7 @@ public class ListClaimsActivity extends Activity {
 			@Override
 			public void update(){
 				list.clear();
-				Collection<ExpenseClaim> claims = clc.getClaimsList().getClaims();
+				Collection<ExpenseClaim> claims = (clc.getClaimsList().getClaims());
 				list.addAll(claims);
 				claimAdapter.notifyDataSetChanged();
 			}
