@@ -97,9 +97,9 @@ public class ViewClaimActivity extends Activity {
 	
 			@Override
 			public void onClick(View v) {
-				// TODO: save claim id into intent
-				// TODO: jump to tags activity
+
 				Intent intent = new Intent();
+				intent.putExtra("claimID", claimID);
 				intent.setClass(ViewClaimActivity.this,TagActivity.class);
 				ViewClaimActivity.this.startActivity(intent);
 			}
