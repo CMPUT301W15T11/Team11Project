@@ -9,23 +9,36 @@ public class ClaimsList {
 	private ArrayList<ExpenseClaim> allClaimsList;
 	private ArrayList<ExpenseClaim> submittedClaimsList;
 	private ArrayList<Listener> listeners;
+	private boolean isEditable;
+
+	public boolean isEditable() {
+		return isEditable;
+	}
+
+	public void setEditable(boolean isEditable) {
+		this.isEditable = isEditable;
+	}
 
 	public ClaimsList() {
 		allClaimsList = new ArrayList<ExpenseClaim>();
 		submittedClaimsList = new ArrayList<ExpenseClaim>();
 		listeners = new ArrayList<Listener>();
-		
+		isEditable = true;
 	}
 	
 	public void addClaim(ExpenseClaim claim){
-		allClaimsList.add(claim);
-		notifyListeners();
+		if (isEditable){
+			allClaimsList.add(claim);
+			notifyListeners();
+		}
 		
 	}
 	
 	public void deleteClaim(ExpenseClaim claim){
-		allClaimsList.remove(claim);
-		notifyListeners();
+		if (isEditable){
+			allClaimsList.remove(claim);
+			notifyListeners();
+		}
 	}
 	
 	public Collection<ExpenseClaim> getClaims(){

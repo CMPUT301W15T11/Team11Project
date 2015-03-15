@@ -4,6 +4,7 @@
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import com.example.team11xtremexpensetracker.ClaimsList;
 import com.example.team11xtremexpensetracker.Destination;
 import com.example.team11xtremexpensetracker.ExpenseClaim;
 
@@ -53,11 +54,11 @@ public class ExpenseClaimModelTest extends TestCase {
 
 	// TODO: test tags
 	public void testGetTags() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	public void testSetTags() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 	
 	
@@ -79,7 +80,7 @@ public class ExpenseClaimModelTest extends TestCase {
 	public void testApproverName() {
 		ExpenseClaim test = new ExpenseClaim();
 		test.setApproverName("test");
-		assertTrue("claimant name",test.getStatus()=="test");
+		assertTrue("claimant name",test.getApproverName()=="test");
 	}
 	
 	// requirement test 1.01
@@ -89,8 +90,9 @@ public class ExpenseClaimModelTest extends TestCase {
 		Calendar endDate = Calendar.getInstance();
 		claim.setName("name");
 		claim.setStartDate(startDate);
-		assertTrue("claimant name",claim.getStartDate()==startDate);
-		assertTrue("claimant name",claim.getEndDate()==endDate);
+		claim.setEndDate(endDate);
+		assertTrue(claim.getStartDate()==startDate);
+		assertTrue(claim.getEndDate()==endDate);
 		assertTrue(claim.getName() == "name");
 	}
 	// requirement test 1.02
@@ -102,10 +104,53 @@ public class ExpenseClaimModelTest extends TestCase {
 		assertTrue(claim.getDestinations().get(0).getReason() == "Reason");  
 	}
 	// requirement test 1.03
+	public void test1_03(){
+		ExpenseClaim  claim = new ExpenseClaim();
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		claim.setName("name");
+		claim.setStartDate(startDate);
+		claim.setEndDate(endDate);
+		Destination dest = new Destination("string");
+		dest.setReason("Reason");
+		claim.getDestinations().add(dest);
+		assertTrue(claim.getDestinations().get(0)== dest);
+		assertTrue(claim.getDestinations().get(0).getReason() == "Reason");  
+		assertTrue(claim.getStartDate()==startDate);
+		assertTrue(claim.getEndDate()==endDate);
+		assertTrue(claim.getName() == "name");
+	}
+	// requirement test 1.04
+	public void test1_04(){
+		ExpenseClaim  claim = new ExpenseClaim();
+		claim.setIsEditable(false);
+		assertFalse(claim.getIsEditable());
+		claim.setIsEditable(true);
+		assertTrue(claim.getIsEditable());
+		
+	}
 	
+	// requirement test 1.05
+	public void test1_05(){	
+		ClaimsList claims = new ClaimsList();
+		claims.setEditable(true);
+		ExpenseClaim  claim = new ExpenseClaim();
+		claims.addClaim(claim);
+		claims.deleteClaim(claim);
+		assertTrue(claims.getClaims().size() == 0);
+		
+		claims.addClaim(claim);
+		claims.setEditable(false);
+		claims.deleteClaim(claim);
+		assertTrue(claims.getClaims().size() == 1);
+		claims.addClaim(claim);
+		assertTrue(claims.getClaims().size() == 1);
+	}
 	
-	
-	
+	// requirement test 1.06
+	public void test1_06(){
+		//TODO: sort test
+	}
 	
 
 }

@@ -18,8 +18,8 @@ public class ExpenseClaim {
 	private ArrayList<Item>Itemlist;
 	// getters and setters
 	public ExpenseClaim(){
-		ArrayList<Destination> destinations = new ArrayList <Destination>() ;
-		ArrayList<Item> Itemlist = new ArrayList <Item>();
+		destinations = new ArrayList <Destination>() ;
+		Itemlist = new ArrayList <Item>();
 	}
 	// item list
 	public ArrayList<Item> getItemlist() {
@@ -29,8 +29,17 @@ public class ExpenseClaim {
 		Itemlist = itemlist;
 	}
 	
-	public void additem(Item newItem){
-		this.Itemlist.add(newItem);
+	public void addItem(Item newItem){
+		if (isEditable){
+			this.Itemlist.add(newItem);
+		}
+	}
+	public void removeItem(int id){
+		if (isEditable){
+			this.Itemlist.remove(id);
+		}
+		
+		
 	}
 	public Item getItemById(int ID){
 		return Itemlist.get(ID);
