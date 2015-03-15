@@ -10,7 +10,6 @@ public class ClaimsList {
 	private ArrayList<ExpenseClaim> submittedClaimsList;
 	private ArrayList<Listener> listeners;
 	private boolean isEditable;
-
 	public boolean isEditable() {
 		return isEditable;
 	}
@@ -18,6 +17,7 @@ public class ClaimsList {
 	public void setEditable(boolean isEditable) {
 		this.isEditable = isEditable;
 	}
+
 
 	public ClaimsList() {
 		allClaimsList = new ArrayList<ExpenseClaim>();

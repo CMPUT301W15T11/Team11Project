@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,12 +24,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ViewClaimActivity extends Activity {
+	
 	private ExpenseClaim currentClaim;
 	private Button tagsButton;
 	private Button ApproveOrSubmitButton;
@@ -46,6 +50,7 @@ public class ViewClaimActivity extends Activity {
 	private ItemlistAdapter itemlistAdapter;
 	private ListView itemlistview;
 	private int claimID; //The index of the claim in ClaimsList
+	private ClaimListController clc;
 	
 
 	@Override
@@ -83,6 +88,12 @@ public class ViewClaimActivity extends Activity {
 		dateRangeView = (TextView) findViewById(R.id.textViewClaimDateRange);
 		//Expense Item list view
 		itemlistview = (ListView)findViewById(R.id.expenseListView);
+		clc = new ClaimListController(); 
+		//itemlsitAdapter = new ItemlistAdapter(this,clc.getClaimsList().getClaims().);
+		Collection<ExpenseClaim> claims = clc.getClaimsList().getClaims(); 
+		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);
+		final ArrayAdapter<ExpenseClaim> itemAdapter = new ArrayAdapter<ExpenseClaim>(this, android.R.layout.simple_expandable_list_item_1, list);
+		itemlistview.setAdapter(itemAdapter);
 		
 		//populate name and dateRange fields.
 		nameView.setText(currentClaim.getName());

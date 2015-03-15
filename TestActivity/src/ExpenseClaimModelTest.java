@@ -149,7 +149,7 @@ public class ExpenseClaimModelTest extends TestCase {
 	
 	// requirement test 1.06
 	public void test1_06(){
-		//TODO: sort test
+		ClaimsList claims = new ClaimsList();
 	}
 	
 
