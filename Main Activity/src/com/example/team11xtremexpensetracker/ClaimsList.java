@@ -9,6 +9,8 @@ public class ClaimsList {
 	private ArrayList<ExpenseClaim> allClaimsList;
 	private ArrayList<ExpenseClaim> submittedClaimsList;
 	private ArrayList<Listener> listeners;
+	
+
 
 	public ClaimsList() {
 		allClaimsList = new ArrayList<ExpenseClaim>();

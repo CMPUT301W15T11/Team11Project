@@ -46,11 +46,14 @@ public class AddItemActivity extends Activity{
 	private ArrayAdapter<String> unitAdapter;
 	private Button additemdate;
 	private Calendar adddate;
+	private int claimID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_item);
+		Intent intent= new Intent();
+		claimID = intent.getIntExtra("claimID", 0);
 		
 
 		//==========================================================================================================
@@ -90,7 +93,7 @@ public class AddItemActivity extends Activity{
 		//==========================================================================================================
 		//============================get input text to string and save into Gson,		
 		
-		datafile = this.loadFromFile();
+		//datafile = this.loadFromFile();
 		itemname = (EditText)findViewById(R.id.additemname);
 		unitspinner = (Spinner)findViewById(R.id.additemunit);
 		categoryspinner = (Spinner)findViewById(R.id.additemcategory);
@@ -138,14 +141,15 @@ public class AddItemActivity extends Activity{
 				newItem.setUnit(itemunitstr);
 				newItem.setCategory(itemcategorystr);
 				
-				
+				ClaimListController.getClaimsList().getClaimByID(claimID).additem(newItem);
 				//datafile.(newItem);
-				saveInFile();
+				//saveInFile();
 				
 				Intent backIntent = new Intent();
 				backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				backIntent.setClass(AddItemActivity.this, ViewClaimActivity.class);
 				startActivity(backIntent);
+				finish();
 				
 			}
 		});
@@ -176,6 +180,7 @@ public class AddItemActivity extends Activity{
 		//==========================================================================================================
 		//============================Gson
 	}
+	/*
 	private ClaimsList loadFromFile(){
 		Gson gson = new Gson();
 		datafile = new ClaimsList();
@@ -213,5 +218,6 @@ public class AddItemActivity extends Activity{
 		
 		
 	}
+	*/
 
 }
