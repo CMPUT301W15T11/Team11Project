@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.team11xtremexpensetracker.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,45 +23,49 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.AddDestionationActivity"
+            android:name=".AddDestionationActivity"
             android:label="@string/title_activity_add_destionation" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.ViewDestinationActivity"
+            android:name=".ViewDestinationActivity"
             android:label="@string/title_activity_view_destination" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.AddClaimActivity"
+            android:name=".AddClaimActivity"
             android:label="@string/title_activity_add_claim" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.ViewClaimActivity"
+            android:name=".ViewClaimActivity"
             android:label="@string/title_activity_view_claim" >
         </activity>
-         <activity
-            android:name="com.example.team11xtremexpensetracker.ListClaimsActivity"
+        <activity
+            android:name=".ListClaimsActivity"
             android:label="@string/title_activity_list_claims" >
         </activity>
         <activity
             android:name=".AddItemActivity"
-            android:label="AddItemActivity">
+            android:label="AddItemActivity" >
         </activity>
         <activity
             android:name=".EditItemActivity"
-            android:label="EditItemActivity">
+            android:label="EditItemActivity" >
         </activity>
         <activity
             android:name=".ViewItemActivity"
-            android:label="ViewItemActivity">
+            android:label="ViewItemActivity" >
         </activity>
-
         <activity
             android:name=".ItemlistActivity"
-            android:label="ItemlistActivity">
+            android:label="ItemlistActivity" >
         </activity>
-        <activity 
-            android:name="com.example.team11xtremexpensetracker.TagActivity"
-            android:label="@string/title_activity_view_tag"></activity>
+        <activity
+            android:name=".TagActivity"
+            android:label="@string/title_activity_view_tag" >
+        </activity>
+        <activity
+            android:name=".EditClaimActivity"
+            android:label="@string/title_activity_edit_claim" >
+        </activity>
     </application>
 
 </manifest>

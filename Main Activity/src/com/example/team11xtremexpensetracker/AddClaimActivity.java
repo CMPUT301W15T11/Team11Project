@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 public class AddClaimActivity extends Activity {
 	
+	private ExpenseClaim oldClaim;
 	private ExpenseClaim newClaim;
 	private String claimName;
 	private Calendar startDate;
@@ -35,6 +36,7 @@ public class AddClaimActivity extends Activity {
 	private Intent intent;
 	private EditText editTextEnterName;
 	private ClaimListController claimListController;
+	private int claimID;
 	
 	
 	
@@ -53,7 +55,26 @@ public class AddClaimActivity extends Activity {
 		startDate=Calendar.getInstance();
 		endDate=Calendar.getInstance();
 		// set listener
-
+		
+		
+		 // Ok, now if you get some extra, set Buttons to start values of claim
+		Intent intent = new Intent();
+		claimID = intent.getIntExtra("claimID",-1);
+		if (claimID >= 0){
+			//oldClaim = new ExpenseClaim();
+			oldClaim = new ClaimListController().getClaimsList().getClaimByID(claimID);
+		}
+		
+		Toast.makeText(this, "ClaimID is" + new Integer(claimID).toString(), Toast.LENGTH_LONG).show();
+		
+		if (oldClaim != null){
+			Toast.makeText(this,"Old Claim not null", Toast.LENGTH_LONG).show();
+		} else if (oldClaim == null){
+			Toast.makeText(this,"Old Claim is null", Toast.LENGTH_LONG).show();
+		}
+		
+		
+		
 		startDatePickerButton.setOnClickListener(new View.OnClickListener() {	
 			Calendar c = Calendar.getInstance();
 			

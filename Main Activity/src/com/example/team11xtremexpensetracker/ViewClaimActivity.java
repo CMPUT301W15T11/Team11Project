@@ -245,9 +245,11 @@ public class ViewClaimActivity extends Activity {
 	public void editClaim(MenuItem menuItem){
 		Toast.makeText(this, "Edit", Toast.LENGTH_LONG).show();
 		Intent intent = new Intent();
+		intent.putExtra("claimID", claimID);
 		// TODO: save claim id into intent for editing
 		intent.setClass(ViewClaimActivity.this,AddClaimActivity.class);
 		ViewClaimActivity.this.startActivity(intent);
+		finish();
 	}
 
 	//Method called by pressing "add expense" button.

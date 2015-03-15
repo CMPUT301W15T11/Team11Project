@@ -72,8 +72,9 @@ public class ListClaimsActivity extends Activity {
 	}
 	
 	public void addClaim(View v){
-		Toast.makeText(this, "Adding Claim", Toast.LENGTH_LONG).show();
+		//Toast.makeText(this, "Adding Claim", Toast.LENGTH_LONG).show();
 		Intent intent = new Intent(ListClaimsActivity.this, AddClaimActivity.class);
+		intent.putExtra("claimID", -1);
 		startActivity(intent);
 	}
 	

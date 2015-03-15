@@ -12,4 +12,6 @@
     <string name="tag_hint">Type the tag here</string>
     <string name="tag_add_button">Add New Tag</string>
     <string name="title_activity_view_tag">TagActivity</string>
+    <string name="title_activity_edit_claim">EditClaimActivity</string>
+
 </resources>
