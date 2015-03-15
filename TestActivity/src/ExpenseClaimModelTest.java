@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 
 public class ExpenseClaimModelTest extends TestCase {
 
-
+	// getter and setter test
 	public void testClaimantName() {
 		ExpenseClaim test = new ExpenseClaim();
 		test.setClaimantName("test");
@@ -81,5 +81,31 @@ public class ExpenseClaimModelTest extends TestCase {
 		test.setApproverName("test");
 		assertTrue("claimant name",test.getStatus()=="test");
 	}
+	
+	// requirement test 1.01
+	public void test1_01(){
+		ExpenseClaim  claim = new ExpenseClaim();
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		claim.setName("name");
+		claim.setStartDate(startDate);
+		assertTrue("claimant name",claim.getStartDate()==startDate);
+		assertTrue("claimant name",claim.getEndDate()==endDate);
+		assertTrue(claim.getName() == "name");
+	}
+	// requirement test 1.02
+	public void test1_02(){
+		ExpenseClaim  claim = new ExpenseClaim();
+		Destination dest = new Destination("string");
+		dest.setReason("Reason");
+		claim.getDestinations().add(dest);
+		assertTrue(claim.getDestinations().get(0).getReason() == "Reason");  
+	}
+	// requirement test 1.03
+	
+	
+	
+	
+	
 
 }

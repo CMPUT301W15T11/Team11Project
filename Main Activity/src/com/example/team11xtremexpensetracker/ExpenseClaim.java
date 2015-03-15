@@ -17,6 +17,10 @@ public class ExpenseClaim {
 	private String approverName;
 	private ArrayList<Item>Itemlist;
 	// getters and setters
+	public ExpenseClaim(){
+		ArrayList<Destination> destinations = new ArrayList <Destination>() ;
+		ArrayList<Item> Itemlist = new ArrayList <Item>();
+	}
 	// item list
 	public ArrayList<Item> getItemlist() {
 		return Itemlist;
