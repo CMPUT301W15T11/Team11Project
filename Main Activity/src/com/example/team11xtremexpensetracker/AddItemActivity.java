@@ -48,13 +48,20 @@ public class AddItemActivity extends Activity{
 	private Calendar adddate;
 	private int claimID;
 	private String textString_start;
+	private ExpenseClaim currentClaim;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_item);
-		Intent intent= new Intent();
+		Intent intent= getIntent();
 		claimID = intent.getIntExtra("claimID", 0);
+		if (claimID >= 0){
+			//new ClaimListController();
+			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
+		}
+		
+		
 		
 
 		//==========================================================================================================
@@ -152,7 +159,7 @@ public class AddItemActivity extends Activity{
 				newItem.setDate(adddate);
 				
 
-				ClaimListController.getClaimsList().getClaimById(claimID).addItem(newItem);
+				currentClaim.addItem(newItem);
 
 				Intent backIntent = new Intent();
 				//backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

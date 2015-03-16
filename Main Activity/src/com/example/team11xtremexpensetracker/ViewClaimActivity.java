@@ -51,7 +51,7 @@ public class ViewClaimActivity extends Activity {
 	private ListView itemlistview;
 	private int claimID; //The index of the claim in ClaimsList
 	private ClaimListController clc;
-	
+	private ArrayList<Item> list;
 
 	@Override
 	protected void onStart() {
@@ -70,7 +70,7 @@ public class ViewClaimActivity extends Activity {
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", 0);
 		if (claimID >= 0){
-			new ClaimListController();
+			//new ClaimListController();
 			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
 		}
 		
@@ -90,7 +90,7 @@ public class ViewClaimActivity extends Activity {
 		
 		
 		
-		ArrayList<Item> list= ClaimListController.getClaimsList().getClaimById(claimID).getItemlist();
+		list= ClaimListController.getClaimsList().getClaimById(claimID).getItemlist();
 		
 		
 		
@@ -168,11 +168,13 @@ public class ViewClaimActivity extends Activity {
 		//============================long click to delete	
 		itemlistview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
+			private int onLongClickPos;
+
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				final int itemID = position;
+				onLongClickPos = position;
 				AlertDialog.Builder adb = new AlertDialog.Builder(ViewClaimActivity.this);
 				adb.setMessage("Delete?");
 				adb.setCancelable(true);
@@ -180,14 +182,14 @@ public class ViewClaimActivity extends Activity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						//Item item = datafile.getClaimByID(claimID).get(itemID);
-						//datafile.getClaimByID(claimID).remove(item);
+						list.remove(onLongClickPos);
 						
-						itemlistAdapter.clear();
-						//itemlistAdapter.addAll(datafile.getItemlist());
-						//itemlistAdapter.notifyDataSetChanged();
+						//currentClaim.getItemlist().remove(onLongClickPos);
+						//list.clear();
+						//Toast.makeText(ViewClaimActivity.this, "size"+currentClaim.getItemlist().size(), Toast.LENGTH_LONG).show();
 						
+						itemlistAdapter.notifyDataSetChanged();
+
 						
 						
 					}
@@ -203,7 +205,7 @@ public class ViewClaimActivity extends Activity {
 					
 				});
 				adb.show();
-				return false;
+				return true;
 			}
 		});
 		

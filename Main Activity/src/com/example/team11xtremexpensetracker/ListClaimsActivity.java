@@ -15,7 +15,10 @@ import com.google.gson.reflect.TypeToken;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,13 +29,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class ListClaimsActivity extends Activity {
-	private static final String FILENAME = "save.sav";
 	private ClaimsList datafile;
 	//private ListClaimsAdapter listClaimAdapter;
 	private ListView claimsListView;
 	private ImageView searchImage;
 	private ClaimListController clc;
 	private EditText tagSearchEdit;
+	private int onLongClickPos;
+	private Collection<ExpenseClaim> claims; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class ListClaimsActivity extends Activity {
 		tagSearchEdit=(EditText)findViewById(R.id.tag_filter);
 		
 		clc = new ClaimListController(); 
-		Collection<ExpenseClaim> claims = clc.getClaimsList().getClaims(); 
+		claims = clc.getClaimsList().getClaims(); 
 		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);
 		final ArrayAdapter<ExpenseClaim> claimAdapter = new ArrayAdapter<ExpenseClaim>(this, android.R.layout.simple_expandable_list_item_1, list);
 		claimsListView.setAdapter(claimAdapter);
@@ -98,7 +102,59 @@ public class ListClaimsActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		
+		
+		
+		
+		claimsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+			
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				onLongClickPos = position;
+				AlertDialog.Builder adb = new AlertDialog.Builder(ListClaimsActivity.this);
+				adb.setMessage("Delete?");
+				adb.setCancelable(true);
+				adb.setPositiveButton("Delete", new OnClickListener(){
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						
+						ClaimListController.removeClaim(onLongClickPos);
+						claimAdapter.clear();
+						for (int i=0;i<ClaimListController.getClaimsList().getLength();i++){
+							claimAdapter.add(ClaimListController.getClaimsList().getClaimById(i));
+						}
+						claimAdapter.notifyDataSetChanged();
+						
+						}
+					
+					
+				});
+				adb.setNegativeButton("Cancel", new OnClickListener(){
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				});
+				adb.show();
+				return true;
+			}
+		});
+		
+		
+	
 	}
+	
+	
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
