@@ -184,10 +184,7 @@ public class ViewClaimActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						list.remove(onLongClickPos);
 						
-						//currentClaim.getItemlist().remove(onLongClickPos);
-						//list.clear();
-						//Toast.makeText(ViewClaimActivity.this, "size"+currentClaim.getItemlist().size(), Toast.LENGTH_LONG).show();
-						
+					
 						itemlistAdapter.notifyDataSetChanged();
 
 						
@@ -229,10 +226,12 @@ public class ViewClaimActivity extends Activity {
 		finish();
 	}
 
-	//Method called by pressing "add expense" button.
-	//This is how button method calls SHOULD be implemented. 
-	public void addExpenseItem(View v){
-		
+	@Override
+	public void onBackPressed(){
+		Intent intentBackPressed = new Intent();
+		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intentBackPressed.setClass(ViewClaimActivity.this, ListClaimsActivity.class);
+		ViewClaimActivity.this.startActivity(intentBackPressed);
 	}
 
 }

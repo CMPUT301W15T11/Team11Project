@@ -170,4 +170,12 @@ public class ListClaimsActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	@Override
+	public void onBackPressed(){
+		Intent intentBackPressed = new Intent();
+		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intentBackPressed.setClass(ListClaimsActivity.this, MainActivity.class);
+		ListClaimsActivity.this.startActivity(intentBackPressed);
+	}
+	
 }

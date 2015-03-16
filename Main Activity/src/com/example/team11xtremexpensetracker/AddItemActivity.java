@@ -193,47 +193,8 @@ public class AddItemActivity extends Activity{
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		//==========================================================================================================
-		//============================Gson
+
 	}
-	/*
-	private ClaimsList loadFromFile(){
-		Gson gson = new Gson();
-		datafile = new ClaimsList();
-		try{
-			FileInputStream fis = openFileInput(FILENAME);
-			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
-			datafile = gson.fromJson(in, typeOfT);
-			fis.close();
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		return datafile;
-	}
-	private void saveInFile(){
-		Gson gson = new Gson();
-		try{
-			FileOutputStream fos = openFileOutput(FILENAME,0);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			gson.toJson(datafile,osw);
-			osw.flush();
-			fos.close();
-			
-			
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		
-		
-		
-	}
-	*/
+
 
 }

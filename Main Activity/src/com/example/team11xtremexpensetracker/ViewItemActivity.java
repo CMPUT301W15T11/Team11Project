@@ -112,47 +112,13 @@ public class ViewItemActivity extends Activity{
 	});
 	}
 	
-	//==========================================================================================================
-	//============================Gson	
-	/*
-	private ClaimsList loadFromFile(){
-		Gson gson = new Gson();
-		datafile = new ClaimsList();
-		try{
-			FileInputStream fis = openFileInput(FILENAME);
-			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
-			datafile = gson.fromJson(in, typeOfT);
-			fis.close();
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		return datafile;
+	@Override
+	public void onBackPressed(){
+		Intent intentBackPressed = new Intent();
+		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intentBackPressed.setClass(ViewItemActivity.this, ViewClaimActivity.class);
+		ViewItemActivity.this.startActivity(intentBackPressed);
 	}
-	private void saveInFile(){
-		Gson gson = new Gson();
-		try{
-			FileOutputStream fos = openFileOutput(FILENAME,0);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			gson.toJson(datafile,osw);
-			osw.flush();
-			fos.close();
-			
-			
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		
-		
-		
-	}
-	*/
 
 	
 
