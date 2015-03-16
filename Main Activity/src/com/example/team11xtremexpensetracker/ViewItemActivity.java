@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,11 +41,13 @@ public class ViewItemActivity extends Activity{
 		setContentView(R.layout.activity_view_item);
 		//==========================================================================================================
 		//============================load and display
-		datafile = loadFromFile();
+		//datafile = loadFromFile();
 		Intent intent = getIntent();
 		final int itemID = intent.getIntExtra("itemID",0);
+		final int claimID = intent.getIntExtra("claimID", 0);
+		Item list= ClaimListController.getClaimsList().getClaimById(claimID).getItemById(itemID);
 		
-		//itemnamestr = datafile.getItemlist().get(itemID).getItem().toString();
+		itemnamestr = list.getItem().toString();
 		itemname = (TextView)findViewById(R.id.itemnameView);
 		itemname.setText(itemnamestr);
 		
@@ -95,6 +98,7 @@ public class ViewItemActivity extends Activity{
 	
 	//==========================================================================================================
 	//============================Gson	
+	/*
 	private ClaimsList loadFromFile(){
 		Gson gson = new Gson();
 		datafile = new ClaimsList();
@@ -132,6 +136,7 @@ public class ViewItemActivity extends Activity{
 		
 		
 	}
+	*/
 
 	
 
