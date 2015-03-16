@@ -52,12 +52,17 @@ public class ExpenseClaimModelTest extends TestCase {
 	}
 
 	// TODO: test tags
-	public void testGetTags() {
-		//fail("Not yet implemented");
+	public void testAddTags() {
+		ExpenseClaim test=new ExpenseClaim();
+		test.getTagList().add(new Tag("tag test"));
+		assertEquals("tag does add","tag test",test.getTagList().get(0).getTagName());
 	}
 
 	public void testSetTags() {
-		//fail("Not yet implemented");
+		ExpenseClaim test=new ExpenseClaim();
+		test.getTagList().add(new Tag("tag 1st"));
+		test.getTagList().get(0).setTagName("tag 2nd");
+		assertEquals("tag does change","tag 2nd",test.getTagList().get(0).getTagName());
 	}
 	
 	
