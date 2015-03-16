@@ -113,6 +113,7 @@ public class ViewItemActivity extends Activity{
 			// TODO Auto-generated method stub
 			Intent intent = new Intent(ViewItemActivity.this,EditItemActivity.class);
 			intent.putExtra("itemID", itemID);
+			intent.putExtra("claimID", claimID);
 			startActivity(intent);
 			
 		}
