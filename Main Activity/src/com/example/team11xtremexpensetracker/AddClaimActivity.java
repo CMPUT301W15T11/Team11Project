@@ -58,11 +58,13 @@ public class AddClaimActivity extends Activity {
 		
 		
 		 // Ok, now if you get some extra, set Buttons to start values of claim
-		Intent intent = new Intent();
+		Intent intent =  getIntent();
 		claimID = intent.getIntExtra("claimID",-1);
 		if (claimID >= 0){
-			//oldClaim = new ExpenseClaim();
-			oldClaim = new ClaimListController().getClaimsList().getClaimById(claimID);
+			new ClaimListController();
+			oldClaim = ClaimListController.getClaimsList().getClaimById(claimID);
+			editTextEnterName.setText(oldClaim.getName());
+			newClaim = oldClaim;
 		}
 		
 		Toast.makeText(this, "ClaimID is" + new Integer(claimID).toString(), Toast.LENGTH_LONG).show();
@@ -123,13 +125,20 @@ public class AddClaimActivity extends Activity {
 					startDatePickerButton.setText("Choose start Date");
 					return;
 				}
-				newClaim = new ExpenseClaim();
-				Intent intent = new Intent();
+				if (claimID==-1){
+					newClaim = new ExpenseClaim();
+				}
+				
 				newClaim.setStartDate(startDate);
 				newClaim.setEndDate(endDate);
 				String claimName = editTextEnterName.getText().toString();
 				newClaim.setName(claimName);
-				ClaimListController.getClaimsList().addClaim(newClaim);
+				if (claimID==-1){
+					ClaimListController.getClaimsList().addClaim(newClaim);
+				}
+				Intent intent = new Intent();
+				intent.setClass(AddClaimActivity.this,ListClaimsActivity.class);
+				AddClaimActivity.this.startActivity(intent);
 				finish();
 			}
 		});

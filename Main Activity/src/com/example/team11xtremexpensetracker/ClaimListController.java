@@ -18,4 +18,7 @@ public class ClaimListController {
 	public static void addClaim(ExpenseClaim claim){
 		getClaimsList().addClaim(claim);
 	}
+	public static void removeClaim(int ID){
+		getClaimsList().getClaimsAL().remove(ID);
+	}
 }
