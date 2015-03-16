@@ -17,8 +17,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViewItemActivity extends Activity{
 	private static final String FILENAME = "save.sav";
@@ -35,20 +38,35 @@ public class ViewItemActivity extends Activity{
 	private TextView itemdescription;
 	private Calendar itemdatestr;
 	private TextView itemdate;
-	
+	private Item list;
+	private boolean indicator;
+	private CheckBox completeness;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_item);
+		completeness = (CheckBox)findViewById(R.id.completed);	
+		
+		addListenerOnChkIos();
 		//==========================================================================================================
 		//============================load and display
-		//datafile = loadFromFile();
+		
+		
+		
 		Intent intent = getIntent();
 		final int itemID = intent.getIntExtra("itemID",0);
 		final int claimID = intent.getIntExtra("claimID", 0);
-		Item list= ClaimListController.getClaimsList().getClaimById(claimID).getItemById(itemID);
+		list= ClaimListController.getClaimsList().getClaimById(claimID).getItemById(itemID);
+		indicator = list.getIndecator();
+		if (indicator == false){
+			Toast.makeText(ViewItemActivity.this, "first not Checked", Toast.LENGTH_SHORT).show();
+			
+		}else{
+			completeness.setChecked(true);
+			Toast.makeText(ViewItemActivity.this, "first Checked", Toast.LENGTH_SHORT).show();
+		}
 		
 		itemnamestr = list.getItem().toString();
 		itemname = (TextView)findViewById(R.id.itemnameView);
@@ -75,6 +93,8 @@ public class ViewItemActivity extends Activity{
 		itemamount = (TextView)findViewById(R.id.amountspentView);
 		itemamount.setText(itemamountstr);
 		
+		
+
 		
 		//==========================================================================================================
 		//============================connect to edit view
@@ -112,47 +132,31 @@ public class ViewItemActivity extends Activity{
 	});
 	}
 	
-	//==========================================================================================================
-	//============================Gson	
-	/*
-	private ClaimsList loadFromFile(){
-		Gson gson = new Gson();
-		datafile = new ClaimsList();
-		try{
-			FileInputStream fis = openFileInput(FILENAME);
-			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
-			datafile = gson.fromJson(in, typeOfT);
-			fis.close();
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
+	public void addListenerOnChkIos() {
+		
+		completeness.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v)
+			{
+
+				// TODO Auto-generated method stub
+				
 			
-		}catch (IOException e){
-			e.printStackTrace();
+			if (((CheckBox)v).isChecked()){
+				Toast.makeText(ViewItemActivity.this, "Checked", Toast.LENGTH_SHORT).show();
+				list.setIndecator(true);
+				
+			}
+			else{
+				list.setIndecator(false) ;
+				Toast.makeText(ViewItemActivity.this, "Not Checked", Toast.LENGTH_SHORT).show();
+			}
 		}
-		return datafile;
+		});
 	}
-	private void saveInFile(){
-		Gson gson = new Gson();
-		try{
-			FileOutputStream fos = openFileOutput(FILENAME,0);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			gson.toJson(datafile,osw);
-			osw.flush();
-			fos.close();
-			
-			
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		
-		
-		
-	}
-	*/
+	
+
 
 	
 
