@@ -9,6 +9,7 @@ public class Item {
 	private String amount;
 	private String unit;
 	private String description;
+	private Boolean indicator = false;
 	public String getItem() {
 		return item;
 	}
@@ -45,6 +46,11 @@ public class Item {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+	public Boolean getIndecator(){
+		return indicator;
+	}
+	public void setIndecator(Boolean indicator){
+		this.indicator = indicator;
+	}
 
 }

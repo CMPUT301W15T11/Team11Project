@@ -76,18 +76,11 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/completed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="true"
         android:text="Completed" />
-
-    <RadioButton
-        android:id="@+id/notcompleted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Not Completed" />
 
     <LinearLayout
         android:layout_width="match_parent"
