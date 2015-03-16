@@ -1,3 +1,4 @@
+package com.example.team11xtremexpensetracker;
 import com.example.team11xtremexpensetracker.Destination;
 
 import junit.framework.TestCase;
