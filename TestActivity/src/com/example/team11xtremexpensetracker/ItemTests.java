@@ -28,11 +28,7 @@ public class ItemTests extends TestCase {
 		test.setDescription("10");
 		assertTrue("Item Description",test.getDescription()=="10");
 	}
-	public void testAdditemDate(){
-		Item test = new Item();
-		test.setDate("2015-3-16");
-		assertTrue("Item date",test.getDate()=="2015-3-16");
-	}
+
 	public void testAdditemCategoty(){
 		Item test = new Item();
 		test.setCategory("Air Fare");
