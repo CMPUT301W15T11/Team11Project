@@ -37,6 +37,8 @@ public class ListClaimsActivity extends Activity {
 	private EditText tagSearchEdit;
 	private int onLongClickPos;
 	private Collection<ExpenseClaim> claims; 
+	private ClaimsList dataList;
+	private static final String FILENAME = "datafile.sav";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,9 @@ public class ListClaimsActivity extends Activity {
 		searchImage=(ImageView)findViewById(R.id.tag_search);
 		tagSearchEdit=(EditText)findViewById(R.id.tag_filter);
 		
+		dataList=this.loadFromFile();
 		clc = new ClaimListController(); 
+		clc.setClaimsList(dataList);
 		claims = clc.getClaimsList().getClaims(); 
 		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);
 		final ArrayAdapter<ExpenseClaim> claimAdapter = new ArrayAdapter<ExpenseClaim>(this, android.R.layout.simple_expandable_list_item_1, list);
@@ -57,6 +61,9 @@ public class ListClaimsActivity extends Activity {
 			public void update(){
 				list.clear();
 				Collection<ExpenseClaim> claims = (clc.getClaimsList().getClaims());
+				if(claims==null){
+					return;
+				}
 				list.addAll(claims);
 				claimAdapter.notifyDataSetChanged();
 			}
@@ -97,6 +104,7 @@ public class ListClaimsActivity extends Activity {
 				String temp = list.get(position).toString();
 				Toast.makeText(ListClaimsActivity.this, "You Clicked " + temp, Toast.LENGTH_SHORT).show();
 				//Now make the same intent push as in the addClaimActivity.
+				saveInFile();
 				Intent intent = new Intent(ListClaimsActivity.this, ViewClaimActivity.class);
 				intent.putExtra("claimID", position);
 				startActivity(intent);
@@ -124,15 +132,18 @@ public class ListClaimsActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						
 						ClaimListController.removeClaim(onLongClickPos);
+						
 						claimAdapter.clear();
 						for (int i=0;i<ClaimListController.getClaimsList().getLength();i++){
 							claimAdapter.add(ClaimListController.getClaimsList().getClaimById(i));
 						}
-						claimAdapter.notifyDataSetChanged();
 						
+						saveInFile();
+						dataList=loadFromFile();
+						ClaimListController.setClaimsList(dataList);
+						claimAdapter.notifyDataSetChanged();
 						}
-					
-					
+									
 				});
 				adb.setNegativeButton("Cancel", new OnClickListener(){
 
@@ -147,13 +158,8 @@ public class ListClaimsActivity extends Activity {
 				return true;
 			}
 		});
-		
-		
 	
 	}
-	
-	
-	
 	
 
 	@Override
@@ -175,7 +181,44 @@ public class ListClaimsActivity extends Activity {
 		Intent intentBackPressed = new Intent();
 		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentBackPressed.setClass(ListClaimsActivity.this, MainActivity.class);
-		ListClaimsActivity.this.startActivity(intentBackPressed);
+		startActivity(intentBackPressed);
+	}
+	
+	private ClaimsList loadFromFile() {
+		Gson gson = new Gson();
+		dataList = new ClaimsList();
+		try {
+			FileInputStream fis = openFileInput(FILENAME);
+			InputStreamReader in = new InputStreamReader(fis);
+			Type typeOfT = new TypeToken<ClaimsList>() {
+			}.getType();
+			dataList = gson.fromJson(in, typeOfT);
+			fis.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataList;
+	}
+
+	private void saveInFile() {
+		Gson gson = new Gson();
+		try {
+			FileOutputStream fos = openFileOutput(FILENAME, 0);
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+			gson.toJson(ClaimListController.getClaimsList(), osw);
+			osw.flush();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

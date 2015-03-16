@@ -29,11 +29,19 @@ public class ClaimsList {
 	public void addClaim(ExpenseClaim claim){
 		if (isEditable){
 			allClaimsList.add(claim);
-			notifyListeners();
+			//notifyListeners();
 		}
 		
 	}
 	
+	public ArrayList<Listener> getListeners() {
+		return listeners;
+	}
+
+	public void setListeners(ArrayList<Listener> listeners) {
+		this.listeners = listeners;
+	}
+
 	public void deleteClaim(ExpenseClaim claim){
 		if (isEditable){
 			allClaimsList.remove(claim);
@@ -84,4 +92,6 @@ public class ClaimsList {
 	public ExpenseClaim getClaimById(int ID){
 		return allClaimsList.get(ID);
 	}
+
+	
 }

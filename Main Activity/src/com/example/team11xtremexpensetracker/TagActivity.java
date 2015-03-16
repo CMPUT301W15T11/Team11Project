@@ -1,5 +1,16 @@
 package com.example.team11xtremexpensetracker;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +31,10 @@ public class TagActivity extends Activity {
 	private ExpenseClaim currentClaim;
 	
 	private FlowLayout tagLayout;
+	
+	private ClaimsList dataList;
+	private static final String FILENAME = "datafile.sav";
+	private ClaimListController clc;
 	
 	public void init(){
 		//we should get data from save file first, and show them on the screens
@@ -69,6 +84,7 @@ public class TagActivity extends Activity {
 		
 		Tag aNewTag=new Tag(tagContent);
 		currentClaim.getTagList().add(aNewTag);
+		saveInFile();
 		
 	}
 	
@@ -89,4 +105,42 @@ public class TagActivity extends Activity {
 		setContentView(R.layout.tag_window);
 		init();
 	}
+	
+	private ClaimsList loadFromFile() {
+		Gson gson = new Gson();
+		dataList = new ClaimsList();
+		try {
+			FileInputStream fis = openFileInput(FILENAME);
+			InputStreamReader in = new InputStreamReader(fis);
+			Type typeOfT = new TypeToken<ClaimsList>() {
+			}.getType();
+			dataList = gson.fromJson(in, typeOfT);
+			fis.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataList;
+	}
+
+	private void saveInFile() {
+		Gson gson = new Gson();
+		try {
+			FileOutputStream fos = openFileOutput(FILENAME, 0);
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+			gson.toJson(clc.getClaimsList(), osw);
+			osw.flush();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }

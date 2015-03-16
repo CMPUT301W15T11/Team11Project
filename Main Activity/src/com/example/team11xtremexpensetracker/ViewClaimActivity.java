@@ -45,13 +45,16 @@ public class ViewClaimActivity extends Activity {
 	private TextView nameView;
 	private TextView dateRangeView;
 	//===
-	private static final String FILENAME = "save.sav";
+	
 	private ClaimsList datafile;
 	private ItemlistAdapter itemlistAdapter;
 	private ListView itemlistview;
 	private int claimID; //The index of the claim in ClaimsList
-	private ClaimListController clc;
 	private ArrayList<Item> list;
+	
+	private ClaimsList dataList;
+	private static final String FILENAME = "datafile.sav";
+	private ClaimListController clc;
 
 	@Override
 	protected void onStart() {
@@ -66,6 +69,9 @@ public class ViewClaimActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_claim);
 		
+		dataList=this.loadFromFile();
+		
+		ClaimListController.setClaimsList(dataList);
 		//Get current claim
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", 0);
@@ -85,14 +91,8 @@ public class ViewClaimActivity extends Activity {
 		dateRangeView = (TextView) findViewById(R.id.textViewClaimDateRange);
 		//Expense Item list view
 		itemlistview = (ListView)findViewById(R.id.expenseListView);
-		clc = new ClaimListController(); 
 		
-		
-		
-		
-		list= ClaimListController.getClaimsList().getClaimById(claimID).getItemlist();
-		
-		
+		list= currentClaim.getItemlist();
 		
 		itemlistAdapter = new ItemlistAdapter(this, list);
 
@@ -103,8 +103,6 @@ public class ViewClaimActivity extends Activity {
 		nameView.setText(currentClaim.getName());
 		dateRangeView.setText(currentClaim.getDateRange());
 		Toast.makeText(this, "DateRange: " + currentClaim.getDateRange(), Toast.LENGTH_LONG).show();
-		//nameView.setText("Name 1");
-		//dateRangeView.setText("Date 1");
 		
 		
 		// create listeners
@@ -128,8 +126,7 @@ public class ViewClaimActivity extends Activity {
 				
 			}
 			
-		});
-		
+		});	
 		
 		addExpenseButton = (Button)findViewById(R.id.buttonClaimAddExpense);
 		addExpenseButton.setOnClickListener(new View.OnClickListener() {	
@@ -142,12 +139,10 @@ public class ViewClaimActivity extends Activity {
 			}
 			
 		});
-		
-		
+			
 		// show name and date range
 		//nameView.setText(claimName);
-		
-		
+				
 		//set Listener for item list view
 		itemlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -184,10 +179,11 @@ public class ViewClaimActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						list.remove(onLongClickPos);
 						
+						saveInFile();
+						dataList=loadFromFile();
+						ClaimListController.setClaimsList(dataList);
 					
 						itemlistAdapter.notifyDataSetChanged();
-
-						
 						
 					}
 					
@@ -232,6 +228,43 @@ public class ViewClaimActivity extends Activity {
 		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentBackPressed.setClass(ViewClaimActivity.this, ListClaimsActivity.class);
 		ViewClaimActivity.this.startActivity(intentBackPressed);
+	}
+	
+	private ClaimsList loadFromFile() {
+		Gson gson = new Gson();
+		dataList = new ClaimsList();
+		try {
+			FileInputStream fis = openFileInput(FILENAME);
+			InputStreamReader in = new InputStreamReader(fis);
+			Type typeOfT = new TypeToken<ClaimsList>() {
+			}.getType();
+			dataList = gson.fromJson(in, typeOfT);
+			fis.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataList;
+	}
+
+	private void saveInFile() {
+		Gson gson = new Gson();
+		try {
+			FileOutputStream fos = openFileOutput(FILENAME, 0);
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+			gson.toJson(clc.getClaimsList(), osw);
+			osw.flush();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

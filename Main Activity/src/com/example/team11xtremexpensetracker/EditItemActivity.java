@@ -25,7 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class EditItemActivity extends Activity{
-	private static final String FILENAME = "save.sav";
+	
 	private ClaimsList datafile;
 	private EditText itemname;
 	private EditText itemdescription;
@@ -48,16 +48,26 @@ public class EditItemActivity extends Activity{
 	private int claimID;
 	private int itemID;
 	private Item list;
+	
+	private ClaimsList dataList;
+	private static final String FILENAME = "datafile.sav";
+	private ClaimListController clc;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_item);
 		
+		dataList=this.loadFromFile();
+		clc = new ClaimListController(); 
+		clc.setClaimsList(dataList);
+		
 		Intent intent = getIntent();
 		itemID = intent.getIntExtra("itemID", 0);
 		claimID = intent.getIntExtra("claimID", 0);
 		list= ClaimListController.getClaimsList().getClaimById(claimID).getItemById(itemID);
+		
+		
 
 		itemnamestr = list.getItem().toString();
 		itemname = (EditText)findViewById(R.id.edititemname);
@@ -157,21 +167,57 @@ public class EditItemActivity extends Activity{
 				list.setUnit(itemunitstr);
 				list.setDate(editdate);
 				
+				saveInFile();
+				
 				Intent backIntent = new Intent();
-				//backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				backIntent.setClass(EditItemActivity.this,ViewClaimActivity.class);
 				startActivity(backIntent);
 				finish();
 				
 			}
 		});
-		
-		
-		
-		
-		
+			
 		
 	}
+	
+	private ClaimsList loadFromFile() {
+		Gson gson = new Gson();
+		dataList = new ClaimsList();
+		try {
+			FileInputStream fis = openFileInput(FILENAME);
+			InputStreamReader in = new InputStreamReader(fis);
+			Type typeOfT = new TypeToken<ClaimsList>() {
+			}.getType();
+			dataList = gson.fromJson(in, typeOfT);
+			fis.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataList;
+	}
+
+	private void saveInFile() {
+		Gson gson = new Gson();
+		try {
+			FileOutputStream fos = openFileOutput(FILENAME, 0);
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+			gson.toJson(clc.getClaimsList(), osw);
+			osw.flush();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	
 
 }

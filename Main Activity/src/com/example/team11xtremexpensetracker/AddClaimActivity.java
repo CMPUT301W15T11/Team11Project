@@ -33,17 +33,23 @@ public class AddClaimActivity extends Activity {
 	private Button startDatePickerButton;
 	private Button endDatePickerButton;
 	private Button doneButton;
-	private Intent intent;
 	private EditText editTextEnterName;
 	private ClaimListController claimListController;
 	private int claimID;
 	
+	private ClaimsList dataList;
+	private static final String FILENAME = "datafile.sav";
+	private ClaimListController clc;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_claim);
+		
+		dataList=this.loadFromFile();
+		clc = new ClaimListController(); 
+		clc.setClaimsList(dataList);
 
 
 		// get widgets
@@ -136,7 +142,9 @@ public class AddClaimActivity extends Activity {
 				if (claimID==-1){
 					ClaimListController.getClaimsList().addClaim(newClaim);
 				}
+				saveInFile();
 				Intent intent = new Intent();
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent.setClass(AddClaimActivity.this,ListClaimsActivity.class);
 				AddClaimActivity.this.startActivity(intent);
 				finish();
@@ -150,6 +158,43 @@ public class AddClaimActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.add_claim, menu);
 		return true; 
+	}
+	
+	private ClaimsList loadFromFile() {
+		Gson gson = new Gson();
+		dataList = new ClaimsList();
+		try {
+			FileInputStream fis = openFileInput(FILENAME);
+			InputStreamReader in = new InputStreamReader(fis);
+			Type typeOfT = new TypeToken<ClaimsList>() {
+			}.getType();
+			dataList = gson.fromJson(in, typeOfT);
+			fis.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataList;
+	}
+
+	private void saveInFile() {
+		Gson gson = new Gson();
+		try {
+			FileOutputStream fos = openFileOutput(FILENAME, 0);
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+			gson.toJson(clc.getClaimsList(), osw);
+			osw.flush();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 

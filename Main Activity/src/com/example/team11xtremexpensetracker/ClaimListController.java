@@ -21,4 +21,13 @@ public class ClaimListController {
 	public static void removeClaim(int ID){
 		getClaimsList().getClaimsAL().remove(ID);
 	}
+	
+	public static void removeListener(int ID){
+		getClaimsList().getListeners().remove(ID);
+	}
+
+	public static void setClaimsList(ClaimsList claimsList) {
+		ClaimListController.claimsList = claimsList;
+	}
+	
 }

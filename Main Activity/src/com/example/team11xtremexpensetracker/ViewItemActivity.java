@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ViewItemActivity extends Activity{
-	private static final String FILENAME = "save.sav";
+	
 	private ClaimsList datafile;
 	private TextView itemname;
 	private String itemnamestr;
@@ -41,6 +41,10 @@ public class ViewItemActivity extends Activity{
 	private Item list;
 	private boolean indicator;
 	private CheckBox completeness;
+	
+	private ClaimsList dataList;
+	private static final String FILENAME = "datafile.sav";
+	private ClaimListController clc;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +129,7 @@ public class ViewItemActivity extends Activity{
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			saveInFile();
 			Intent backIntent = new Intent(ViewItemActivity.this,ViewClaimActivity.class);
 			startActivity(backIntent);
 			
@@ -165,9 +170,42 @@ public class ViewItemActivity extends Activity{
 		});
 	}
 	
+	private ClaimsList loadFromFile() {
+		Gson gson = new Gson();
+		dataList = new ClaimsList();
+		try {
+			FileInputStream fis = openFileInput(FILENAME);
+			InputStreamReader in = new InputStreamReader(fis);
+			Type typeOfT = new TypeToken<ClaimsList>() {
+			}.getType();
+			dataList = gson.fromJson(in, typeOfT);
+			fis.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataList;
+	}
 
+	private void saveInFile() {
+		Gson gson = new Gson();
+		try {
+			FileOutputStream fos = openFileOutput(FILENAME, 0);
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+			gson.toJson(clc.getClaimsList(), osw);
+			osw.flush();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-
-	
 
 }
