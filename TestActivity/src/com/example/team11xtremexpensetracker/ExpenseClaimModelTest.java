@@ -1,12 +1,11 @@
+package com.example.team11xtremexpensetracker;
 
 
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.example.team11xtremexpensetracker.ClaimsList;
 import com.example.team11xtremexpensetracker.Destination;
-import com.example.team11xtremexpensetracker.ExpenseClaim;
 
 import junit.framework.TestCase;
 
