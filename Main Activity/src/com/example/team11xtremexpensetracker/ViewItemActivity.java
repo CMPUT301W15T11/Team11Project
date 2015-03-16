@@ -133,6 +133,7 @@ public class ViewItemActivity extends Activity{
 			// TODO Auto-generated method stub
 			saveInFile();
 			Intent backIntent = new Intent(ViewItemActivity.this,ViewClaimActivity.class);
+			backIntent.putExtra("claimID", claimID);
 			startActivity(backIntent);
 			
 		}
