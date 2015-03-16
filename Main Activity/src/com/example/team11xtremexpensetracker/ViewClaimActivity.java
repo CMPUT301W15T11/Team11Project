@@ -90,7 +90,7 @@ public class ViewClaimActivity extends Activity {
 		
 		
 		
-		ArrayList<Item> list= ClaimListController.getClaimsList().getClaimById(0).getItemlist();
+		ArrayList<Item> list= ClaimListController.getClaimsList().getClaimById(claimID).getItemlist();
 		
 		
 		
