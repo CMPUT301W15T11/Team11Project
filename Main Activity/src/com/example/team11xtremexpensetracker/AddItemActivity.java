@@ -141,7 +141,7 @@ public class AddItemActivity extends Activity{
 				newItem.setUnit(itemunitstr);
 				newItem.setCategory(itemcategorystr);
 				
-				ClaimListController.getClaimsList().getClaimByID(claimID).additem(newItem);
+				ClaimListController.getClaimsList().getClaimByID(claimID).addItem(newItem);
 				//datafile.(newItem);
 				//saveInFile();
 				
