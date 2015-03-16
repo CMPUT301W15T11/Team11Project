@@ -61,11 +61,11 @@ public class ViewItemActivity extends Activity{
 		list= ClaimListController.getClaimsList().getClaimById(claimID).getItemById(itemID);
 		indicator = list.getIndecator();
 		if (indicator == false){
-			Toast.makeText(ViewItemActivity.this, "first not Checked", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(ViewItemActivity.this, "first not Checked", Toast.LENGTH_SHORT).show();
 			
 		}else{
 			completeness.setChecked(true);
-			Toast.makeText(ViewItemActivity.this, "first Checked", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(ViewItemActivity.this, "first Checked", Toast.LENGTH_SHORT).show();
 		}
 		
 		itemnamestr = list.getItem().toString();
