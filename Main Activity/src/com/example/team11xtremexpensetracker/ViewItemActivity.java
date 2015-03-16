@@ -71,6 +71,10 @@ public class ViewItemActivity extends Activity{
 		itemdate = (TextView)findViewById(R.id.itemdateview);
 		itemdate.setText(textString_start);
 		
+		itemamountstr = list.getAmount().toString();
+		itemamount = (TextView)findViewById(R.id.amountspentView);
+		itemamount.setText(itemamountstr);
+		
 		
 		//==========================================================================================================
 		//============================connect to edit view

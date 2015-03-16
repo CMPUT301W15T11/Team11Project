@@ -22,12 +22,22 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class EditItemActivity extends Activity{
 	private static final String FILENAME = "save.sav";
 	private ClaimsList datafile;
 	private EditText itemname;
+	private EditText itemdescription;
+	private EditText itemamount;
+	
 	private String itemnamestr;
+	private String itemunitstr;
+	private String itemdescriptionstr;
+	private String itemamountstr;
+	private String itemcategorystr;
+	private Calendar itemdate;
+	
 	private Item currentitem;
 	private Spinner categoryspinner;
 	private ArrayAdapter<String> categoryAdapter;
@@ -35,11 +45,33 @@ public class EditItemActivity extends Activity{
 	private ArrayAdapter<String> unitAdapter;
 	private Button edititemdate;
 	private Calendar editdate;
+	private int claimID;
+	private int itemID;
+	private Item list;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_item);
+		
+		Intent intent = getIntent();
+		itemID = intent.getIntExtra("itemID", 0);
+		claimID = intent.getIntExtra("claimID", 0);
+		list= ClaimListController.getClaimsList().getClaimById(claimID).getItemById(itemID);
+
+		itemnamestr = list.getItem().toString();
+		itemname = (EditText)findViewById(R.id.edititemname);
+		itemname.setText(itemnamestr);
+		
+		itemdescriptionstr = list.getDescription().toString();
+		itemdescription = (EditText)findViewById(R.id.editdescription);
+		itemdescription.setText(itemdescriptionstr);
+		
+		itemamountstr = list.getAmount().toString();
+		itemamount = (EditText)findViewById(R.id.editamountspent);
+		itemamount.setText(itemamountstr);
+		
+		
 		//==========================================================================================================
 		//============================create spinner
 		
@@ -73,20 +105,11 @@ public class EditItemActivity extends Activity{
 		unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		unitspinner.setAdapter(unitAdapter);
 		
-		//==========================================================================================================
-		//============================load from file, put the information on EditText
-		//==========================================================================================================
-		//============================A claimID should be intented
+
 		
 		
-		Intent intent = getIntent();
-		final int itemID = intent.getIntExtra("itemID", 0);
-		datafile = loadFromFile();
-		// TODO: 
-		//currentitem = datafile.getItemlist().get(itemID);
-		//itemnamestr = datafile.getItemlist().get(itemID).getItem();
-		itemname = (EditText)findViewById(R.id.edititemname);
-		itemname.setText(itemnamestr);
+
+
 		//=======datepicker
 		editdate=Calendar.getInstance();
 		edititemdate = (Button)findViewById(R.id.edititemdate);
@@ -121,17 +144,24 @@ public class EditItemActivity extends Activity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				itemnamestr = itemname.getText().toString();
+				itemunitstr = unitspinner.getSelectedItem().toString();
+				itemcategorystr = categoryspinner.getSelectedItem().toString();
+				itemdescriptionstr = itemdescription.getText().toString();
+				itemamountstr = itemamount.getText().toString();
 				
 				
-				
-				currentitem.setItem(itemnamestr);
-				
-				saveInFile();
+				list.setAmount(itemamountstr);
+				list.setItem(itemnamestr);
+				list.setCategory(itemcategorystr);
+				list.setDescription(itemdescriptionstr);
+				list.setUnit(itemunitstr);
+				list.setDate(editdate);
 				
 				Intent backIntent = new Intent();
-				backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				//backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				backIntent.setClass(EditItemActivity.this,ViewClaimActivity.class);
 				startActivity(backIntent);
+				finish();
 				
 			}
 		});
@@ -142,49 +172,6 @@ public class EditItemActivity extends Activity{
 		
 		
 	}
-	
-	//==========================================================================================================
-	//============================Gson	
-	
-	private ClaimsList loadFromFile(){
-		Gson gson = new Gson();
-		datafile = new ClaimsList();
-		try{
-			FileInputStream fis = openFileInput(FILENAME);
-			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
-			datafile = gson.fromJson(in, typeOfT);
-			fis.close();
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		return datafile;
-	}
-	private void saveInFile(){
-		Gson gson = new Gson();
-		try{
-			FileOutputStream fos = openFileOutput(FILENAME,0);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			gson.toJson(datafile,osw);
-			osw.flush();
-			fos.close();
-			
-			
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		
-		
-		
-	}
-	
-	
 	
 
 }
