@@ -1,8 +1,10 @@
 package com.example.team11xtremexpensetracker;
 
+import java.util.Calendar;
+
 public class Item {
 	private String item;
-	private String date;
+	private Calendar date;
 	private String category;
 	private String amount;
 	private String unit;
@@ -13,10 +15,10 @@ public class Item {
 	public void setItem(String item) {
 		this.item = item;
 	}
-	public String getDate() {
+	public Calendar getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(Calendar date) {
 		this.date = date;
 	}
 	public String getCategory() {

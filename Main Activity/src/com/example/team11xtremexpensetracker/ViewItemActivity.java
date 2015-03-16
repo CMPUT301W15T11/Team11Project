@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,6 +33,8 @@ public class ViewItemActivity extends Activity{
 	private TextView itemamount;
 	private String itemdescriptionstr;
 	private TextView itemdescription;
+	private Calendar itemdatestr;
+	private TextView itemdate;
 	
 	
 	@Override
@@ -51,13 +54,22 @@ public class ViewItemActivity extends Activity{
 		itemname = (TextView)findViewById(R.id.itemnameView);
 		itemname.setText(itemnamestr);
 		
-		//itemunitstr = datafile.getItemlist().get(itemID).getUnit().toString();
+		itemunitstr = list.getUnit().toString();
 		itemunit = (TextView)findViewById(R.id.unitView);
 		itemunit.setText(itemunitstr);
 		
-		//itemcategorystr = datafile.getItemlist().get(itemID).getCategory().toString();
+		itemcategorystr = list.getCategory().toString();
 		itemcategory = (TextView)findViewById(R.id.categoryView);
 		itemcategory.setText(itemcategorystr);
+		
+		itemdescriptionstr = list.getDescription().toString();
+		itemdescription = (TextView)findViewById(R.id.descriptionView);
+		itemdescription.setText(itemdescriptionstr);
+		
+		itemdatestr = list.getDate();
+		String textString_start = String.format("%d/%d/%d", itemdatestr.get(Calendar.MONTH) + 1,itemdatestr.get(Calendar.DATE), itemdatestr.get(Calendar.YEAR));
+		itemdate = (TextView)findViewById(R.id.itemdateview);
+		itemdate.setText(textString_start);
 		
 		
 		//==========================================================================================================

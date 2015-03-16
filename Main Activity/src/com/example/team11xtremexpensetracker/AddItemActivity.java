@@ -47,6 +47,7 @@ public class AddItemActivity extends Activity{
 	private Button additemdate;
 	private Calendar adddate;
 	private int claimID;
+	private String textString_start;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -97,6 +98,9 @@ public class AddItemActivity extends Activity{
 		itemname = (EditText)findViewById(R.id.additemname);
 		unitspinner = (Spinner)findViewById(R.id.additemunit);
 		categoryspinner = (Spinner)findViewById(R.id.additemcategory);
+		itemamount = (EditText)findViewById(R.id.addamountspent);
+		itemdescription = (EditText)findViewById(R.id.adddescription);
+		
 		
 		//button add date
 		adddate=Calendar.getInstance();
@@ -111,7 +115,7 @@ public class AddItemActivity extends Activity{
 					@Override
 					public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
 							int startDayOfMonth) {
-						String textString_start = String.format("%d-%d-%d", startYear, startMonthOfYear + 1,
+						textString_start = String.format("%d-%d-%d", startYear, startMonthOfYear + 1,
 								startDayOfMonth);
 						additemdate.setText(textString_start);
 						adddate.set(startYear, startMonthOfYear+1, startDayOfMonth);
@@ -134,12 +138,18 @@ public class AddItemActivity extends Activity{
 				itemnamestr = itemname.getText().toString();
 				itemunitstr = unitspinner.getSelectedItem().toString();
 				itemcategorystr = categoryspinner.getSelectedItem().toString();
+				itemdescriptionstr = itemdescription.getText().toString();
+				itemamountstr = itemamount.getText().toString();
+				
 				
 				
 				Item newItem = new Item();
 				newItem.setItem(itemnamestr);
 				newItem.setUnit(itemunitstr);
 				newItem.setCategory(itemcategorystr);
+				newItem.setAmount(itemamountstr);
+				newItem.setDescription(itemdescriptionstr);
+				newItem.setDate(adddate);
 				
 
 				ClaimListController.getClaimsList().getClaimById(claimID).addItem(newItem);
