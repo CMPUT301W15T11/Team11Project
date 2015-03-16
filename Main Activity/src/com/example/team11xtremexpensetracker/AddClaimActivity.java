@@ -130,10 +130,6 @@ public class AddClaimActivity extends Activity {
 				String claimName = editTextEnterName.getText().toString();
 				newClaim.setName(claimName);
 				ClaimListController.getClaimsList().addClaim(newClaim);
-				int claimID = (ClaimListController.getClaimsList().getClaims().size())-1;
-				intent.putExtra("claimID", claimID);
-				intent.setClass(AddClaimActivity.this,ViewClaimActivity.class);
-				AddClaimActivity.this.startActivity(intent);
 				finish();
 			}
 		});

@@ -10,8 +10,7 @@ public class ExpenseClaim {
 	private Calendar endDate;
 	private ArrayList<Destination>  destinations;
 	private String status;
-	// TODO: set tag class
-	//private  ArrayList<Tag> tags;
+	private  ArrayList<Tag> tagList;
 	private Double totalCurrency;
 	private Boolean isEditable;
 	private String approverName;
@@ -21,6 +20,7 @@ public class ExpenseClaim {
 		isEditable = true;
 		destinations = new ArrayList <Destination>() ;
 		Itemlist = new ArrayList <Item>();
+		tagList=new ArrayList<Tag>();
 	}
 	// item list
 	public ArrayList<Item> getItemlist() {
@@ -104,12 +104,12 @@ public class ExpenseClaim {
 		this.status = status;
 	}
 	// tags
-	//public ArrayList<Tag> getTags() {
-		//return tags;
-	//}
-	//public void setTags(ArrayList<Tag> tags) {
-		//this.tags = tags;
-	//}
+	public ArrayList<Tag> getTagList() {
+		return tagList;
+	}
+	public void setTags(ArrayList<Tag> tagList) {
+		this.tagList = tagList;
+	}
 	// total currency
 	public Double getTotalCurrency() {
 		return totalCurrency;
