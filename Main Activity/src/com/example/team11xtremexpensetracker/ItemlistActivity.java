@@ -1,10 +1,5 @@
 //==========================================================================================================
-//This is the main activity of my part (Expense Item.). A claim Position should be intended to me
-//so that I can load its correspond expense item. So that I did not write all the load and save function since i need to change them later
-//after i get the claim position.
-//I have wrote getItem (Item name),getCategory and getUnit.
-//I have four activity: AdditemActivity, EditItemActivity, ViewItemActivity and this page:ItemlistActivity
-//I have two three other classes: item, itemlist and itemlistAdapter
+//useless!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //==========================================================================================================
 package com.example.team11xtremexpensetracker;
 

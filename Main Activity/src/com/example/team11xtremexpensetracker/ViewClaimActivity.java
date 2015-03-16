@@ -94,10 +94,10 @@ public class ViewClaimActivity extends Activity {
 		
 		
 		
-		ItemlistAdapter  itemAdapter = new ItemlistAdapter(this, list);
+		itemlistAdapter = new ItemlistAdapter(this, list);
 
 		// item list adapter
-		itemlistview.setAdapter(itemAdapter);
+		itemlistview.setAdapter(itemlistAdapter);
 		
 		//populate name and dateRange fields.
 		nameView.setText(currentClaim.getName());
@@ -158,6 +158,7 @@ public class ViewClaimActivity extends Activity {
 				final int itemID = itemposition;
 				
 				Intent intent = new Intent(ViewClaimActivity.this,ViewItemActivity.class);
+				intent.putExtra("claimID", claimID);
 				intent.putExtra("itemID",itemID);
 				startActivity(intent);
 				
@@ -185,7 +186,7 @@ public class ViewClaimActivity extends Activity {
 						
 						itemlistAdapter.clear();
 						//itemlistAdapter.addAll(datafile.getItemlist());
-						itemlistAdapter.notifyDataSetChanged();
+						//itemlistAdapter.notifyDataSetChanged();
 						
 						
 						
