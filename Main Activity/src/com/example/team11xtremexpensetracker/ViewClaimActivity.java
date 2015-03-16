@@ -135,6 +135,7 @@ public class ViewClaimActivity extends Activity {
 			public void onClick(View v) {
 				// TODO: jump to add expense activity
 				Intent intent =  new Intent(ViewClaimActivity.this,AddItemActivity.class);
+				intent.putExtra("claimID", claimID);
 				startActivity(intent);
 			}
 			

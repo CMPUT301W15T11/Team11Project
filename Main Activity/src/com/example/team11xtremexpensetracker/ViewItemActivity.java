@@ -45,6 +45,7 @@ public class ViewItemActivity extends Activity{
 	private ClaimsList dataList;
 	private static final String FILENAME = "datafile.sav";
 	private ClaimListController clc;
+	private int claimID;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class ViewItemActivity extends Activity{
 		
 		Intent intent = getIntent();
 		final int itemID = intent.getIntExtra("itemID",0);
-		final int claimID = intent.getIntExtra("claimID", 0);
+		claimID = intent.getIntExtra("claimID", 0);
 		list= ClaimListController.getClaimsList().getClaimById(claimID).getItemById(itemID);
 		indicator = list.getIndecator();
 		if (indicator == false){
@@ -143,6 +144,7 @@ public class ViewItemActivity extends Activity{
 		Intent intentBackPressed = new Intent();
 		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentBackPressed.setClass(ViewItemActivity.this, ViewClaimActivity.class);
+		intentBackPressed.putExtra("claimID", claimID);
 		ViewItemActivity.this.startActivity(intentBackPressed);
 	}
 

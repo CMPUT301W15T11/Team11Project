@@ -172,6 +172,7 @@ public class EditItemActivity extends Activity{
 				Intent backIntent = new Intent();
 				backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				backIntent.setClass(EditItemActivity.this,ViewClaimActivity.class);
+				backIntent.putExtra("claimID", claimID);
 				startActivity(backIntent);
 				finish();
 				
