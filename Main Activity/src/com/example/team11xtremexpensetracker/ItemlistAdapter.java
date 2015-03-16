@@ -11,15 +11,13 @@ import android.widget.TextView;
 
 public class ItemlistAdapter extends ArrayAdapter<Item>{
 
-	private Context context;
-	private ArrayList<Item> itemlist;
+
 	
 	public ItemlistAdapter(Context context,ArrayList<Item> itemlist){
 		super(context,0,itemlist);
-		this.context = context = context;
-		this.itemlist = itemlist;
 		
 	}
+	 @Override	
 	public View getView(int position,View convertView,ViewGroup parent){
 		Item tempitem = getItem(position);
 		if (convertView == null){

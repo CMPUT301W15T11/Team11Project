@@ -57,11 +57,7 @@ public class ViewClaimActivity extends Activity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		//==listView
-		datafile = this.loadFromFile();
-	
-		Intent intent = getIntent();
-		claimID = intent.getIntExtra("claimID",0);
+		
 	}
 
 	@SuppressLint("CutPasteId")
@@ -74,7 +70,8 @@ public class ViewClaimActivity extends Activity {
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", 0);
 		if (claimID >= 0){
-			currentClaim = new ClaimListController().getClaimsList().getClaimByID(claimID);
+			new ClaimListController();
+			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
 		}
 		
 		
@@ -89,10 +86,17 @@ public class ViewClaimActivity extends Activity {
 		//Expense Item list view
 		itemlistview = (ListView)findViewById(R.id.expenseListView);
 		clc = new ClaimListController(); 
-		//itemlsitAdapter = new ItemlistAdapter(this,clc.getClaimsList().getClaims().);
-		Collection<ExpenseClaim> claims = clc.getClaimsList().getClaims(); 
-		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);
-		final ArrayAdapter<ExpenseClaim> itemAdapter = new ArrayAdapter<ExpenseClaim>(this, android.R.layout.simple_expandable_list_item_1, list);
+		
+		
+		
+		
+		ArrayList<Item> list= ClaimListController.getClaimsList().getClaimById(0).getItemlist();
+		
+		
+		
+		ItemlistAdapter  itemAdapter = new ItemlistAdapter(this, list);
+
+		// item list adapter
 		itemlistview.setAdapter(itemAdapter);
 		
 		//populate name and dateRange fields.
@@ -144,7 +148,7 @@ public class ViewClaimActivity extends Activity {
 		//nameView.setText(claimName);
 		
 		
-		//set Listener for itemlist view
+		//set Listener for item list view
 		itemlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -178,9 +182,8 @@ public class ViewClaimActivity extends Activity {
 						// TODO Auto-generated method stub
 						//Item item = datafile.getClaimByID(claimID).get(itemID);
 						//datafile.getClaimByID(claimID).remove(item);
-						saveInFile();
+						
 						itemlistAdapter.clear();
-						datafile = loadFromFile();
 						//itemlistAdapter.addAll(datafile.getItemlist());
 						itemlistAdapter.notifyDataSetChanged();
 						
@@ -198,8 +201,6 @@ public class ViewClaimActivity extends Activity {
 					}
 					
 				});
-
-				
 				adb.show();
 				return false;
 			}
@@ -214,45 +215,7 @@ public class ViewClaimActivity extends Activity {
 		getMenuInflater().inflate(R.menu.view_claim, menu);
 		return true;
 	}
-	//==========================================================================================================
-	//============================Gson
-	private ClaimsList loadFromFile(){
-		Gson gson = new Gson();
-		datafile = new ClaimsList();
-		try{
-			FileInputStream fis = openFileInput(FILENAME);
-			InputStreamReader in = new InputStreamReader(fis);
-			Type typeOfT = new TypeToken<ClaimsList>(){}.getType();
-			datafile = gson.fromJson(in, typeOfT);
-			fis.close();
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		return datafile;
-	}
-	private void saveInFile(){
-		Gson gson = new Gson();
-		try{
-			FileOutputStream fos = openFileOutput(FILENAME,0);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			gson.toJson(datafile,osw);
-			osw.flush();
-			fos.close();
-			
-			
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		
-		
-		
-	}
+
 	public void editClaim(MenuItem menuItem){
 		Toast.makeText(this, "Edit", Toast.LENGTH_LONG).show();
 		Intent intent = new Intent();

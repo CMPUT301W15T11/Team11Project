@@ -18,6 +18,7 @@ public class ExpenseClaim {
 	private ArrayList<Item>Itemlist;
 	// getters and setters
 	public ExpenseClaim(){
+		isEditable = true;
 		destinations = new ArrayList <Destination>() ;
 		Itemlist = new ArrayList <Item>();
 	}

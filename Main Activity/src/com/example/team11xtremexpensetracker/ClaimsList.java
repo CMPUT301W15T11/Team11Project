@@ -44,6 +44,9 @@ public class ClaimsList {
 	public Collection<ExpenseClaim> getClaims(){
 		return allClaimsList;
 	}
+	public ArrayList<ExpenseClaim> getClaimsAL(){
+		return allClaimsList;
+	}
 	
 	public void updateSubmitted(){
 		notifyListeners();
@@ -78,7 +81,7 @@ public class ClaimsList {
 	public int getLength(){
 		return allClaimsList.size();
 	}
-	public ExpenseClaim getClaimByID(int ID){
+	public ExpenseClaim getClaimById(int ID){
 		return allClaimsList.get(ID);
 	}
 }

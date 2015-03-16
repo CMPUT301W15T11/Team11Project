@@ -149,7 +149,14 @@ public class ExpenseClaimModelTest extends TestCase {
 	
 	// requirement test 1.06
 	public void test1_06(){
+		// file 
 		ClaimsList claims = new ClaimsList();
+		ExpenseClaim  claim = new ExpenseClaim();
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		claim.setName("name");
+		claim.setStartDate(startDate);
+		claim.setEndDate(endDate);
 	}
 	
 

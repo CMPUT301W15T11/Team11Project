@@ -62,7 +62,7 @@ public class AddClaimActivity extends Activity {
 		claimID = intent.getIntExtra("claimID",-1);
 		if (claimID >= 0){
 			//oldClaim = new ExpenseClaim();
-			oldClaim = new ClaimListController().getClaimsList().getClaimByID(claimID);
+			oldClaim = new ClaimListController().getClaimsList().getClaimById(claimID);
 		}
 		
 		Toast.makeText(this, "ClaimID is" + new Integer(claimID).toString(), Toast.LENGTH_LONG).show();
