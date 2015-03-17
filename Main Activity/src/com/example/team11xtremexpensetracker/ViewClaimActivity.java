@@ -102,7 +102,7 @@ public class ViewClaimActivity extends Activity {
 		//populate name and dateRange fields.
 		nameView.setText(currentClaim.getName());
 		dateRangeView.setText(currentClaim.getDateRange());
-		Toast.makeText(this, "DateRange: " + currentClaim.getDateRange(), Toast.LENGTH_LONG).show();
+		//Toast.makeText(this, "DateRange: " + currentClaim.getDateRange(), Toast.LENGTH_LONG).show();
 		
 		
 		// create listeners
@@ -214,7 +214,7 @@ public class ViewClaimActivity extends Activity {
 	}
 
 	public void editClaim(MenuItem menuItem){
-		Toast.makeText(this, "Edit", Toast.LENGTH_LONG).show();
+		//Toast.makeText(this, "Edit", Toast.LENGTH_LONG).show();
 		Intent intent = new Intent();
 		intent.putExtra("claimID", claimID);
 		// TODO: save claim id into intent for editing

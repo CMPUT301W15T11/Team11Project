@@ -73,12 +73,12 @@ public class AddClaimActivity extends Activity {
 			newClaim = oldClaim;
 		}
 		
-		Toast.makeText(this, "ClaimID is" + new Integer(claimID).toString(), Toast.LENGTH_LONG).show();
+		//Toast.makeText(this, "ClaimID is" + new Integer(claimID).toString(), Toast.LENGTH_LONG).show();
 		
 		if (oldClaim != null){
-			Toast.makeText(this,"Old Claim not null", Toast.LENGTH_LONG).show();
+			//Toast.makeText(this,"Old Claim not null", Toast.LENGTH_LONG).show();
 		} else if (oldClaim == null){
-			Toast.makeText(this,"Old Claim is null", Toast.LENGTH_LONG).show();
+			//Toast.makeText(this,"Old Claim is null", Toast.LENGTH_LONG).show();
 		}
 		
 		
@@ -131,13 +131,19 @@ public class AddClaimActivity extends Activity {
 					startDatePickerButton.setText("Choose start Date");
 					return;
 				}
+		
 				if (claimID==-1){
 					newClaim = new ExpenseClaim();
 				}
 				
 				newClaim.setStartDate(startDate);
 				newClaim.setEndDate(endDate);
+				
 				String claimName = editTextEnterName.getText().toString();
+				if(claimName.equals("")){
+					Toast.makeText(AddClaimActivity.this, "Enter a Claim Name", Toast.LENGTH_SHORT).show();
+					return;
+				}
 				newClaim.setName(claimName);
 				if (claimID==-1){
 					ClaimListController.getClaimsList().addClaim(newClaim);

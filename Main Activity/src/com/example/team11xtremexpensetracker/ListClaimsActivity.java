@@ -102,7 +102,7 @@ public class ListClaimsActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 				String temp = list.get(position).toString();
-				Toast.makeText(ListClaimsActivity.this, "You Clicked " + temp, Toast.LENGTH_SHORT).show();
+				//Toast.makeText(ListClaimsActivity.this, "You Clicked " + temp, Toast.LENGTH_SHORT).show();
 				//Now make the same intent push as in the addClaimActivity.
 				saveInFile();
 				Intent intent = new Intent(ListClaimsActivity.this, ViewClaimActivity.class);

@@ -162,13 +162,13 @@ public class ViewItemActivity extends Activity{
 				
 			
 			if (((CheckBox)v).isChecked()){
-				Toast.makeText(ViewItemActivity.this, "Checked", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(ViewItemActivity.this, "Checked", Toast.LENGTH_SHORT).show();
 				list.setIndecator(true);
 				
 			}
 			else{
 				list.setIndecator(false) ;
-				Toast.makeText(ViewItemActivity.this, "Not Checked", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(ViewItemActivity.this, "Not Checked", Toast.LENGTH_SHORT).show();
 			}
 		}
 		});
