@@ -1,6 +1,7 @@
 package com.example.team11xtremexpensetracker;
 
 import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,6 +23,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * Add Tag Activity:
+ * used to add tags and manage claims
+ * 
+ * @author Mingtuo 
+ * 
+ */
+
 public class TagActivity extends Activity {
 	private EditText tagEdit;
 	private Button tagAdd;
@@ -36,9 +45,14 @@ public class TagActivity extends Activity {
 	private static final String FILENAME = "datafile.sav";
 	private ClaimListController clc;
 	
+	/**
+	 * Initialize every view and tag function
+	 */
 	public void init(){
 		//we should get data from save file first, and show them on the screens
-		
+		/**
+		 * set each view
+		 */
 		tagEdit=(EditText)findViewById(R.id.add_tag_editText);
 		tagAdd=(Button)findViewById(R.id.add_tag_button);
 		tagLayout=(FlowLayout)findViewById(R.id.tag_layout);
@@ -49,13 +63,18 @@ public class TagActivity extends Activity {
 			new ClaimListController();
 			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
 		}
-		
+		/**
+		 * check tagList() is empty or not, if not empty pop every tag onto screen
+		 */
 		if(currentClaim.getTagList().size()>0){
 			for(int i=0;i<currentClaim.getTagList().size();i++){
 				showTag(currentClaim.getTagList().get(i).getTagName());
 			}
 		}
 		
+		/**
+		 * set listener to add button
+		 */
 		tagAdd.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -69,6 +88,10 @@ public class TagActivity extends Activity {
 		
 	}
 	
+	/**
+	 * function used to create new tag and add onto screen
+	 * @param tagContent
+	 */
 	private void createTag(String tagContent){
 		
 		TextView newTag=new TextView(this);
@@ -88,6 +111,10 @@ public class TagActivity extends Activity {
 		
 	}
 	
+	/**
+	 * function used to pop pre-exist tag out
+	 * @param tagContent
+	 */
 	private void showTag(String tagContent){
 		TextView newTag=new TextView(this);
 		MarginLayoutParams mp=new MarginLayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
@@ -106,6 +133,10 @@ public class TagActivity extends Activity {
 		init();
 	}
 	
+	/**
+	 * load file function
+	 * @return dataList
+	 */
 	private ClaimsList loadFromFile() {
 		Gson gson = new Gson();
 		dataList = new ClaimsList();
@@ -126,6 +157,9 @@ public class TagActivity extends Activity {
 		return dataList;
 	}
 
+	/**
+	 * save file function
+	 */
 	private void saveInFile() {
 		Gson gson = new Gson();
 		try {

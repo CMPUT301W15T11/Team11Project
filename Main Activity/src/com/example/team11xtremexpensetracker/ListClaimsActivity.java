@@ -69,6 +69,9 @@ public class ListClaimsActivity extends Activity {
 			}
 		});
 		
+		/**
+		 * set Listener to search button, which controls the function of claim filter
+		 */
 		searchImage.setOnClickListener(new View.OnClickListener(){
 
 			@Override
