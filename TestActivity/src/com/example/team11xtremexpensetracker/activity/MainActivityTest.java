@@ -1,6 +1,5 @@
 package com.example.team11xtremexpensetracker.activity;
 
-import com.example.team11xtremexpensetracker.MainActivity;
 import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.R.id;
 

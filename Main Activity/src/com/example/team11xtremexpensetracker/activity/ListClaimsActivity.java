@@ -1,4 +1,4 @@
-package com.example.team11xtremexpensetracker;
+package com.example.team11xtremexpensetracker.activity;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,6 +10,14 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.example.team11xtremexpensetracker.ClaimListController;
+import com.example.team11xtremexpensetracker.ClaimsList;
+import com.example.team11xtremexpensetracker.ExpenseClaim;
+import com.example.team11xtremexpensetracker.Listener;
+import com.example.team11xtremexpensetracker.R;
+import com.example.team11xtremexpensetracker.R.id;
+import com.example.team11xtremexpensetracker.R.layout;
+import com.example.team11xtremexpensetracker.R.menu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

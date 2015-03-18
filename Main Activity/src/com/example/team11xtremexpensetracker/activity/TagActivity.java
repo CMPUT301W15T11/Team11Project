@@ -1,4 +1,4 @@
-package com.example.team11xtremexpensetracker;
+package com.example.team11xtremexpensetracker.activity;
 
 import java.io.FileInputStream;
 
@@ -9,6 +9,16 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 
+import com.example.team11xtremexpensetracker.ClaimListController;
+import com.example.team11xtremexpensetracker.ClaimsList;
+import com.example.team11xtremexpensetracker.ExpenseClaim;
+import com.example.team11xtremexpensetracker.FlowLayout;
+import com.example.team11xtremexpensetracker.R;
+import com.example.team11xtremexpensetracker.Tag;
+import com.example.team11xtremexpensetracker.R.color;
+import com.example.team11xtremexpensetracker.R.drawable;
+import com.example.team11xtremexpensetracker.R.id;
+import com.example.team11xtremexpensetracker.R.layout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

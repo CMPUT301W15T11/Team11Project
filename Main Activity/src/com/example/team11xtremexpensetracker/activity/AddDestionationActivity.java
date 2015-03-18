@@ -1,4 +1,8 @@
-package com.example.team11xtremexpensetracker;
+package com.example.team11xtremexpensetracker.activity;
+
+import com.example.team11xtremexpensetracker.R;
+import com.example.team11xtremexpensetracker.R.layout;
+import com.example.team11xtremexpensetracker.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;

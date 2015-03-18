@@ -1,7 +1,6 @@
 package com.example.team11xtremexpensetracker.activity;
 
 import com.example.team11xtremexpensetracker.R;
-import com.example.team11xtremexpensetracker.ViewClaimActivity;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
