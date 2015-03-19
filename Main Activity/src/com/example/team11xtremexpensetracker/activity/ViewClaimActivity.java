@@ -84,6 +84,7 @@ public class ViewClaimActivity extends Activity {
 		//Get current claim
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", 0);
+		//Toast.makeText(this, "Claim: " + (new Integer(claimID).toString()), Toast.LENGTH_SHORT).show();
 		if (claimID >= 0){
 			//new ClaimListController();
 			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);

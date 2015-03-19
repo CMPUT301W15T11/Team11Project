@@ -25,7 +25,7 @@ public class ListClaimsAdapter extends ArrayAdapter<ExpenseClaim>{
 		if (convertView == null){
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item,parent,false);
 			}
-		TextView item = (TextView)convertView.findViewById(R.id.placeView);
+		TextView item = (TextView)convertView.findViewById(R.id.itemNameView);
 		item.setText(tempClaim.getName());
 		return convertView;
 	}

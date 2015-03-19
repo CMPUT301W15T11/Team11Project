@@ -158,10 +158,16 @@ public class AddClaimActivity extends Activity {
 					ClaimListController.getClaimsList().addClaim(newClaim);
 				}
 				saveInFile();
-				Intent intent = new Intent();
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				intent.setClass(AddClaimActivity.this,ListClaimsActivity.class);
-				AddClaimActivity.this.startActivity(intent);
+				//Intent intent = new Intent();
+				//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				//intent.setClass(AddClaimActivity.this,ListClaimsActivity.class);
+				//intent.setClass(AddClaimActivity.this,ViewClaimActivity.class);
+				//AddClaimActivity.this.startActivity(intent);
+				Integer newClaim = new Integer((new ClaimListController().getClaimsList().getLength()) - 1);
+				Intent intent = new Intent(AddClaimActivity.this, ViewClaimActivity.class);
+				intent.putExtra("claimID", newClaim);
+				//Toast.makeText(AddClaimActivity.this, "claimID: " + newClaim.toString(), Toast.LENGTH_SHORT).show();
+				startActivity(intent);
 				finish();
 			}
 		});
