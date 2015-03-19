@@ -1,5 +1,10 @@
 package com.example.team11xtremexpensetracker.activity;
 
+/**
+ * Lets users view and edit a selected claim
+ * Also lets users add expense items to claims
+ */
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

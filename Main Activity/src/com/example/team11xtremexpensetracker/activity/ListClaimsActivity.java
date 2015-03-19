@@ -1,5 +1,10 @@
 package com.example.team11xtremexpensetracker.activity;
 
+/*
+ * Displays a list of existing expense claims to the user
+ * Allows user to filter by tags, create a new claim, delete claims, or view/edit claims
+ */
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -59,10 +64,12 @@ public class ListClaimsActivity extends Activity {
 		searchImage = (ImageView) findViewById(R.id.tag_search);
 		tagSearchEdit = (EditText) findViewById(R.id.tag_filter);
 
+		//Load in claims from disk, give them to the claimsListController
 		dataList = this.loadFromFile();
 		clc = new ClaimListController();
 		clc.setClaimsList(dataList);
 		claims = clc.getClaimsList().getClaims();
+		// Setup adapter for list so claims can be displayed
 		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);
 		final ArrayAdapter<ExpenseClaim> claimAdapter = new ArrayAdapter<ExpenseClaim>(this,
 				android.R.layout.simple_expandable_list_item_1, list);
@@ -70,7 +77,8 @@ public class ListClaimsActivity extends Activity {
 
 		indexCorrector = new ArrayList<Integer>();
 		filterFlag = false;
-
+		
+		// Add listeners
 		clc.getClaimsList().addListener(new Listener() {
 			@Override
 			public void update() {
@@ -120,14 +128,13 @@ public class ListClaimsActivity extends Activity {
 
 		});
 
+		/**
+		 * Called when a claim within the list is selected
+		 * Calls viewClaim while passing it the appropriate claim ID
+		 */
 		claimsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-				// String temp = list.get(position).toString();
-				// Toast.makeText(ListClaimsActivity.this, "You Clicked " +
-				// temp, Toast.LENGTH_SHORT).show();
-				// Now make the same intent push as in the addClaimActivity.
-				// saveInFile();
 				if (!filterFlag) {
 					Intent intent = new Intent(ListClaimsActivity.this, ViewClaimActivity.class);
 					intent.putExtra("claimID", position);
@@ -142,6 +149,11 @@ public class ListClaimsActivity extends Activity {
 			}
 		});
 
+		/**
+		 * Called when an item in the claims list is long clicked
+		 * Displays the "Would you like to delete" dialog,
+		 * and if prompted, deletes the appropriate claim
+		 */
 		claimsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
 			@Override
@@ -202,6 +214,10 @@ public class ListClaimsActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * invoked when "add claim" button is pressed
+	 * Brings users to the AddClaimActivity.
+	 */
 	public void addClaim(View v) {
 		// Toast.makeText(this, "Adding Claim", Toast.LENGTH_LONG).show();
 		Intent intent = new Intent(ListClaimsActivity.this, AddClaimActivity.class);

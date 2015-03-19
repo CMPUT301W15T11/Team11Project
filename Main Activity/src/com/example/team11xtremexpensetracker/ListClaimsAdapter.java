@@ -1,7 +1,10 @@
 package com.example.team11xtremexpensetracker;
 
-import java.util.ArrayList;
+/*
+ * An Adapter for Expense Claims List
+ */
 
+import java.util.ArrayList;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

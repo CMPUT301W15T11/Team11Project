@@ -9,15 +9,18 @@ package com.example.team11xtremexpensetracker;
 public class Destination {
 	protected String destinationName;
 	protected String reasonForTravel;
-	
+
+	// Constructor. Sets destination name
 	public Destination(String name){
 		this.destinationName = name;
 	}
 	
+	// Set travel resons
 	public void setReason(String reason){
 		this.reasonForTravel = reason;
 	}
 	
+	// Get travel reason
 	public String getReason(){
 		if (reasonForTravel != null)
 			return reasonForTravel;
@@ -25,6 +28,7 @@ public class Destination {
 			return "";
 	}
 	
+	//returns destination name
 	public String getDest(){
 		return destinationName;
 	}

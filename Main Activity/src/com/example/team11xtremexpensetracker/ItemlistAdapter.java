@@ -1,5 +1,9 @@
 package com.example.team11xtremexpensetracker;
 
+/*
+ * An Adapter for expense item lists
+ */
+
 import java.util.ArrayList;
 
 import android.content.Context;
