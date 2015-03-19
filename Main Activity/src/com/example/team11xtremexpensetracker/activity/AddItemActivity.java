@@ -160,6 +160,10 @@ public class AddItemActivity extends Activity{
 				itemamountstr = itemamount.getText().toString();
 				
 				
+				if (itemnamestr.equals("")){
+					Toast.makeText(AddItemActivity.this, "Enter an Expense Name", Toast.LENGTH_SHORT).show();
+					return;
+				}
 				
 				Item newItem = new Item();
 				newItem.setItem(itemnamestr);
