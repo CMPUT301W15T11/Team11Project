@@ -13,5 +13,10 @@
     <string name="tag_add_button">Add New Tag</string>
     <string name="title_activity_view_tag">TagActivity</string>
     <string name="title_activity_edit_claim">EditClaimActivity</string>
+    <string name="title_activity_account">AccountActivity</string>
+    <string name="account_id">Account ID:</string>
+    <string name="account_password">Password:</string>
+    <string name="account_back_button">Back</string>
+    <string name="account_confirm_button">Confirm</string>
 
 </resources>

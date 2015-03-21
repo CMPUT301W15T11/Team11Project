@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.team11xtremexpensetracker.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,35 +23,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.activity.AddDestionationActivity"
+            android:name=".activity.AddDestionationActivity"
             android:label="@string/title_activity_add_destionation" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.activity.ViewDestinationActivity"
+            android:name=".activity.ViewDestinationActivity"
             android:label="@string/title_activity_view_destination" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.activity.AddClaimActivity"
+            android:name=".activity.AddClaimActivity"
             android:label="@string/title_activity_add_claim" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.activity.ViewClaimActivity"
+            android:name=".activity.ViewClaimActivity"
             android:label="@string/title_activity_view_claim" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.activity.ListClaimsActivity"
+            android:name=".activity.ListClaimsActivity"
             android:label="@string/title_activity_list_claims" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.activity.AddItemActivity"
+            android:name=".activity.AddItemActivity"
             android:label="AddItemActivity" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.activity.EditItemActivity"
+            android:name=".activity.EditItemActivity"
             android:label="EditItemActivity" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.activity.ViewItemActivity"
+            android:name=".activity.ViewItemActivity"
             android:label="ViewItemActivity" >
         </activity>
         <activity
@@ -59,12 +59,16 @@
             android:label="ItemlistActivity" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.activity.TagActivity"
+            android:name=".activity.TagActivity"
             android:label="@string/title_activity_view_tag" >
         </activity>
         <activity
             android:name=".EditClaimActivity"
             android:label="@string/title_activity_edit_claim" >
+        </activity>
+        <activity
+            android:name="com.example.team11xtremexpensetracker.activity.AccountActivity"
+            android:label="@string/title_activity_account" >
         </activity>
     </application>
 
