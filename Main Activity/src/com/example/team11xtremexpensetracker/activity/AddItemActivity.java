@@ -1,5 +1,10 @@
 package com.example.team11xtremexpensetracker.activity;
 
+/*
+ * Activity thats presents UI for user to add a new expense claim
+ * Checks to make sure expense claim has a name
+ */
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -148,6 +153,9 @@ public class AddItemActivity extends Activity{
 		Button itemadd = (Button)findViewById(R.id.confirmadd);
 		
 		
+		// If expense item has a name,
+		// A new expense item is generated and added to the list
+		// User is brought back to the viewClaim activity
 		itemadd.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -213,6 +221,7 @@ public class AddItemActivity extends Activity{
 
 	}
 
+	// Load claims from file
 	private ClaimsList loadFromFile() {
 		Gson gson = new Gson();
 		dataList = new ClaimsList();
@@ -233,6 +242,7 @@ public class AddItemActivity extends Activity{
 		return dataList;
 	}
 
+	// Save claims to file
 	private void saveInFile() {
 		Gson gson = new Gson();
 		try {

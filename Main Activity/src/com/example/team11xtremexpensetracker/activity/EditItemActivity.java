@@ -1,5 +1,9 @@
 package com.example.team11xtremexpensetracker.activity;
 
+/*
+ * Lets user edit a pre-existing item.
+ */
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

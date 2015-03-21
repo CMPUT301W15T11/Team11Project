@@ -1,7 +1,10 @@
 package com.example.team11xtremexpensetracker;
 
-import java.util.ArrayList;
+/*
+ * An Adapter for Expense Claims List
+ */
 
+import java.util.ArrayList;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +28,7 @@ public class ListClaimsAdapter extends ArrayAdapter<ExpenseClaim>{
 		if (convertView == null){
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item,parent,false);
 			}
-		TextView item = (TextView)convertView.findViewById(R.id.placeView);
+		TextView item = (TextView)convertView.findViewById(R.id.itemNameView);
 		item.setText(tempClaim.getName());
 		return convertView;
 	}

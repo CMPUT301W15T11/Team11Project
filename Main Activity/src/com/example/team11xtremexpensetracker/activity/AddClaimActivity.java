@@ -1,5 +1,10 @@
 package com.example.team11xtremexpensetracker.activity;
 
+/*
+ * Activity that provdies the UI to add new Expense Claims
+ * Claims must contain a name, and a start date before their end date.
+ */
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -82,16 +87,8 @@ public class AddClaimActivity extends Activity {
 			newClaim = oldClaim;
 		}
 		
-		//Toast.makeText(this, "ClaimID is" + new Integer(claimID).toString(), Toast.LENGTH_LONG).show();
 		
-		if (oldClaim != null){
-			//Toast.makeText(this,"Old Claim not null", Toast.LENGTH_LONG).show();
-		} else if (oldClaim == null){
-			//Toast.makeText(this,"Old Claim is null", Toast.LENGTH_LONG).show();
-		}
-		
-		
-		
+		//Sets date picker button to open a date picker when clicked
 		startDatePickerButton.setOnClickListener(new View.OnClickListener() {	
 			Calendar c = Calendar.getInstance();
 			
@@ -113,6 +110,7 @@ public class AddClaimActivity extends Activity {
 			
 		});  
 		
+		// sets date picker button to open a date picker when clicked
 		endDatePickerButton.setOnClickListener(new View.OnClickListener() {	
 			Calendar c = Calendar.getInstance();
 			@Override
@@ -132,6 +130,10 @@ public class AddClaimActivity extends Activity {
 		});
 		
 		
+		// Defines what is executed when done button is pressed
+		// If name is entered, and dates are ok it creates a new claim,
+		// Adds it to the list, and brings user to view the claim and add expense. 
+		// Else it prompts user to enter more info
 		doneButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
@@ -158,10 +160,16 @@ public class AddClaimActivity extends Activity {
 					ClaimListController.getClaimsList().addClaim(newClaim);
 				}
 				saveInFile();
-				Intent intent = new Intent();
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				intent.setClass(AddClaimActivity.this,ListClaimsActivity.class);
-				AddClaimActivity.this.startActivity(intent);
+				//Intent intent = new Intent();
+				//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				//intent.setClass(AddClaimActivity.this,ListClaimsActivity.class);
+				//intent.setClass(AddClaimActivity.this,ViewClaimActivity.class);
+				//AddClaimActivity.this.startActivity(intent);
+				Integer newClaim = new Integer((new ClaimListController().getClaimsList().getLength()) - 1);
+				Intent intent = new Intent(AddClaimActivity.this, ViewClaimActivity.class);
+				intent.putExtra("claimID", newClaim);
+				//Toast.makeText(AddClaimActivity.this, "claimID: " + newClaim.toString(), Toast.LENGTH_SHORT).show();
+				startActivity(intent);
 				finish();
 			}
 		});
@@ -175,6 +183,7 @@ public class AddClaimActivity extends Activity {
 		return true; 
 	}
 	
+	// Loads claimsList from file
 	private ClaimsList loadFromFile() {
 		Gson gson = new Gson();
 		dataList = new ClaimsList();
@@ -195,6 +204,7 @@ public class AddClaimActivity extends Activity {
 		return dataList;
 	}
 
+	// Saves claimsList to file
 	private void saveInFile() {
 		Gson gson = new Gson();
 		try {
