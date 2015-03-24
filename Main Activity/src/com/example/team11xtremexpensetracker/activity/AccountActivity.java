@@ -9,6 +9,7 @@ import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.R.id;
 import com.example.team11xtremexpensetracker.R.layout;
 import com.example.team11xtremexpensetracker.R.menu;
+import com.example.team11xtremexpensetracker.RegisterActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -32,6 +33,7 @@ public class AccountActivity extends Activity {
 	private String password;
 	private Button backButton;
 	private Button confirmButton;
+	private Button registerButton;
 
 	private void init() {
 
@@ -39,6 +41,7 @@ public class AccountActivity extends Activity {
 		accountPasswordEdit = (EditText) findViewById(R.id.account_password_view);
 		backButton = (Button) findViewById(R.id.account_back);
 		confirmButton = (Button) findViewById(R.id.account_confirm);
+		registerButton=(Button) findViewById(R.id.register_new_button);
 
 		backButton.setOnClickListener(new View.OnClickListener() {
 
@@ -57,12 +60,26 @@ public class AccountActivity extends Activity {
 				accountId = accountIdEdit.getText().toString();
 				password = accountPasswordEdit.getText().toString();
 				if (checkId(accountId) && checkPassword(password)) {
+					// TODO check userID exists or not,if so go next step
+					// TODO check every claim's userID and add them into next activity
+					
+					//
 					Intent intent=new Intent(AccountActivity.this,ListClaimsActivity.class);
 					startActivity(intent);
 				} else {
 					Toast.makeText(AccountActivity.this, "Invalid ID or password!", Toast.LENGTH_SHORT).show();
 					accountPasswordEdit.setText("");
 				}
+			}
+		});
+		
+		registerButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent =new Intent(AccountActivity.this,RegisterActivity.class);
+				startActivity(intent);
 			}
 		});
 	}

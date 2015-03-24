@@ -1,12 +1,9 @@
 package com.example.team11xtremexpensetracker;
 
-
-
 /*
  *  Singleton Class
  *  Holds list of all claims in system.
  */
-
 
 public class ClaimListController {
 

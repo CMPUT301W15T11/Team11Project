@@ -67,8 +67,12 @@
             android:label="@string/title_activity_edit_claim" >
         </activity>
         <activity
-            android:name="com.example.team11xtremexpensetracker.activity.AccountActivity"
+            android:name=".activity.AccountActivity"
             android:label="@string/title_activity_account" >
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register" >
         </activity>
     </application>
 

@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 public class GsonCreator {
 
 	public GsonCreator() {
+		
 	};
 
 	public Gson getGson() {
