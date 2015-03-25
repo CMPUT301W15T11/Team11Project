@@ -253,7 +253,7 @@ public class ExpenseClaim {
 	 */
 	public String toString() {
 		// TODO the structure is weird, it's hard to manage with only claimList, we may need to add userList as well
-		return this.name;
+		return name;
 	}
 	
 }

@@ -25,5 +25,9 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
+	public String toString(){
+		return "User[userName="+this.userName+",userId="+this.userId+",userPassword="+this.userPassword+"]";
+	}
 
 }

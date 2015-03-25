@@ -14,6 +14,9 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.Calendar;
 
+import network.Client;
+import network.ConnectionChecker;
+
 import com.example.team11xtremexpensetracker.ClaimListController;
 import com.example.team11xtremexpensetracker.ClaimsList;
 import com.example.team11xtremexpensetracker.ExpenseClaim;
@@ -38,7 +41,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class AddClaimActivity extends Activity {
-	
+
 	private ExpenseClaim oldClaim;
 	private ExpenseClaim newClaim;
 	private String claimName;
@@ -50,48 +53,48 @@ public class AddClaimActivity extends Activity {
 	private EditText editTextEnterName;
 	private ClaimListController claimListController;
 	private int claimID;
-	
+
 	private ClaimsList dataList;
 	private static final String FILENAME = "datafile.sav";
 	private ClaimListController clc;
-	
-	
+
+	private Client client;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_claim);
-		
-		dataList=this.loadFromFile();
-		clc = new ClaimListController(); 
+
+		dataList = this.loadFromFile();
+		clc = new ClaimListController();
 		clc.setClaimsList(dataList);
 
+		client = new Client();
 
 		// get widgets
 		startDatePickerButton = (Button) findViewById(R.id.startDatePickerButton);
 		endDatePickerButton = (Button) findViewById(R.id.endDatePickerButton);
 		doneButton = (Button) findViewById(R.id.addClaimDoneButton);
-		
-		editTextEnterName = (EditText)findViewById(R.id.editTextEnterName);
-		startDate=Calendar.getInstance();
-		endDate=Calendar.getInstance();
+
+		editTextEnterName = (EditText) findViewById(R.id.editTextEnterName);
+		startDate = Calendar.getInstance();
+		endDate = Calendar.getInstance();
 		// set listener
-		
-		
-		 // Ok, now if you get some extra, set Buttons to start values of claim
-		Intent intent =  getIntent();
-		claimID = intent.getIntExtra("claimID",-1);
-		if (claimID >= 0){
+
+		// Ok, now if you get some extra, set Buttons to start values of claim
+		Intent intent = getIntent();
+		claimID = intent.getIntExtra("claimID", -1);
+		if (claimID >= 0) {
 			new ClaimListController();
 			oldClaim = ClaimListController.getClaimsList().getClaimById(claimID);
 			editTextEnterName.setText(oldClaim.getName());
 			newClaim = oldClaim;
 		}
-		
-		
-		//Sets date picker button to open a date picker when clicked
-		startDatePickerButton.setOnClickListener(new View.OnClickListener() {	
+
+		// Sets date picker button to open a date picker when clicked
+		startDatePickerButton.setOnClickListener(new View.OnClickListener() {
 			Calendar c = Calendar.getInstance();
-			
+
 			@Override
 			public void onClick(View v) {
 				new SingleDatePickerDialog(AddClaimActivity.this, 0, new SingleDatePickerDialog.OnDateSetListener() {
@@ -99,20 +102,21 @@ public class AddClaimActivity extends Activity {
 					@Override
 					public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
 							int startDayOfMonth) {
-						String textString_start = String.format("%d/%d/%d", startMonthOfYear + 1,
-								startDayOfMonth, startYear);
+						String textString_start = String.format("%d/%d/%d", startMonthOfYear + 1, startDayOfMonth,
+								startYear);
 						startDatePickerButton.setText(textString_start);
-						startDate.set(startYear, startMonthOfYear+1, startDayOfMonth);
-						
+						startDate.set(startYear, startMonthOfYear + 1, startDayOfMonth);
+
 					}
 				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), true).show();
 			}
-			
-		});  
-		
+
+		});
+
 		// sets date picker button to open a date picker when clicked
-		endDatePickerButton.setOnClickListener(new View.OnClickListener() {	
+		endDatePickerButton.setOnClickListener(new View.OnClickListener() {
 			Calendar c = Calendar.getInstance();
+
 			@Override
 			public void onClick(View v) {
 				new SingleDatePickerDialog(AddClaimActivity.this, 0, new SingleDatePickerDialog.OnDateSetListener() {
@@ -120,69 +124,80 @@ public class AddClaimActivity extends Activity {
 					@Override
 					public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
 							int startDayOfMonth) {
-						String textString_start = String.format("%d/%d/%d", startMonthOfYear + 1,
-								startDayOfMonth, startYear);
+						String textString_start = String.format("%d/%d/%d", startMonthOfYear + 1, startDayOfMonth,
+								startYear);
 						endDatePickerButton.setText(textString_start);
-						endDate.set(startYear, startMonthOfYear+1, startDayOfMonth);
+						endDate.set(startYear, startMonthOfYear + 1, startDayOfMonth);
 					}
 				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), true).show();
 			}
 		});
-		
-		
+
 		// Defines what is executed when done button is pressed
 		// If name is entered, and dates are ok it creates a new claim,
-		// Adds it to the list, and brings user to view the claim and add expense. 
+		// Adds it to the list, and brings user to view the claim and add
+		// expense.
 		// Else it prompts user to enter more info
-		doneButton.setOnClickListener(new View.OnClickListener() {	
+		doneButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(startDate.after(endDate)){
-					Toast.makeText(AddClaimActivity.this,"Start date should be earlier than end date\n"+"        Submit Denied",Toast.LENGTH_SHORT).show();
+				if (startDate.after(endDate)) {
+					Toast.makeText(AddClaimActivity.this,
+							"Start date should be earlier than end date\n" + "        Submit Denied",
+							Toast.LENGTH_SHORT).show();
 					startDatePickerButton.setText("Choose start Date");
 					return;
 				}
-		
-				if (claimID==-1){
+
+				if (claimID == -1) {
 					newClaim = new ExpenseClaim();
 				}
-				
+
 				newClaim.setStartDate(startDate);
 				newClaim.setEndDate(endDate);
-				
+
 				String claimName = editTextEnterName.getText().toString();
-				if(claimName.equals("")){
+				if (claimName.equals("")) {
 					Toast.makeText(AddClaimActivity.this, "Enter a Claim Name", Toast.LENGTH_SHORT).show();
 					return;
 				}
 				newClaim.setName(claimName);
-				if (claimID==-1){
+				if (claimID == -1) {
 					ClaimListController.getClaimsList().addClaim(newClaim);
 				}
 				saveInFile();
-				//Intent intent = new Intent();
-				//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				//intent.setClass(AddClaimActivity.this,ListClaimsActivity.class);
-				//intent.setClass(AddClaimActivity.this,ViewClaimActivity.class);
-				//AddClaimActivity.this.startActivity(intent);
+				// ------------------------------------------------test--------------------------------------//
+				ConnectionChecker netChecker = new ConnectionChecker();
+				if (netChecker.netConnected(AddClaimActivity.this)) {
+					client.addClaim(newClaim);
+				}else{
+					Toast.makeText(AddClaimActivity.this,"No network connected, change will only be applied locally",Toast.LENGTH_SHORT).show();
+				}
+				// ------------------------------------------------test--------------------------------------//
+				// Intent intent = new Intent();
+				// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				// intent.setClass(AddClaimActivity.this,ListClaimsActivity.class);
+				// intent.setClass(AddClaimActivity.this,ViewClaimActivity.class);
+				// AddClaimActivity.this.startActivity(intent);
 				Integer newClaim = new Integer((new ClaimListController().getClaimsList().getLength()) - 1);
 				Intent intent = new Intent(AddClaimActivity.this, ViewClaimActivity.class);
 				intent.putExtra("claimID", newClaim);
-				//Toast.makeText(AddClaimActivity.this, "claimID: " + newClaim.toString(), Toast.LENGTH_SHORT).show();
+				// Toast.makeText(AddClaimActivity.this, "claimID: " +
+				// newClaim.toString(), Toast.LENGTH_SHORT).show();
 				startActivity(intent);
 				finish();
 			}
 		});
-		
+
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.add_claim, menu);
-		return true; 
+		return true;
 	}
-	
+
 	// Loads claimsList from file
 	private ClaimsList loadFromFile() {
 		Gson gson = new Gson();
@@ -221,6 +236,5 @@ public class AddClaimActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
-
 
 }
