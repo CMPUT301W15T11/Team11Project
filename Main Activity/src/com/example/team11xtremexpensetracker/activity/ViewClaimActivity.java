@@ -69,6 +69,7 @@ public class ViewClaimActivity extends Activity {
 	private ClaimsList dataList;
 	private static final String FILENAME = "datafile.sav";
 	private ClaimListController clc;
+	private Button addDestButton;
 
 	@Override
 	protected void onStart() {
@@ -150,6 +151,20 @@ public class ViewClaimActivity extends Activity {
 			public void onClick(View v) {
 				// TODO: jump to add expense activity
 				Intent intent =  new Intent(ViewClaimActivity.this,AddItemActivity.class);
+				intent.putExtra("claimID", claimID);
+				startActivity(intent);
+			}
+			
+		});
+		
+		
+		addDestButton = (Button)findViewById(R.id.addDestButton);
+		addDestButton.setOnClickListener(new View.OnClickListener() {	
+
+			@Override
+			public void onClick(View v) {
+				// TODO: jump to add expense activity
+				Intent intent =  new Intent(ViewClaimActivity.this,AddDestionationActivity.class);
 				intent.putExtra("claimID", claimID);
 				startActivity(intent);
 			}

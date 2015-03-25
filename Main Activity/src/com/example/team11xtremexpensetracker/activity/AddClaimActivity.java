@@ -63,7 +63,7 @@ public class AddClaimActivity extends Activity {
 		
 		dataList=this.loadFromFile();
 		clc = new ClaimListController(); 
-		clc.setClaimsList(dataList);
+		ClaimListController.setClaimsList(dataList);
 
 
 		// get widgets
@@ -157,18 +157,13 @@ public class AddClaimActivity extends Activity {
 				}
 				newClaim.setName(claimName);
 				if (claimID==-1){
+					claimID = ClaimListController.getClaimsList().getLength();
 					ClaimListController.getClaimsList().addClaim(newClaim);
 				}
 				saveInFile();
-				//Intent intent = new Intent();
-				//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				//intent.setClass(AddClaimActivity.this,ListClaimsActivity.class);
-				//intent.setClass(AddClaimActivity.this,ViewClaimActivity.class);
-				//AddClaimActivity.this.startActivity(intent);
-				Integer newClaim = new Integer((new ClaimListController().getClaimsList().getLength()) - 1);
+				new ClaimListController();
 				Intent intent = new Intent(AddClaimActivity.this, ViewClaimActivity.class);
-				intent.putExtra("claimID", newClaim);
-				//Toast.makeText(AddClaimActivity.this, "claimID: " + newClaim.toString(), Toast.LENGTH_SHORT).show();
+				intent.putExtra("claimID", claimID);
 				startActivity(intent);
 				finish();
 			}

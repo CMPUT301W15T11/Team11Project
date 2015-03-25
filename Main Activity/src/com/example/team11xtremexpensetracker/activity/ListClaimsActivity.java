@@ -57,6 +57,11 @@ public class ListClaimsActivity extends Activity {
 	private boolean filterFlag;
 
 	@Override
+	protected void onStart() {
+		dataList.sort();
+	}
+	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_claims);
@@ -66,6 +71,7 @@ public class ListClaimsActivity extends Activity {
 
 		//Load in claims from disk, give them to the claimsListController
 		dataList = this.loadFromFile();
+		dataList.sort();
 		clc = new ClaimListController();
 		clc.setClaimsList(dataList);
 		claims = clc.getClaimsList().getClaims();
@@ -175,6 +181,7 @@ public class ListClaimsActivity extends Activity {
 							}
 							saveInFile();
 							dataList = loadFromFile();
+							dataList.sort();
 							ClaimListController.setClaimsList(dataList);
 							claimAdapter.notifyDataSetChanged();
 						} else {
@@ -184,6 +191,7 @@ public class ListClaimsActivity extends Activity {
 							ClaimListController.removeClaim(correctIndex);
 							saveInFile();
 							dataList = loadFromFile();
+							dataList.sort();
 							ClaimListController.setClaimsList(dataList);
 							claimAdapter.notifyDataSetChanged();
 						}

@@ -59,17 +59,17 @@ public class AccountActivity extends Activity {
 				// TODO Auto-generated method stub
 				accountId = accountIdEdit.getText().toString();
 				password = accountPasswordEdit.getText().toString();
-				if (checkId(accountId) && checkPassword(password)) {
+				//if (checkId(accountId) && checkPassword(password)) {
 					// TODO check userID exists or not,if so go next step
 					// TODO check every claim's userID and add them into next activity
 					
 					//
 					Intent intent=new Intent(AccountActivity.this,ListClaimsActivity.class);
 					startActivity(intent);
-				} else {
-					Toast.makeText(AccountActivity.this, "Invalid ID or password!", Toast.LENGTH_SHORT).show();
-					accountPasswordEdit.setText("");
-				}
+				//} else {
+				//	Toast.makeText(AccountActivity.this, "Invalid ID or password!", Toast.LENGTH_SHORT).show();
+				//	accountPasswordEdit.setText("");
+				//}
 			}
 		});
 		
