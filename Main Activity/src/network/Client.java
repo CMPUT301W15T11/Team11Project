@@ -80,6 +80,9 @@ public class Client {
 
 	}
 
+	// test way: open url
+	// http://cmput301.softwareprocess.es:8080/cmput301w15t11/Claims/ur new
+	// claim's name/, too see the new claim exists or not
 	public void addClaim(final ExpenseClaim claim) {
 
 		new Thread(new Runnable() {
@@ -90,7 +93,6 @@ public class Client {
 				HttpClient httpClient = new DefaultHttpClient();
 				try {
 
-					// HttpPost for adding a claim
 					HttpPost addRequest = new HttpPost(RESOURCE_URL + "Claims/" + claim.getName() + "/");
 					StringEntity stringEntity = new StringEntity(gson.toJson(claim));
 					addRequest.setEntity(stringEntity);
@@ -98,7 +100,6 @@ public class Client {
 
 					HttpResponse response = httpClient.execute(addRequest);
 
-					// Can use TAG to check status via logcat.
 					String status = response.getStatusLine().toString();
 					Log.i(LOG_TAG, status);
 
@@ -143,14 +144,11 @@ public class Client {
 
 				HttpClient httpClient = new DefaultHttpClient();
 				try {
-
-					// HTTP delete for deleting a claim
 					HttpDelete deleteRequest = new HttpDelete(RESOURCE_URL + "Claims/" + claimName + "/");
 					deleteRequest.setHeader("Accept", "application/json");
 
 					HttpResponse response = httpClient.execute(deleteRequest);
 
-					// Can use TAG to check status via logcat.
 					String status = response.getStatusLine().toString();
 					Log.i(LOG_TAG, status);
 
