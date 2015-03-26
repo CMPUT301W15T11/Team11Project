@@ -15,6 +15,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import network.Client;
+
 import com.example.team11xtremexpensetracker.ClaimListController;
 import com.example.team11xtremexpensetracker.ClaimsList;
 import com.example.team11xtremexpensetracker.ExpenseClaim;
@@ -65,6 +67,8 @@ public class AddItemActivity extends Activity{
 	private ClaimsList dataList;
 	private static final String FILENAME = "datafile.sav";
 	private ClaimListController clc;
+	
+	private Client client;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -77,7 +81,7 @@ public class AddItemActivity extends Activity{
 			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
 		}
 		
-		
+		client=new Client();
 		
 
 		//==========================================================================================================
@@ -182,7 +186,7 @@ public class AddItemActivity extends Activity{
 				newItem.setDate(adddate);
 				
 				currentClaim.addItem(newItem);
-				
+				client.addClaim(currentClaim);
 				saveInFile();
 				
 				Intent backIntent = new Intent();

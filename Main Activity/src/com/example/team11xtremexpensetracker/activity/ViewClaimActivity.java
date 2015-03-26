@@ -100,7 +100,7 @@ public class ViewClaimActivity extends Activity {
 			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
 		}
 		
-		
+		client=new Client();
 	
 		// TODO: load from file
 		// get widgets
@@ -214,7 +214,7 @@ public class ViewClaimActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						
 						list.remove(onLongClickPos);
-						
+						client.addClaim(currentClaim);
 						saveInFile();
 						dataList=loadFromFile();
 						ClaimListController.setClaimsList(dataList);

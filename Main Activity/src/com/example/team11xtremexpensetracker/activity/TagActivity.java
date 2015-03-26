@@ -1,13 +1,14 @@
 package com.example.team11xtremexpensetracker.activity;
 
 import java.io.FileInputStream;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+
+import network.Client;
 
 import com.example.team11xtremexpensetracker.ClaimListController;
 import com.example.team11xtremexpensetracker.ClaimsList;
@@ -55,6 +56,8 @@ public class TagActivity extends Activity {
 	private static final String FILENAME = "datafile.sav";
 	private ClaimListController clc;
 	
+	private Client client;
+	
 	/**
 	 * Initialize every view and tag function
 	 */
@@ -73,6 +76,8 @@ public class TagActivity extends Activity {
 			new ClaimListController();
 			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
 		}
+		
+		client=new Client();
 		/**
 		 * check tagList() is empty or not, if not empty pop every tag onto screen
 		 */
@@ -118,6 +123,7 @@ public class TagActivity extends Activity {
 		Tag aNewTag=new Tag(tagContent);
 		currentClaim.getTagList().add(aNewTag);
 		saveInFile();
+		client.addClaim(currentClaim);
 		
 	}
 	
