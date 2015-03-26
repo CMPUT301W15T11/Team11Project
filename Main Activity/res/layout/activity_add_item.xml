@@ -54,7 +54,7 @@
         android:id="@+id/amountspentView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       	android:text="Amount spent in $" />
+        android:text="Amount spent" />
 
     <EditText
         android:id="@+id/addamountspent"

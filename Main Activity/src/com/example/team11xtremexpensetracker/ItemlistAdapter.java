@@ -32,7 +32,7 @@ public class ItemlistAdapter extends ArrayAdapter<Item>{
 		itemName.setText(tempitem.getItem());
 		
 		TextView itemAmt = (TextView)convertView.findViewById(R.id.itemAmountView);
-		itemAmt.setText("$"+tempitem.getAmount());
+		itemAmt.setText(tempitem.getUnit()+" : "+tempitem.getAmount());
 		
 		
 		return convertView;
