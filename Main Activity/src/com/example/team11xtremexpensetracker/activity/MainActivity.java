@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
 	
 	public void claimantSelected(View view){
 		//Toast.makeText(this, "Claimant", Toast.LENGTH_LONG).show();
-		Intent intent = new Intent(MainActivity.this, AccountActivity.class );
+		Intent intent = new Intent(MainActivity.this, ListClaimsActivity.class );
 		startActivity(intent);
 	}
 

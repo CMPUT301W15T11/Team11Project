@@ -13,7 +13,6 @@ public class ClaimListController {
 		if (claimsList == null){
 			claimsList = new ClaimsList();
 		}
-		claimsList.sort();
 		return claimsList;
 	}
 	
@@ -36,4 +35,7 @@ public class ClaimListController {
 		ClaimListController.claimsList = claimsList;
 	}
 	
+	public static void sort(){
+		claimsList.sort();
+	}
 }

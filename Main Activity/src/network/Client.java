@@ -134,7 +134,7 @@ public class Client {
 	 * 
 	 * } catch (Exception e) { e.printStackTrace(); } }
 	 */
-	public static void deleteClaim(final String claimName) {
+	public void deleteClaim(final String claimName) {
 
 		new Thread(new Runnable() {
 

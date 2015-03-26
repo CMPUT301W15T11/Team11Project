@@ -21,7 +21,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.44"
-            android:text="Approved/Submitted" />
+            android:text="Approved" />
+        <Button
+            android:id="@+id/addDestButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.44"
+            android:text="Destination" />
     </LinearLayout>
 
     <TextView

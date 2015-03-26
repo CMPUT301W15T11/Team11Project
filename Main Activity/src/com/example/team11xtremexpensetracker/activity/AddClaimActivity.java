@@ -67,7 +67,7 @@ public class AddClaimActivity extends Activity {
 
 		dataList = this.loadFromFile();
 		clc = new ClaimListController();
-		clc.setClaimsList(dataList);
+		ClaimListController.setClaimsList(dataList);
 
 		client = new Client();
 
@@ -163,29 +163,32 @@ public class AddClaimActivity extends Activity {
 				}
 				newClaim.setName(claimName);
 				if (claimID == -1) {
+					claimID = ClaimListController.getClaimsList().getLength();
 					ClaimListController.getClaimsList().addClaim(newClaim);
 				}
 				saveInFile();
-				// ------------------------------------------------test--------------------------------------//
+				
+				client.addClaim(newClaim);
+
+				/*-----------------------Bug---------------------
+				 * the checker somehow ends thread in a wrong way
 				ConnectionChecker netChecker = new ConnectionChecker();
 				if (netChecker.netConnected(AddClaimActivity.this)) {
 					client.addClaim(newClaim);
-				}else{
-					Toast.makeText(AddClaimActivity.this,"No network connected, change will only be applied locally",Toast.LENGTH_SHORT).show();
+				} else {
+					client=null;
+					Toast.makeText(AddClaimActivity.this,
+							"No network found, change will be applied on local file only", Toast.LENGTH_SHORT).show();
 				}
-				// ------------------------------------------------test--------------------------------------//
-				// Intent intent = new Intent();
-				// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				// intent.setClass(AddClaimActivity.this,ListClaimsActivity.class);
-				// intent.setClass(AddClaimActivity.this,ViewClaimActivity.class);
-				// AddClaimActivity.this.startActivity(intent);
-				Integer newClaim = new Integer((new ClaimListController().getClaimsList().getLength()) - 1);
+				
+				*/
+
+				new ClaimListController();
 				Intent intent = new Intent(AddClaimActivity.this, ViewClaimActivity.class);
-				intent.putExtra("claimID", newClaim);
-				// Toast.makeText(AddClaimActivity.this, "claimID: " +
-				// newClaim.toString(), Toast.LENGTH_SHORT).show();
+				intent.putExtra("claimID", claimID);
+				//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
-				finish();
+				finish(); 
 			}
 		});
 

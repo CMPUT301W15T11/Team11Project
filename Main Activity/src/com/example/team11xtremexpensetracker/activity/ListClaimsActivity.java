@@ -15,6 +15,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import network.Client;
+
 import com.example.team11xtremexpensetracker.ClaimListController;
 import com.example.team11xtremexpensetracker.ClaimsList;
 import com.example.team11xtremexpensetracker.ExpenseClaim;
@@ -55,7 +57,15 @@ public class ListClaimsActivity extends Activity {
 
 	private ArrayList<Integer> indexCorrector;
 	private boolean filterFlag;
+	
+	private Client client;
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		dataList.sort();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,9 +76,13 @@ public class ListClaimsActivity extends Activity {
 
 		//Load in claims from disk, give them to the claimsListController
 		dataList = this.loadFromFile();
+		dataList.sort();
 		clc = new ClaimListController();
 		clc.setClaimsList(dataList);
 		claims = clc.getClaimsList().getClaims();
+		
+		client=new Client();
+		
 		// Setup adapter for list so claims can be displayed
 		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);
 		final ArrayAdapter<ExpenseClaim> claimAdapter = new ArrayAdapter<ExpenseClaim>(this,
@@ -168,22 +182,32 @@ public class ListClaimsActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if (!filterFlag) {
+							String nameForHttp=ClaimListController.getClaimsList().getClaimsAL().get(onLongClickPos).getName();
 							ClaimListController.removeClaim(onLongClickPos);
 							claimAdapter.clear();
 							for (int i = 0; i < ClaimListController.getClaimsList().getLength(); i++) {
 								claimAdapter.add(ClaimListController.getClaimsList().getClaimById(i));
 							}
 							saveInFile();
+							
+							client.deleteClaim(nameForHttp);
+							
 							dataList = loadFromFile();
+							dataList.sort();
 							ClaimListController.setClaimsList(dataList);
 							claimAdapter.notifyDataSetChanged();
 						} else {
 							int correctIndex = indexCorrector.get(onLongClickPos);
 							indexCorrector.remove(onLongClickPos);
 							list.remove(onLongClickPos);
+							String nameForHttp=ClaimListController.getClaimsList().getClaimsAL().get(correctIndex).getName();
 							ClaimListController.removeClaim(correctIndex);
 							saveInFile();
+							
+							client.deleteClaim(nameForHttp);
+							
 							dataList = loadFromFile();
+							dataList.sort();
 							ClaimListController.setClaimsList(dataList);
 							claimAdapter.notifyDataSetChanged();
 						}
