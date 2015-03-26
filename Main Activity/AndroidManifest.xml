@@ -74,10 +74,7 @@
             android:name=".activity.AccountActivity"
             android:label="@string/title_activity_account" >
         </activity>
-        <activity
-            android:name=".RegisterActivity"
-            android:label="@string/title_activity_register" >
-        </activity>
+        
     </application>
 
 </manifest>
