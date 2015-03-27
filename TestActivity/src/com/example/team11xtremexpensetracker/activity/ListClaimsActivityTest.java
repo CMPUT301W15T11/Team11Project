@@ -2,6 +2,7 @@ package com.example.team11xtremexpensetracker.activity;
 
 import com.example.team11xtremexpensetracker.R;
 
+import android.app.Instrumentation.ActivityMonitor;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
@@ -21,6 +22,9 @@ public class ListClaimsActivityTest extends ActivityInstrumentationTestCase2<Lis
 	Button addClaimButton;
 	ListView claimsListView;
 	ListClaimsActivity mActivity;
+	//ListClaimsActivity mActivity2;
+	int origNumberClaims;
+	int newNumClaims;
 	
 	
 	public ListClaimsActivityTest() {
@@ -95,6 +99,82 @@ public class ListClaimsActivityTest extends ActivityInstrumentationTestCase2<Lis
 
 	    tearDown();
 	}
+	
+	
+	public void testAddClaimButtonOpensView() throws Exception {
+		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(AddClaimActivity.class.getName(), null, false);
+		
+		mActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run(){
+				addClaimButton.performClick();
+			}
+		});
+		
+		AddClaimActivity addClaimActivity = (AddClaimActivity)getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 0);
+		assertNotNull(addClaimActivity);
+		addClaimActivity.finish();
+		
+		tearDown();
+	} 
+	
+	public void testAddClaimInAddClaimActivity() throws Exception {
+		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(AddClaimActivity.class.getName(), null, false);
+		ActivityMonitor activityMonitor2 = getInstrumentation().addMonitor(ViewClaimActivity.class.getName(), null, false);
+		final EditText claimName;
+		final Button doneButton;
+		
+		
+		//Take note of number of claims in list before one is added.
+		origNumberClaims = claimsListView.getAdapter().getCount();
+		
+		mActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run(){
+				addClaimButton.performClick();
+			}
+		});
+		
+		AddClaimActivity addClaimActivity = (AddClaimActivity)getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 0);
+		claimName = (EditText)addClaimActivity.findViewById(R.id.editTextEnterName);
+		doneButton = (Button)addClaimActivity.findViewById(R.id.addClaimDoneButton);
+		addClaimActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run(){
+				claimName.setText("Maui");
+				doneButton.performClick();
+			}
+		});
+		
+		
+		//Close out ViewClaimActivity that has been opened
+		final ViewClaimActivity vClaim = (ViewClaimActivity)getInstrumentation().waitForMonitorWithTimeout(activityMonitor2, 0);
+		vClaim.finish();
+		assertNotNull(mActivity);
+		tearDown();
+	}
+	
+	public void testClaimNumberWentUp() throws Exception{
+		newNumClaims = claimsListView.getAdapter().getCount();
+		assertTrue("Old: " + new Integer(origNumberClaims).toString() + " New: " + new Integer(newNumClaims).toString(), newNumClaims > origNumberClaims);
+		tearDown();
+	}
+	
+	/*
+	 * Cant simulate listView itemLongClick with test equipment. so cant check this yet
+	public void testDeleteClaim() throws Exception{
+		mActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run(){
+				claimsListView.requestFocusFromTouch();
+				claimsListView.setSelection(0);
+				claimsListView.performItemClick(claimsListView.getAdapter().getView(0, null, null), 0, claimsListView.getAdapter().getItemId(0));
+				
+			}
+		});
+		
+		
+	}*/
 	
 	
 }

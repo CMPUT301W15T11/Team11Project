@@ -35,7 +35,7 @@ public class ViewClaimActivityTest extends ActivityInstrumentationTestCase2<View
 		mActivity = getActivity();
 		
 		Intent intent = new Intent();
-        intent.putExtra("claimID",2);
+        intent.putExtra("claimID",0);
         setActivityIntent(intent);
         
         buttonClaimTags = (Button)mActivity.findViewById(R.id.buttonClaimTags);
@@ -92,7 +92,7 @@ public class ViewClaimActivityTest extends ActivityInstrumentationTestCase2<View
 	    tearDown();
 	}
 	@MediumTest
-	public void testAddExpense() throws Exception {
+	public void testAddExpenseButton() throws Exception {
 	    final View decorView = mActivity.getWindow().getDecorView();
 
 	    ViewAsserts.assertOnScreen(decorView, buttonClaimAddExpense);
@@ -114,13 +114,10 @@ public class ViewClaimActivityTest extends ActivityInstrumentationTestCase2<View
 	    tearDown();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*
+	@MediumTest
+	public void testAddExpense() throws Exception{
+		
+	} */
 	
 }
