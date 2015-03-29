@@ -1,14 +1,8 @@
 package com.example.team11xtremexpensetracker.activity;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.example.team11xtremexpensetracker.ClaimListController;
-import com.example.team11xtremexpensetracker.ClaimsList;
 import com.example.team11xtremexpensetracker.R;
-import com.example.team11xtremexpensetracker.R.id;
-import com.example.team11xtremexpensetracker.R.layout;
-import com.example.team11xtremexpensetracker.R.menu;
+import com.example.team11xtremexpensetracker.UserController;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,23 +11,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class AccountActivity extends Activity {
 
-	private ClaimsList dataList;
-	private static final String FILENAME = "datafile.sav";
-	private ClaimListController clc;
-
-
 	private Button backButton;
 	private Button confirmButton;
+	private EditText usernameEdit;
+	private UserController userController;
 
 	private void init() {
 
+		userController=new UserController();
 		
 		backButton = (Button) findViewById(R.id.account_back);
 		confirmButton = (Button) findViewById(R.id.account_confirm);
+		usernameEdit=(EditText)findViewById(R.id.username_editText);
+		
 
 		backButton.setOnClickListener(new View.OnClickListener() {
 
@@ -49,8 +42,11 @@ public class AccountActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				String userName=usernameEdit.getText().toString();
+				userController.setUserName(userName);
+				
 				Intent intent=new Intent(AccountActivity.this,ListClaimsActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				
 				startActivity(intent);
 				
 			}

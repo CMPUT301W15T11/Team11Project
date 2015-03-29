@@ -8,6 +8,7 @@ package com.example.team11xtremexpensetracker.activity;
 import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.R.layout;
 import com.example.team11xtremexpensetracker.R.menu;
+import com.example.team11xtremexpensetracker.UserController;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -33,7 +34,14 @@ public class MainActivity extends Activity {
 	
 	public void claimantSelected(View view){
 		//Toast.makeText(this, "Claimant", Toast.LENGTH_LONG).show();
-		Intent intent = new Intent(MainActivity.this, ListClaimsActivity.class );
+		UserController.setUserType("Claimant");
+		Intent intent = new Intent(MainActivity.this, AccountActivity.class );
+		startActivity(intent);
+	}
+	
+	public void approverSelected(View view){
+		UserController.setUserType("Approver");
+		Intent intent=new Intent(MainActivity.this,AccountActivity.class);
 		startActivity(intent);
 	}
 

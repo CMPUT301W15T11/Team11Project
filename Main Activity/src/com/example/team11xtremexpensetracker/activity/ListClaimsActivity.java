@@ -25,6 +25,7 @@ import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.R.id;
 import com.example.team11xtremexpensetracker.R.layout;
 import com.example.team11xtremexpensetracker.R.menu;
+import com.example.team11xtremexpensetracker.UserController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,6 +39,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -50,6 +52,7 @@ public class ListClaimsActivity extends Activity {
 	private ImageView searchImage;
 	private ClaimListController clc;
 	private EditText tagSearchEdit;
+	private Button addClaimButton;
 	private int onLongClickPos;
 	private Collection<ExpenseClaim> claims;
 	private ClaimsList dataList;
@@ -57,15 +60,16 @@ public class ListClaimsActivity extends Activity {
 
 	private ArrayList<Integer> indexCorrector;
 	private boolean filterFlag;
-	
+
 	private Client client;
+	private ArrayList<ExpenseClaim> transferList;
 
 	@Override
 	protected void onStart() {
 		super.onStart();
 		dataList.sort();
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,16 +77,48 @@ public class ListClaimsActivity extends Activity {
 		claimsListView = (ListView) findViewById(R.id.claimsListView);
 		searchImage = (ImageView) findViewById(R.id.tag_search);
 		tagSearchEdit = (EditText) findViewById(R.id.tag_filter);
-
-		//Load in claims from disk, give them to the claimsListController
+		addClaimButton=(Button)findViewById(R.id.addClaimButton);
+		// Load in claims from disk, give them to the claimsListController
 		dataList = this.loadFromFile();
 		dataList.sort();
 		clc = new ClaimListController();
 		clc.setClaimsList(dataList);
 		claims = clc.getClaimsList().getClaims();
+
+		client = new Client();
+
+		if (UserController.getUserType().equals("Claimant")) {
+			claimant_init();
+			
+		} else if (UserController.getUserType().equals("Approver")) {
+			approver_init();
+			
+		}
+
+	}
+	
+	public void approver_init(){
+		addClaimButton.setEnabled(false);
+		transferList=new ArrayList<ExpenseClaim>(); 
+		new Thread(new Runnable(){
+			@Override
+			public void run(){
+				transferList=client.getApproverClaimList();
+			}
+			
+		}).start();
+
+		final ArrayList<ExpenseClaim> list2=new ArrayList<ExpenseClaim>(transferList);
+		final ArrayAdapter<ExpenseClaim> claimAdapter=new ArrayAdapter<ExpenseClaim>(ListClaimsActivity.this,android.R.layout.simple_expandable_list_item_1,list2);
+		claimsListView.setAdapter(claimAdapter);
 		
-		client=new Client();
 		
+		indexCorrector=new ArrayList<Integer>();
+		filterFlag=false;
+	
+	}
+
+	public void claimant_init() {
 		// Setup adapter for list so claims can be displayed
 		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);
 		final ArrayAdapter<ExpenseClaim> claimAdapter = new ArrayAdapter<ExpenseClaim>(this,
@@ -91,7 +127,7 @@ public class ListClaimsActivity extends Activity {
 
 		indexCorrector = new ArrayList<Integer>();
 		filterFlag = false;
-		
+
 		// Add listeners
 		clc.getClaimsList().addListener(new Listener() {
 			@Override
@@ -143,8 +179,8 @@ public class ListClaimsActivity extends Activity {
 		});
 
 		/**
-		 * Called when a claim within the list is selected
-		 * Calls viewClaim while passing it the appropriate claim ID
+		 * Called when a claim within the list is selected Calls viewClaim while
+		 * passing it the appropriate claim ID
 		 */
 		claimsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -164,9 +200,9 @@ public class ListClaimsActivity extends Activity {
 		});
 
 		/**
-		 * Called when an item in the claims list is long clicked
-		 * Displays the "Would you like to delete" dialog,
-		 * and if prompted, deletes the appropriate claim
+		 * Called when an item in the claims list is long clicked Displays the
+		 * "Would you like to delete" dialog, and if prompted, deletes the
+		 * appropriate claim
 		 */
 		claimsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
@@ -182,16 +218,17 @@ public class ListClaimsActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if (!filterFlag) {
-							String nameForHttp=ClaimListController.getClaimsList().getClaimsAL().get(onLongClickPos).getName();
+							String nameForHttp = ClaimListController.getClaimsList().getClaimsAL().get(onLongClickPos)
+									.getName();
 							ClaimListController.removeClaim(onLongClickPos);
 							claimAdapter.clear();
 							for (int i = 0; i < ClaimListController.getClaimsList().getLength(); i++) {
 								claimAdapter.add(ClaimListController.getClaimsList().getClaimById(i));
 							}
 							saveInFile();
-							
+
 							client.deleteClaim(nameForHttp);
-							
+
 							dataList = loadFromFile();
 							dataList.sort();
 							ClaimListController.setClaimsList(dataList);
@@ -200,12 +237,13 @@ public class ListClaimsActivity extends Activity {
 							int correctIndex = indexCorrector.get(onLongClickPos);
 							indexCorrector.remove(onLongClickPos);
 							list.remove(onLongClickPos);
-							String nameForHttp=ClaimListController.getClaimsList().getClaimsAL().get(correctIndex).getName();
+							String nameForHttp = ClaimListController.getClaimsList().getClaimsAL().get(correctIndex)
+									.getName();
 							ClaimListController.removeClaim(correctIndex);
 							saveInFile();
-							
+
 							client.deleteClaim(nameForHttp);
-							
+
 							dataList = loadFromFile();
 							dataList.sort();
 							ClaimListController.setClaimsList(dataList);
@@ -239,8 +277,8 @@ public class ListClaimsActivity extends Activity {
 	}
 
 	/**
-	 * invoked when "add claim" button is pressed
-	 * Brings users to the AddClaimActivity.
+	 * invoked when "add claim" button is pressed Brings users to the
+	 * AddClaimActivity.
 	 */
 	public void addClaim(View v) {
 		// Toast.makeText(this, "Adding Claim", Toast.LENGTH_LONG).show();
@@ -252,7 +290,6 @@ public class ListClaimsActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		Intent intentBackPressed = new Intent();
-		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentBackPressed.setClass(ListClaimsActivity.this, MainActivity.class);
 		startActivity(intentBackPressed);
 	}

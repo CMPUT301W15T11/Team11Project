@@ -14,9 +14,19 @@
     <string name="title_activity_view_tag">TagActivity</string>
     <string name="title_activity_edit_claim">EditClaimActivity</string>
     <string name="title_activity_account">AccountActivity</string>
-   	<string name="account_name">Enter your name below</string>
+    <string name="account_name">Enter your name below</string>
     <string name="account_back_button">Back</string>
     <string name="account_confirm_button">Confirm</string>
-
+    <string name="submit_button">Submit</string>
+    <string name="submitted_button">Submitted</string>
+    <string name="approve_button">Approve</string>
+    <string name="approved_button">Aprroved</string>
+    <string name="return_button">Return</string>
+    <string name="returned_button">Returned</string>
+    <string name="title_activity_comments">CommentsActivity</string>
+    <string name="by_text">By</string>
+    <string name="comments_date">Post date:</string>
+    <string name="title_activity_add_comments">AddCommentsActivity</string>
+    <string name="title_activity_approver_view_claim">ApproverViewClaimActivity</string>
 
 </resources>

@@ -20,7 +20,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.util.Log;
 
 import com.example.team11xtremexpensetracker.ExpenseClaim;
-import com.example.team11xtremexpensetracker.User;
+import com.example.team11xtremexpensetracker.UserController;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -28,10 +28,10 @@ import com.google.gson.reflect.TypeToken;
 
 public class Client {
 
-	private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301w15t11/_search";
+	private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301w15t11/Claims/_search";
 	private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301w15t11/";
 	private static final String LOG_TAG = "ClaimSearch";
-
+	
 	private Gson gson;
 
 	public Client() {
@@ -80,9 +80,6 @@ public class Client {
 
 	}
 
-	// test way: open url
-	// http://cmput301.softwareprocess.es:8080/cmput301w15t11/Claims/ur new
-	// claim's name/, too see the new claim exists or not
 	public void addClaim(final ExpenseClaim claim) {
 
 		new Thread(new Runnable() {
@@ -120,21 +117,6 @@ public class Client {
 		}).start();
 	}
 
-	/*
-	 * public void addClaim(ExpenseClaim claim) { // TODO Auto-generated method
-	 * stub HttpClient httpClient = new DefaultHttpClient(); try { HttpPost
-	 * addRequest = new HttpPost(RESOURCE_URL +
-	 * claim.getName().replaceAll("\\s","")+"/");
-	 * 
-	 * StringEntity stringEntity = new StringEntity(gson.toJson(claim));
-	 * addRequest.setEntity(stringEntity); addRequest.setHeader("Accept",
-	 * "application/json");
-	 * 
-	 * HttpResponse response = httpClient.execute(addRequest); String status =
-	 * response.getStatusLine().toString(); Log.i(TAG, status);
-	 * 
-	 * } catch (Exception e) { e.printStackTrace(); } }
-	 */
 	public void deleteClaim(final String claimName) {
 
 		new Thread(new Runnable() {
@@ -168,7 +150,17 @@ public class Client {
 			}
 		}).start();
 	}
+	
+	public ArrayList<ExpenseClaim> getApproverClaimList(){
+		// TODO load claims which do not belong to current approver
+		
+		ArrayList<ExpenseClaim> output=new ArrayList<ExpenseClaim> ();
+		
+		return output;
+	}
+	
 
+	
 	private SearchHit<ExpenseClaim> parseClaimHit(HttpResponse response) {
 		try {
 			String json = getEntityContent(response);

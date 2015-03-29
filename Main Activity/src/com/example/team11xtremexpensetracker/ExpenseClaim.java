@@ -13,21 +13,26 @@ import java.util.Calendar;
 public class ExpenseClaim {
 	
 	private String claimantName;
+	private String approverName;
 	private String name;
+	private String comments;
+	private Calendar commentDate;
+	
 	private Calendar startDate;
 	private Calendar endDate;
 	private ArrayList<Destination>  destinations;
 	private String status;
 	private  ArrayList<Tag> tagList;
 	private Double totalCurrency;
-	private Boolean isEditable;
-	private String approverName;
+	private Boolean isEditable;	
 	private ArrayList<Item>Itemlist;
 	// getters and setters	
 	/**
 	 * Create a empty expense claim object.
 	 */
 	public ExpenseClaim(){
+		approverName="";
+		status="In progress";
 		isEditable = true;
 		destinations = new ArrayList <Destination>() ;
 		Itemlist = new ArrayList <Item>();
@@ -199,9 +204,23 @@ public class ExpenseClaim {
 	 * Set tag list.
 	 * @param tagList
 	 */
-	public void setTags(ArrayList<Tag> tagList) {
+	public void setTagList(ArrayList<Tag> tagList) {
 		this.tagList = tagList;
 	}
+	
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+	public Calendar getCommentDate() {
+		return commentDate;
+	}
+	public void setCommentDate(Calendar commentDate) {
+		this.commentDate = commentDate;
+	}
+	
 	// total currency
 	/**
 	 * Get total currency.

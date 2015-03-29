@@ -7,7 +7,7 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -74,7 +74,18 @@
             android:name=".activity.AccountActivity"
             android:label="@string/title_activity_account" >
         </activity>
-        
+        <activity
+            android:name=".activity.CommentsActivity"
+            android:label="@string/title_activity_comments" >
+        </activity>
+        <activity
+            android:name=".AddCommentsActivity"
+            android:label="@string/title_activity_add_comments" >
+        </activity>
+        <activity
+            android:name=".ApproverViewClaimActivity"
+            android:label="@string/title_activity_approver_view_claim" >
+        </activity>
     </application>
 
 </manifest>

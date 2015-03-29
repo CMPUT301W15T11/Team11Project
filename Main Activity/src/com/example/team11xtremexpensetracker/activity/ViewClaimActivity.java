@@ -17,6 +17,7 @@ import java.util.Collection;
 
 import network.Client;
 
+import com.example.team11xtremexpensetracker.AddCommentsActivity;
 import com.example.team11xtremexpensetracker.ClaimListController;
 import com.example.team11xtremexpensetracker.ClaimsList;
 import com.example.team11xtremexpensetracker.ExpenseClaim;
@@ -26,6 +27,7 @@ import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.R.id;
 import com.example.team11xtremexpensetracker.R.layout;
 import com.example.team11xtremexpensetracker.R.menu;
+import com.example.team11xtremexpensetracker.UserController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -47,39 +49,40 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ViewClaimActivity extends Activity {
-	
+
 	private ExpenseClaim currentClaim;
 	private Button tagsButton;
 	private Button ApproveOrSubmitButton;
 	private Button menuButton;
 	private Button addExpenseButton;
-	
+
 	private String claimName;
 	private String dateRange;
-	
+
 	private ListView expenseView;
 	private TextView nameView;
 	private TextView dateRangeView;
-	//===
-	
+	// ===
+
 	private ClaimsList datafile;
 	private ItemlistAdapter itemlistAdapter;
 	private ListView itemlistview;
-	private int claimID; //The index of the claim in ClaimsList
+	private int claimID; // The index of the claim in ClaimsList
 	private ArrayList<Item> list;
-	
+
 	private ClaimsList dataList;
 	private static final String FILENAME = "datafile.sav";
 	private ClaimListController clc;
 	private Button addDestButton;
-	
+
 	private Client client;
+	private boolean editFlag;
 
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		
+
 	}
 
 	@SuppressLint("CutPasteId")
@@ -87,21 +90,23 @@ public class ViewClaimActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_claim);
-		
-		dataList=this.loadFromFile();
-		
+
+		dataList = this.loadFromFile();
+
 		ClaimListController.setClaimsList(dataList);
-		//Get current claim
+		// Get current claim
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", 0);
-		//Toast.makeText(this, "Claim: " + (new Integer(claimID).toString()), Toast.LENGTH_SHORT).show();
-		if (claimID >= 0){
-			//new ClaimListController();
+		// Toast.makeText(this, "Claim: " + (new Integer(claimID).toString()),
+		// Toast.LENGTH_SHORT).show();
+		if (claimID >= 0) {
+			// new ClaimListController();
 			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
 		}
-		
-		client=new Client();
-	
+
+		client = new Client();
+		editFlag = true;
+
 		// TODO: load from file
 		// get widgets
 		tagsButton = (Button) findViewById(R.id.buttonClaimTags);
@@ -109,136 +114,168 @@ public class ViewClaimActivity extends Activity {
 		addExpenseButton = (Button) findViewById(R.id.buttonClaimAddExpense);
 		nameView = (TextView) findViewById(R.id.textViewClaimName);
 		dateRangeView = (TextView) findViewById(R.id.textViewClaimDateRange);
-		//Expense Item list view
-		itemlistview = (ListView)findViewById(R.id.expenseListView);
-		
-		list= currentClaim.getItemlist();
-		
+		// final MenuItem editClaimItem=(MenuItem)findViewById(R.id.editClaim);
+
+		if (claimID >= 0 && (currentClaim.getStatus().equals("Submitted"))
+				|| (currentClaim.getStatus().equals("Approved"))) {
+			ApproveOrSubmitButton.setEnabled(false);
+			editFlag = false;
+			// editClaimItem.setEnabled(false);
+		}
+		if (claimID >= 0 && UserController.getUserType().equals("Approver")) {
+			ApproveOrSubmitButton.setText(R.string.approve_button);
+			editFlag = false;
+		}
+		// Expense Item list view
+		itemlistview = (ListView) findViewById(R.id.expenseListView);
+
+		list = currentClaim.getItemlist();
+
 		itemlistAdapter = new ItemlistAdapter(this, list);
 
 		// item list adapter
 		itemlistview.setAdapter(itemlistAdapter);
-		
-		//populate name and dateRange fields.
+
+		// populate name and dateRange fields.
 		nameView.setText(currentClaim.getName());
 		dateRangeView.setText(currentClaim.getDateRange());
-		//Toast.makeText(this, "DateRange: " + currentClaim.getDateRange(), Toast.LENGTH_LONG).show();
-		
-		
+		// Toast.makeText(this, "DateRange: " + currentClaim.getDateRange(),
+		// Toast.LENGTH_LONG).show();
+
 		// create listeners
-		tagsButton.setOnClickListener(new View.OnClickListener() {	
-	
+		tagsButton.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 
 				Intent intent = new Intent();
 				intent.putExtra("claimID", claimID);
-				intent.setClass(ViewClaimActivity.this,TagActivity.class);
+				intent.setClass(ViewClaimActivity.this, TagActivity.class);
 				ViewClaimActivity.this.startActivity(intent);
 			}
-			
+
 		});
-		
-		ApproveOrSubmitButton.setOnClickListener(new View.OnClickListener() {	
+
+		ApproveOrSubmitButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				
+				if (UserController.getUserType().equals("Claimant")) {
+					if (currentClaim.getTagList().size() < 1) {
+						Toast.makeText(ViewClaimActivity.this, "Cannot submit without any tag", Toast.LENGTH_SHORT)
+								.show();
+						return;
+					}
+					if (currentClaim.getDestinations().size() < 1) {
+						Toast.makeText(ViewClaimActivity.this, "Cannot submit without any destination",
+								Toast.LENGTH_SHORT).show();
+						return;
+					}
+					currentClaim.setStatus("Submitted");
+					editFlag = false;
+					Toast.makeText(ViewClaimActivity.this, "Claim submitted", Toast.LENGTH_SHORT).show();
+					ApproveOrSubmitButton.setText(R.string.submitted_button);
+					ApproveOrSubmitButton.setEnabled(false);
+
+					// editClaimItem.setEnabled(false);
+
+					saveInFile();
+					client.addClaim(currentClaim);
+				} else if (UserController.getUserType().equals("Approver")) {
+
+				}
+
 			}
-			
-		});	
-		
-		addExpenseButton = (Button)findViewById(R.id.buttonClaimAddExpense);
-		addExpenseButton.setOnClickListener(new View.OnClickListener() {	
+
+		});
+
+		addExpenseButton = (Button) findViewById(R.id.buttonClaimAddExpense);
+		addExpenseButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO: jump to add expense activity
-				Intent intent =  new Intent(ViewClaimActivity.this,AddItemActivity.class);
+				Intent intent = new Intent(ViewClaimActivity.this, AddItemActivity.class);
 				intent.putExtra("claimID", claimID);
 				startActivity(intent);
 			}
-			
+
 		});
-		
-		
-		addDestButton = (Button)findViewById(R.id.addDestButton);
-		addDestButton.setOnClickListener(new View.OnClickListener() {	
+
+		addDestButton = (Button) findViewById(R.id.addDestButton);
+		addDestButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO: jump to add expense activity
-				Intent intent =  new Intent(ViewClaimActivity.this,AddDestionationActivity.class);
+				Intent intent = new Intent(ViewClaimActivity.this, AddDestionationActivity.class);
 				intent.putExtra("claimID", claimID);
 				startActivity(intent);
 			}
-			
+
 		});
-			
+
 		// show name and date range
-		//nameView.setText(claimName);
-				
-		//set Listener for item list view
+		// nameView.setText(claimName);
+
+		// set Listener for item list view
 		itemlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int itemposition, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int itemposition, long id) {
 				// TODO Auto-generated method stub
 				final int itemID = itemposition;
-				
-				Intent intent = new Intent(ViewClaimActivity.this,ViewItemActivity.class);
+
+				Intent intent = new Intent(ViewClaimActivity.this, ViewItemActivity.class);
 				intent.putExtra("claimID", claimID);
-				intent.putExtra("itemID",itemID);
+				intent.putExtra("itemID", itemID);
 				startActivity(intent);
-				
+
 			}
 		});
-		//==========================================================================================================
-		//============================long click to delete	
+		// ==========================================================================================================
+		// ============================long click to delete
 		itemlistview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
 			private int onLongClickPos;
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 				// TODO Auto-generated method stub
 				onLongClickPos = position;
 				AlertDialog.Builder adb = new AlertDialog.Builder(ViewClaimActivity.this);
 				adb.setMessage("Delete?");
 				adb.setCancelable(true);
-				adb.setPositiveButton("Delete", new OnClickListener(){
+				adb.setPositiveButton("Delete", new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						
+
 						list.remove(onLongClickPos);
 						client.addClaim(currentClaim);
 						saveInFile();
-						dataList=loadFromFile();
+						dataList = loadFromFile();
 						ClaimListController.setClaimsList(dataList);
-					
+
 						itemlistAdapter.notifyDataSetChanged();
-						
+
 					}
-					
+
 				});
-				adb.setNegativeButton("Cancel", new OnClickListener(){
+				adb.setNegativeButton("Cancel", new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						
+
 					}
-					
+
 				});
 				adb.show();
 				return true;
 			}
 		});
-		
-		
+
 	}
 
 	@Override
@@ -248,24 +285,47 @@ public class ViewClaimActivity extends Activity {
 		return true;
 	}
 
-	public void editClaim(MenuItem menuItem){
-		//Toast.makeText(this, "Edit", Toast.LENGTH_LONG).show();
-		Intent intent = new Intent();
-		intent.putExtra("claimID", claimID);
-		// TODO: save claim id into intent for editing
-		intent.setClass(ViewClaimActivity.this,AddClaimActivity.class);
-		ViewClaimActivity.this.startActivity(intent);
-		finish();
+	public void editClaim(MenuItem menuItem) {
+		// Toast.makeText(this, "Edit", Toast.LENGTH_LONG).show();
+		if (editFlag) {
+			Intent intent = new Intent();
+			intent.putExtra("claimID", claimID);
+			// TODO: save claim id into intent for editing
+			intent.setClass(ViewClaimActivity.this, AddClaimActivity.class);
+			ViewClaimActivity.this.startActivity(intent);
+			finish();
+		} else {
+			Toast.makeText(ViewClaimActivity.this, "Cannot apply change on submitted claim", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	public void commentClaim(MenuItem menuItem) {
+		if (UserController.getUserType().equals("Claimant")||((currentClaim.getStatus().equals("Approved"))||(currentClaim.getStatus().equals("Returned")))) {
+			Intent intent = new Intent();
+			intent.putExtra("claimID", claimID);
+			intent.setClass(ViewClaimActivity.this, CommentsActivity.class);
+			ViewClaimActivity.this.startActivity(intent);
+			finish();
+		}else if(UserController.getUserType().equals("Approver")){
+			Intent intent=new Intent();
+			intent.putExtra("claimID",claimID);
+			intent.setClass(ViewClaimActivity.this,AddCommentsActivity.class);
+			ViewClaimActivity.this.startActivity(intent);
+			finish();
+		}else{
+			Toast.makeText(ViewClaimActivity.this, "No comments find", Toast.LENGTH_SHORT).show();
+			return;
+		}
 	}
 
 	@Override
-	public void onBackPressed(){
+	public void onBackPressed() {
 		Intent intentBackPressed = new Intent();
-		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentBackPressed.setClass(ViewClaimActivity.this, ListClaimsActivity.class);
 		ViewClaimActivity.this.startActivity(intentBackPressed);
+		finish();
 	}
-	
+
 	private ClaimsList loadFromFile() {
 		Gson gson = new Gson();
 		dataList = new ClaimsList();

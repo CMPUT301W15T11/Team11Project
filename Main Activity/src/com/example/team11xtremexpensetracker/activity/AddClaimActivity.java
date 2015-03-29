@@ -26,6 +26,7 @@ import com.example.team11xtremexpensetracker.R.id;
 import com.example.team11xtremexpensetracker.R.layout;
 import com.example.team11xtremexpensetracker.R.menu;
 import com.example.team11xtremexpensetracker.SingleDatePickerDialog.OnDateSetListener;
+import com.example.team11xtremexpensetracker.UserController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -59,7 +60,8 @@ public class AddClaimActivity extends Activity {
 	private ClaimListController clc;
 
 	private Client client;
-
+	private UserController userController;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -166,6 +168,9 @@ public class AddClaimActivity extends Activity {
 					claimID = ClaimListController.getClaimsList().getLength();
 					ClaimListController.getClaimsList().addClaim(newClaim);
 				}
+				
+				newClaim.setClaimantName(UserController.getUserName());
+				
 				saveInFile();
 				
 				client.addClaim(newClaim);
