@@ -16,14 +16,22 @@ public class CameraActivity extends Activity {
 		setContentView(R.layout.activity_camera);
 		
 		Context context = this;
-		PackageManager packageManager = context.getPackageManager();
-		
-		if(packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+		if (checkCameraHardware(context)==true){
 			Log.i("camera","This device has a camera.");
-		
 		}
 		else{
 			Log.i("camera", "This device does not have a camera.");
 		}
 	}
+
+		/** Check if this device has a camera */
+	private boolean checkCameraHardware(Context c){
+		if (c.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+			// this device has a camera
+			return true;
+		} else {
+			// no camera on this device
+			return false;
+			}
+		}
 }
