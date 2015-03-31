@@ -17,6 +17,7 @@ import java.util.Collection;
 
 import network.Client;
 
+import com.example.team11xtremexpensetracker.ApproverClaimListAdapter;
 import com.example.team11xtremexpensetracker.ClaimListController;
 import com.example.team11xtremexpensetracker.ClaimsList;
 import com.example.team11xtremexpensetracker.ExpenseClaim;
@@ -63,6 +64,7 @@ public class ListClaimsActivity extends Activity {
 
 	private Client client;
 	private ArrayList<ExpenseClaim> transferList;
+	private ApproverClaimListAdapter claimAdapter2;
 
 	@Override
 	protected void onStart() {
@@ -104,13 +106,15 @@ public class ListClaimsActivity extends Activity {
 			@Override
 			public void run(){
 				transferList=client.getApproverClaimList();
-			}
-			
+			}		
 		}).start();
-
-		final ArrayList<ExpenseClaim> list2=new ArrayList<ExpenseClaim>(transferList);
-		final ArrayAdapter<ExpenseClaim> claimAdapter=new ArrayAdapter<ExpenseClaim>(ListClaimsActivity.this,android.R.layout.simple_expandable_list_item_1,list2);
-		claimsListView.setAdapter(claimAdapter);
+		ArrayList<ExpenseClaim> list=new ArrayList<ExpenseClaim>();
+		list.addAll(transferList);
+		if(transferList.size()==0){
+			Toast.makeText(this, "Bug still exists", Toast.LENGTH_LONG).show();
+		}
+		claimAdapter2=new ApproverClaimListAdapter(this,list);
+		claimsListView.setAdapter(claimAdapter2);
 		
 		
 		indexCorrector=new ArrayList<Integer>();

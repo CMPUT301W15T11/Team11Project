@@ -31,34 +31,11 @@ public class Client {
 	private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301w15t11/Claims/_search";
 	private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301w15t11/";
 	private static final String LOG_TAG = "ClaimSearch";
-	
+
 	private Gson gson;
 
 	public Client() {
 		gson = new Gson();
-	}
-
-	public ArrayList<ExpenseClaim> searchClaim(String searchString, String field) {
-		// TODO Auto-generated method stub
-		ArrayList<ExpenseClaim> result = new ArrayList<ExpenseClaim>();
-		HttpClient httpClient = new DefaultHttpClient();
-		try {
-			HttpPost httpPost = createSearchRequest(searchString, field);
-			HttpResponse response;
-			response = httpClient.execute(httpPost);
-			SearchResponse<ExpenseClaim> sr = parseSearchResponse(response);
-			Hits<ExpenseClaim> hits = sr.getHits();
-			result.add(hits.getHits().get(1).getSource());
-		} catch (ClientProtocolException e) {
-			throw new RuntimeException(e);
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
-		return result;
-
 	}
 
 	public ExpenseClaim getClaim(String claimName) {
@@ -150,17 +127,40 @@ public class Client {
 			}
 		}).start();
 	}
-	
-	public ArrayList<ExpenseClaim> getApproverClaimList(){
-		// TODO load claims which do not belong to current approver
-		
-		ArrayList<ExpenseClaim> output=new ArrayList<ExpenseClaim> ();
-		
-		return output;
-	}
-	
 
-	
+	public ArrayList<ExpenseClaim> getApproverClaimList() {
+		String searchString="Submitted";
+		ArrayList<ExpenseClaim> claims = new ArrayList<ExpenseClaim>();
+		if (searchString == null || "".equals(searchString)) {
+			searchString = "*";
+		}
+		try {
+			HttpPost searchRequest = createSearchRequest(searchString);
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpResponse response = httpClient.execute(searchRequest);
+
+			String status = response.getStatusLine().toString();
+
+			SearchResponse<ExpenseClaim> esResponse = parseSearchResponse(response);
+			Hits<ExpenseClaim> hits = esResponse.getHits();
+
+			if (hits != null) {
+				if (hits.getHits() != null) {
+					for (SearchHit<ExpenseClaim> sesr : hits.getHits()) {
+						claims.add((sesr.getSource()));
+					}
+				}
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return claims;
+	}
+
 	private SearchHit<ExpenseClaim> parseClaimHit(HttpResponse response) {
 		try {
 			String json = getEntityContent(response);
@@ -175,15 +175,10 @@ public class Client {
 		return null;
 	}
 
-	private HttpPost createSearchRequest(String searchString, String field) throws UnsupportedEncodingException {
+	private HttpPost createSearchRequest(String searchString) throws UnsupportedEncodingException {
+		// TODO Auto-generated method stub
 		HttpPost searchRequest = new HttpPost(SEARCH_URL);
-		String[] fields = null;
-		if (field != null) {
-			fields = new String[1];
-			fields[0] = field;
-		}
-
-		SimpleSearchCommand command = new SimpleSearchCommand(searchString, fields);
+		SimpleSearchCommand command = new SimpleSearchCommand(searchString);
 
 		String query = command.getJsonCommand();
 		Log.i(LOG_TAG, "Json command: " + query);
@@ -197,12 +192,11 @@ public class Client {
 		return searchRequest;
 	}
 
-	public String getEntityContent(HttpResponse response) throws IOException {
-		BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-
+	public static String getEntityContent(HttpResponse response) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
 		StringBuffer result = new StringBuffer();
 		String line = "";
-		while ((line = rd.readLine()) != null) {
+		while ((line = br.readLine()) != null) {
 			result.append(line);
 		}
 
