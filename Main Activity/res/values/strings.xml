@@ -28,5 +28,6 @@
     <string name="comments_date">Post date:</string>
     <string name="title_activity_add_comments">AddCommentsActivity</string>
     <string name="title_activity_approver_view_claim">ApproverViewClaimActivity</string>
+    <string name="title_activity_camera">CameraActivity</string>
 
 </resources>
