@@ -16,6 +16,8 @@ public class Item {
 	private String unit;
 	private String description;
 	private Boolean indicator = false;
+	private Boolean hasPhoto = false;
+	private Byte[] photo;
 	/**
 	 * get item name
 	 * @return
