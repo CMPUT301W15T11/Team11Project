@@ -1,16 +1,89 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.team11xtremexpensetracker.AddCommentsActivity" >
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.example.team11xtremexpensetracker.activity.CommentsActivity" >
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="9"
+        android:orientation="horizontal"
+        >
+        <TextView
+         	
+         	android:layout_width="wrap_content"
+         	android:layout_height="match_parent"
+         	android:layout_weight="1"
+         	android:layout_marginLeft="4dp"
+         	android:layout_marginRight="4dp"
+         	android:gravity="center|start"
+         	android:textSize="18sp"
+         	android:textColor="@color/black" 
+         	android:text="@string/add_comments_title"
+         	/>
+        
+       
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:orientation="horizontal"       
+        >
+       
+        <ScrollView
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent" 
+	            android:layout_margin="4dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+	            <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical" >
+				
+	                <EditText 
+	                    android:id="@+id/add_comments_edit"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="match_parent"
+	                    android:background="@color/white"
+	                    android:textSize="18sp"
+	                    />
+	                
 
-</RelativeLayout>
+	            </LinearLayout>
+	        </ScrollView>
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="8"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+        
+        <Button
+            android:id="@+id/approveClaimButton"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/approveClaim_button"
+            />
+        
+         <Button
+            android:id="@+id/returnClaimButton" 
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/returnClaim_button"
+            />
+        
+    </LinearLayout>
+    
+</LinearLayout>

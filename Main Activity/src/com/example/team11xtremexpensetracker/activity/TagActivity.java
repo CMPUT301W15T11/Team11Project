@@ -15,7 +15,9 @@ import com.example.team11xtremexpensetracker.ClaimsList;
 import com.example.team11xtremexpensetracker.ExpenseClaim;
 import com.example.team11xtremexpensetracker.FlowLayout;
 import com.example.team11xtremexpensetracker.R;
+import com.example.team11xtremexpensetracker.SubmittedClaimController;
 import com.example.team11xtremexpensetracker.Tag;
+import com.example.team11xtremexpensetracker.UserController;
 import com.example.team11xtremexpensetracker.R.color;
 import com.example.team11xtremexpensetracker.R.drawable;
 import com.example.team11xtremexpensetracker.R.id;
@@ -72,9 +74,13 @@ public class TagActivity extends Activity {
 		
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", 0);
-		if (claimID >= 0){
-			new ClaimListController();
-			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
+		if (claimID >= 0) {
+
+			if (UserController.getUserType().equals("Claimant")) {
+				currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
+			} else if (UserController.getUserType().equals("Approver")) {
+				currentClaim = SubmittedClaimController.getSubmittedClaimById(claimID);
+			}
 		}
 		
 		client=new Client();

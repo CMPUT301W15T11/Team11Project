@@ -79,7 +79,7 @@
             android:label="@string/title_activity_comments" >
         </activity>
         <activity
-            android:name=".AddCommentsActivity"
+            android:name="com.example.team11xtremexpensetracker.activity.AddCommentsActivity"
             android:label="@string/title_activity_add_comments" >
         </activity>
         <activity

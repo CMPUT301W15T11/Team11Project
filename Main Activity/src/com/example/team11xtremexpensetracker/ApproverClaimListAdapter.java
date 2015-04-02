@@ -1,5 +1,6 @@
 package com.example.team11xtremexpensetracker;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -20,14 +21,19 @@ public class ApproverClaimListAdapter extends ArrayAdapter<ExpenseClaim>{
 	public View getView(int position,View convertView,ViewGroup parent){
 		ExpenseClaim tempClaim = getItem(position);
 		if (convertView == null){
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item,parent,false);
+			convertView = LayoutInflater.from(getContext()).inflate(R.layout.approver_listitem,parent,false);
 			//convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_expandable_list_item_1,parent,false);
 			}
-		TextView itemName = (TextView)convertView.findViewById(R.id.itemNameView);
+		TextView itemName = (TextView)convertView.findViewById(R.id.item_text);
 		itemName.setText(tempClaim.getName());
 		
-
+		TextView itemStatus=(TextView)convertView.findViewById(R.id.item_text1);
+		itemStatus.setText(tempClaim.getStatus());
 		
+		TextView itemDate=(TextView)convertView.findViewById(R.id.item_text3);
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String dateStr = df.format(tempClaim.getStartDate().getTime());
+		itemDate.setText(dateStr);
 		
 		return convertView;
 	}

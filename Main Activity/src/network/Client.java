@@ -92,6 +92,12 @@ public class Client {
 
 			}
 		}).start();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void deleteClaim(final String claimName) {
@@ -126,10 +132,11 @@ public class Client {
 
 			}
 		}).start();
+
 	}
 
 	public ArrayList<ExpenseClaim> getApproverClaimList() {
-		String searchString="Submitted";
+		String searchString = "Submitted";
 		ArrayList<ExpenseClaim> claims = new ArrayList<ExpenseClaim>();
 		if (searchString == null || "".equals(searchString)) {
 			searchString = "*";
@@ -158,6 +165,12 @@ public class Client {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		for (int i = 0; i < claims.size(); i++) {
+			if (claims.get(i).getClaimantName().equals(UserController.getUserName())) {
+				claims.remove(i);
+			}
+		}
+
 		return claims;
 	}
 
