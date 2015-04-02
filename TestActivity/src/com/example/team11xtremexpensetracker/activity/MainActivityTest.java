@@ -5,7 +5,9 @@ import com.example.team11xtremexpensetracker.R;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
+import android.webkit.WebView.FindListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.test.ViewAsserts;
 import android.view.ViewGroup;
 import android.test.suitebuilder.annotation.MediumTest;
@@ -25,7 +27,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		setActivityInitialTouchMode(false);
+		setActivityInitialTouchMode(true);
 		mActivity = getActivity();
 		claimantButton = (Button) mActivity.findViewById(R.id.claimantButton);
 		approverButton = (Button) mActivity.findViewById(R.id.approverButton);
@@ -56,23 +58,77 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	} 
 	
 	
-	//Tests to see if new activity is launched when button is pressed
-	@MediumTest
-	public void testbuttonGoesToNew() throws Exception{
-		//setUp();
-		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(ListClaimsActivity.class.getName(), null, false);
+	//Press Claimant and go to new screen
+		@MediumTest
+		public void testbuttonGoesToNew() throws Exception{
+			AccountActivity accountActivity;
+			ActivityMonitor activityMonitor = getInstrumentation().addMonitor(AccountActivity.class.getName(), null, false);
+			
+			mActivity.runOnUiThread(new Runnable(){
+				@Override
+				public void run(){
+					claimantButton.performClick();
+				}
+			});
+			accountActivity = (AccountActivity)getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 0);
+			assertNotNull("Activity did not start", accountActivity);
+			accountActivity.finish();
+			tearDown();
+		}
 		
-		mActivity.runOnUiThread(new Runnable(){
-			@Override
-			public void run(){
-				claimantButton.performClick();
-			}
-		});
-		ListClaimsActivity listClaimAct = (ListClaimsActivity)getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 0);
-		assertNotNull("Activity did not start", listClaimAct);
-		listClaimAct.finish();
-		tearDown();
-	}
+		/*
+		public ListClaimsActivity navigateToListClaims(){
+			AccountActivity accountActivity;
+			ListClaimsActivity listClaimsActivity;
+			ActivityMonitor accountActivityMonitor = getInstrumentation().addMonitor(AccountActivity.class.getName(), null, false);
+			ActivityMonitor listClaimsMonitor = getInstrumentation().addMonitor(ListClaimsActivity.class.getName(), null, false);
+			//Account Activity UI Elements
+			final EditText claimantName;
+			final Button claimantNameButton;
+			
+			mActivity.runOnUiThread(new Runnable() {
+				@Override
+				public void run(){
+					claimantButton.performClick();
+				}
+			});
+			
+			accountActivity = (AccountActivity)getInstrumentation().waitForMonitorWithTimeout(accountActivityMonitor, 0);
+			claimantName = (EditText)accountActivity.findViewById(R.id.username_editText);
+			claimantNameButton = (Button)accountActivity.findViewById(R.id.account_confirm);
+		
+			accountActivity.runOnUiThread(new Runnable(){
+				@Override 
+				public void run() {
+					claimantName.setText("John");
+					claimantNameButton.performClick();
+				}
+			});
+			
+			listClaimsActivity = (ListClaimsActivity)getInstrumentation().waitForMonitorWithTimeout(listClaimsMonitor,  0);
+			return listClaimsActivity;
+		}
+		
+		public void testAddClaim() throws Exception {
+			final Button addClaimButton;
+			AddClaimActivity addClaimActivity;
+			ActivityMonitor addClaimMonitor = getInstrumentation().addMonitor(AddClaimActivity.class.getName(), null, false);
+			ListClaimsActivity listClaimsActivity = navigateToListClaims();
+			addClaimButton = (Button)listClaimsActivity.findViewById(R.id.addClaimButton);
+			listClaimsActivity.runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					addClaimButton.performClick();
+				}
+			});
+			
+			addClaimActivity = (AddClaimActivity)getInstrumentation().waitForMonitorWithTimeout(addClaimMonitor, 0);
+			assertNotNull("AddClaimActivity did not launch correctly", addClaimActivity);
+			addClaimActivity.finish();
+			listClaimsActivity.finish();
+			tearDown();
+		} */
 	
 
 }

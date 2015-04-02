@@ -131,7 +131,7 @@ public class ListClaimsActivityTest extends ActivityInstrumentationTestCase2<Lis
 	
 	//Check to see if new claim shows up in claims list
 	@MediumTest
-	public void testAddClaimInAddClaimActivity() throws Exception {
+	public void testAddNewClaimAddedToClaimList() throws Exception {
 		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(AddClaimActivity.class.getName(), null, false);
 		ActivityMonitor activityMonitor2 = getInstrumentation().addMonitor(ViewClaimActivity.class.getName(), null, false);
 		final EditText claimNameTextView;
@@ -204,6 +204,7 @@ public class ListClaimsActivityTest extends ActivityInstrumentationTestCase2<Lis
 	 * test adding an expense to a claims
 	 */
 	
+	/*
 	@MediumTest
 	public void testAddExpenseToClaim() throws Exception {
 		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(ViewClaimActivity.class.getName(), null, false);
@@ -290,7 +291,7 @@ public class ListClaimsActivityTest extends ActivityInstrumentationTestCase2<Lis
 		assertTrue("Expense Item was not added to list view", origNumItems+1 == newNumItems);
 		vActivity.finish();
 		tearDown(); */
-	} 
+	//} 
 }
 
 

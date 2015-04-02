@@ -1,6 +1,8 @@
 package com.example.team11xtremexpensetracker.activity;
 
+import com.example.team11xtremexpensetracker.ClaimListController;
 import com.example.team11xtremexpensetracker.R;
+import com.example.team11xtremexpensetracker.UserController;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
@@ -23,6 +25,9 @@ public class ViewClaimActivityTest extends ActivityInstrumentationTestCase2<View
 	ListView expenseListView;
 	ViewClaimActivity mActivity;
 	
+	//Values to check
+	String claimName = "maui3";
+	
 	
 	public ViewClaimActivityTest() {
 		super(ViewClaimActivity.class);
@@ -30,14 +35,19 @@ public class ViewClaimActivityTest extends ActivityInstrumentationTestCase2<View
 	}
 	
 	protected void setUp() throws Exception {
-		super.setUp();
+		UserController UC = new UserController();
+		UC.setUserType("Claimant");
+		
+		// ** Need to get index of newest claim here!!
+		int claimID = (new ClaimListController().getClaimsList().getLength());
+		Intent intent = new Intent();
+		intent.putExtra("claimID", 2);
+		setActivityIntent(intent);
 		setActivityInitialTouchMode(true);
 		mActivity = getActivity();
 		
-		Intent intent = new Intent();
-        intent.putExtra("claimID",0);
-        setActivityIntent(intent);
-        
+		super.setUp();
+		
         buttonClaimTags = (Button)mActivity.findViewById(R.id.buttonClaimTags);
         buttonApproveSubmit = (Button)mActivity.findViewById(R.id.buttonApproveSubmit);
         textViewClaimName = (TextView)mActivity.findViewById(R.id.textViewClaimName);
@@ -47,6 +57,7 @@ public class ViewClaimActivityTest extends ActivityInstrumentationTestCase2<View
 		
 	}
 	
+	/*
 	@MediumTest
 	public void testTagButton() throws Exception {
 	    final View decorView = mActivity.getWindow().getDecorView();
@@ -58,6 +69,7 @@ public class ViewClaimActivityTest extends ActivityInstrumentationTestCase2<View
 
 	    tearDown();
 	}
+	
 	@MediumTest
 	public void testApproveSubmitButton() throws Exception {
 	    final View decorView = mActivity.getWindow().getDecorView();
@@ -112,12 +124,20 @@ public class ViewClaimActivityTest extends ActivityInstrumentationTestCase2<View
 	    assertNotNull(layoutParams);
 
 	    tearDown();
+	} */
+	
+	
+	@MediumTest
+	public void testCorrectClaim() throws Exception{
+		String display = new Integer(new ClaimListController().getClaimsList().getLength()).toString();
+		assertTrue("Claim: " + textViewClaimName.getText() +" count: " + display , textViewClaimName.getText().equals(claimName));
+		//tearDown();
 	}
 	
 	/*
 	@MediumTest
 	public void testAddExpense() throws Exception{
-		
+		assertTrue(1==1);
+		tearDown();
 	} */
-	
 }
