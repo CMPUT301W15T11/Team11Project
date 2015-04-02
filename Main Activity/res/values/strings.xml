@@ -28,14 +28,11 @@
     <string name="comments_date">Post date:</string>
     <string name="title_activity_add_comments">AddCommentsActivity</string>
     <string name="title_activity_approver_view_claim">ApproverViewClaimActivity</string>
-<<<<<<< HEAD
 	<string name="add_comments_title">Type your comments below</string>
 	<string name="approveClaim_button">Approve current claim</string>
 	<string name="returnClaim_button">Return current claim</string>
     
     
-=======
     <string name="title_activity_camera">CameraActivity</string>
 
->>>>>>> d7e29e472a684224c4008379e83a5c158153f3dc
 </resources>
