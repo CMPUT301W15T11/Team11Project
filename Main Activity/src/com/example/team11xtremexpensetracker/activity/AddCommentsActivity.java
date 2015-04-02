@@ -51,11 +51,28 @@ public class AddCommentsActivity extends Activity {
 					currentClaim.setComments(comments);
 					currentClaim.setStatus("Approved");
 					client.addClaim(currentClaim);
-					SubmittedClaimController.setSubmittedList(client.getApproverClaimList());
+					//SubmittedClaimController.setSubmittedList(client.getApproverClaimList());
+					Thread updateThread=new Thread(new Runnable(){
+
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							SubmittedClaimController.setSubmittedList(client.getApproverClaimList());
+						}
+						
+					});
+					updateThread.start();
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					Intent backIntent=new Intent();
 					backIntent.putExtra("claimID", claimID);
-					backIntent.setClass(AddCommentsActivity.this,ViewClaimActivity.class);
+					backIntent.setClass(AddCommentsActivity.this,ListClaimsActivity.class);
 					startActivity(backIntent);
+					finish();
 				}
 			}
 
@@ -73,11 +90,27 @@ public class AddCommentsActivity extends Activity {
 					currentClaim.setComments(comments);
 					currentClaim.setStatus("Returned");
 					client.addClaim(currentClaim);
-					SubmittedClaimController.setSubmittedList(client.getApproverClaimList());
+					Thread updateThread=new Thread(new Runnable(){
+
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							SubmittedClaimController.setSubmittedList(client.getApproverClaimList());
+						}
+						
+					});
+					updateThread.start();
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					Intent backIntent=new Intent();
 					backIntent.putExtra("claimID", claimID);
-					backIntent.setClass(AddCommentsActivity.this,ViewClaimActivity.class);
+					backIntent.setClass(AddCommentsActivity.this,ListClaimsActivity.class);
 					startActivity(backIntent);
+					finish();
 				}
 			}
 

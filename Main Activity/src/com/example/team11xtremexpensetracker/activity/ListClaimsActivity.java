@@ -72,6 +72,7 @@ public class ListClaimsActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		dataList.sort();
+		
 	}
 
 	@Override
@@ -90,7 +91,6 @@ public class ListClaimsActivity extends Activity {
 		claims = clc.getClaimsList().getClaims();
 
 		client = new Client();
-
 		
 		if (UserController.getUserType().equals("Claimant")) {
 			claimant_init();
@@ -98,22 +98,22 @@ public class ListClaimsActivity extends Activity {
 		} else if (UserController.getUserType().equals("Approver")) {
 			approver_init();
 			
-		} 
+		}
 
 	}
 	
 	public void approver_init(){
 		addClaimButton.setEnabled(false);
 		transferList=new ArrayList<ExpenseClaim>(); 
-		Thread test=new Thread(new Runnable(){
+		Thread loadThread=new Thread(new Runnable(){
 			@Override
 			public void run(){
 				transferList.addAll(client.getApproverClaimList());
 			}		
 		});
-		test.start();
+		loadThread.start();
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

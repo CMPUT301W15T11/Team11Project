@@ -26,9 +26,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -115,14 +119,41 @@ public class TagActivity extends Activity {
 	 */
 	private void createTag(String tagContent){
 		
-		TextView newTag=new TextView(this);
+		final TextView newTag=new TextView(this);
 		MarginLayoutParams mp=new MarginLayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
 		mp.setMargins(10,10,10,10);
 		newTag.setLayoutParams(mp);
 		newTag.setText(tagContent);
 		newTag.setGravity(Gravity.CENTER);
 		newTag.setBackgroundResource(R.drawable.flag_02);
-		newTag.setTextColor(getResources().getColor(R.color.skyblue));	
+		newTag.setTextColor(getResources().getColor(R.color.skyblue));
+		newTag.setFocusable(true);
+		newTag.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				AlertDialog.Builder adb = new AlertDialog.Builder(TagActivity.this);
+				adb.setMessage("Delete selected tag?");
+				adb.setCancelable(true);
+				adb.setPositiveButton("Confirm", new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						for(int index=0;index<currentClaim.getTagList().size();index++){
+							if(currentClaim.getTagList().get(index).equals(newTag.getText().toString())){
+								currentClaim.getTagList().remove(index);							
+							}
+						}
+						saveInFile();
+						client.addClaim(currentClaim);
+						//tagLayout.notify();
+					}});
+				return false;
+			}
+		});
+				
 		tagEdit.setText("");
 		tagLayout.addView(newTag);
 		
@@ -138,14 +169,41 @@ public class TagActivity extends Activity {
 	 * @param tagContent
 	 */
 	private void showTag(String tagContent){
-		TextView newTag=new TextView(this);
+		final TextView newTag=new TextView(this);
 		MarginLayoutParams mp=new MarginLayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
 		mp.setMargins(10,10,10,10);
 		newTag.setLayoutParams(mp);
 		newTag.setText(tagContent);
 		newTag.setGravity(Gravity.CENTER);
 		newTag.setBackgroundResource(R.drawable.flag_02);
-		newTag.setTextColor(getResources().getColor(R.color.skyblue));	
+		newTag.setTextColor(getResources().getColor(R.color.skyblue));
+		newTag.setFocusable(true);
+		newTag.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				AlertDialog.Builder adb = new AlertDialog.Builder(TagActivity.this);
+				adb.setMessage("Delete selected tag?");
+				adb.setCancelable(true);
+				adb.setPositiveButton("Confirm", new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						for(int index=0;index<currentClaim.getTagList().size();index++){
+							if(currentClaim.getTagList().get(index).equals(newTag.getText().toString())){
+								currentClaim.getTagList().remove(index);								
+							}
+						}
+						saveInFile();
+						client.addClaim(currentClaim);
+						//tagLayout.notify();
+					}});
+				return false;
+			}
+		});
+		
 		tagLayout.addView(newTag);
 	}
 	

@@ -93,7 +93,7 @@ public class Client {
 			}
 		}).start();
 		try {
-			Thread.sleep(500);
+			Thread.sleep(200);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,7 +132,12 @@ public class Client {
 
 			}
 		}).start();
-
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public ArrayList<ExpenseClaim> getApproverClaimList() {
