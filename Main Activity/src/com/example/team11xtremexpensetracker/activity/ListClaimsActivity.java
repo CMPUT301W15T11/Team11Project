@@ -26,6 +26,7 @@ import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.R.id;
 import com.example.team11xtremexpensetracker.R.layout;
 import com.example.team11xtremexpensetracker.R.menu;
+import com.example.team11xtremexpensetracker.SubmittedClaimController;
 import com.example.team11xtremexpensetracker.UserController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -64,6 +65,7 @@ public class ListClaimsActivity extends Activity {
 
 	private Client client;
 	private ArrayList<ExpenseClaim> transferList;
+	private ArrayList<ExpenseClaim> screenList;
 	private ApproverClaimListAdapter claimAdapter2;
 
 	@Override
@@ -103,23 +105,78 @@ public class ListClaimsActivity extends Activity {
 	public void approver_init(){
 		addClaimButton.setEnabled(false);
 		transferList=new ArrayList<ExpenseClaim>(); 
-		new Thread(new Runnable(){
+		Thread test=new Thread(new Runnable(){
 			@Override
 			public void run(){
-				transferList=client.getApproverClaimList();
+				transferList.addAll(client.getApproverClaimList());
 			}		
-		}).start();
-		ArrayList<ExpenseClaim> list=new ArrayList<ExpenseClaim>();
-		list.addAll(transferList);
-		if(transferList.size()==0){
-			Toast.makeText(this, "Bug still exists", Toast.LENGTH_LONG).show();
+		});
+		test.start();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		claimAdapter2=new ApproverClaimListAdapter(this,list);
+		
+		SubmittedClaimController.setSubmittedList(transferList);
+		
+		screenList=new ArrayList<ExpenseClaim>();
+		screenList.addAll(SubmittedClaimController.getSubmittedList());
+		
+		claimAdapter2=new ApproverClaimListAdapter(this,screenList);
 		claimsListView.setAdapter(claimAdapter2);
-		
-		
+				
 		indexCorrector=new ArrayList<Integer>();
 		filterFlag=false;
+		
+		searchImage.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String searchingTag = tagSearchEdit.getText().toString();
+				searchingTag.toLowerCase();
+				if (searchingTag.equals("")) {
+					filterFlag = false;
+					screenList.clear();
+					screenList.addAll(SubmittedClaimController.getSubmittedList());
+					claimAdapter2.notifyDataSetChanged();
+					return;
+				}
+				filterFlag = true;
+				indexCorrector.clear();
+				ArrayList<ExpenseClaim> claims = SubmittedClaimController.getSubmittedList();
+				screenList.clear();
+				for (int i = 0; i < claims.size(); i++) {
+					for (int j = 0; j < claims.get(i).getTagList().size(); j++) {
+						if (searchingTag.equals(claims.get(i).getTagList().get(j).getTagName().toLowerCase())) {
+							screenList.add(claims.get(i));
+							indexCorrector.add(i);
+						}
+					}
+				}
+				claimAdapter2.notifyDataSetChanged();
+			}
+
+		});
+		
+		claimsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+				if (!filterFlag) {
+					Intent intent = new Intent(ListClaimsActivity.this, ViewClaimActivity.class);
+					intent.putExtra("claimID", position);
+					startActivity(intent);
+				} else {
+					int correctIndex = indexCorrector.get(position);
+					Intent intent = new Intent(ListClaimsActivity.this, ViewClaimActivity.class);
+					intent.putExtra("claimID", correctIndex);
+					startActivity(intent);
+				}
+
+			}
+		});
 	
 	}
 

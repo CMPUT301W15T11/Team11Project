@@ -17,7 +17,6 @@ import java.util.Collection;
 
 import network.Client;
 
-import com.example.team11xtremexpensetracker.AddCommentsActivity;
 import com.example.team11xtremexpensetracker.ClaimListController;
 import com.example.team11xtremexpensetracker.ClaimsList;
 import com.example.team11xtremexpensetracker.ExpenseClaim;
@@ -27,6 +26,7 @@ import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.R.id;
 import com.example.team11xtremexpensetracker.R.layout;
 import com.example.team11xtremexpensetracker.R.menu;
+import com.example.team11xtremexpensetracker.SubmittedClaimController;
 import com.example.team11xtremexpensetracker.UserController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -101,7 +101,11 @@ public class ViewClaimActivity extends Activity {
 		// Toast.LENGTH_SHORT).show();
 		if (claimID >= 0) {
 			// new ClaimListController();
-			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
+			if (UserController.getUserType().equals("Claimant")) {
+				currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
+			} else if (UserController.getUserType().equals("Approver")) {
+				currentClaim = SubmittedClaimController.getSubmittedClaimById(claimID);
+			}
 		}
 
 		client = new Client();
@@ -116,7 +120,8 @@ public class ViewClaimActivity extends Activity {
 		dateRangeView = (TextView) findViewById(R.id.textViewClaimDateRange);
 		// final MenuItem editClaimItem=(MenuItem)findViewById(R.id.editClaim);
 
-		if (claimID >= 0 && (currentClaim.getStatus().equals("Submitted"))
+		if (claimID >= 0
+				&& ((UserController.getUserType().equals("Claimant")) && (currentClaim.getStatus().equals("Submitted")))
 				|| (currentClaim.getStatus().equals("Approved"))) {
 			ApproveOrSubmitButton.setEnabled(false);
 			editFlag = false;
@@ -141,13 +146,11 @@ public class ViewClaimActivity extends Activity {
 		dateRangeView.setText(currentClaim.getDateRange());
 		// Toast.makeText(this, "DateRange: " + currentClaim.getDateRange(),
 		// Toast.LENGTH_LONG).show();
-
 		// create listeners
 		tagsButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-
 				Intent intent = new Intent();
 				intent.putExtra("claimID", claimID);
 				intent.setClass(ViewClaimActivity.this, TagActivity.class);
@@ -176,13 +179,12 @@ public class ViewClaimActivity extends Activity {
 					Toast.makeText(ViewClaimActivity.this, "Claim submitted", Toast.LENGTH_SHORT).show();
 					ApproveOrSubmitButton.setText(R.string.submitted_button);
 					ApproveOrSubmitButton.setEnabled(false);
-
 					// editClaimItem.setEnabled(false);
-
 					saveInFile();
 					client.addClaim(currentClaim);
 				} else if (UserController.getUserType().equals("Approver")) {
-
+					Toast.makeText(ViewClaimActivity.this, "Please add comments first",Toast.LENGTH_SHORT).show();
+					return;
 				}
 
 			}
@@ -300,19 +302,20 @@ public class ViewClaimActivity extends Activity {
 	}
 
 	public void commentClaim(MenuItem menuItem) {
-		if (UserController.getUserType().equals("Claimant")||((currentClaim.getStatus().equals("Approved"))||(currentClaim.getStatus().equals("Returned")))) {
+		if (UserController.getUserType().equals("Claimant")
+				|| ((currentClaim.getStatus().equals("Approved")) || (currentClaim.getStatus().equals("Returned")))) {
 			Intent intent = new Intent();
 			intent.putExtra("claimID", claimID);
 			intent.setClass(ViewClaimActivity.this, CommentsActivity.class);
 			ViewClaimActivity.this.startActivity(intent);
-			finish();
-		}else if(UserController.getUserType().equals("Approver")){
-			Intent intent=new Intent();
-			intent.putExtra("claimID",claimID);
-			intent.setClass(ViewClaimActivity.this,AddCommentsActivity.class);
+			//finish();
+		} else if (UserController.getUserType().equals("Approver")) {
+			Intent intent = new Intent();
+			intent.putExtra("claimID", claimID);
+			intent.setClass(ViewClaimActivity.this, AddCommentsActivity.class);
 			ViewClaimActivity.this.startActivity(intent);
 			finish();
-		}else{
+		} else {
 			Toast.makeText(ViewClaimActivity.this, "No comments find", Toast.LENGTH_SHORT).show();
 			return;
 		}
