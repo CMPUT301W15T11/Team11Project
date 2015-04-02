@@ -91,13 +91,14 @@ public class ListClaimsActivity extends Activity {
 
 		client = new Client();
 
+		
 		if (UserController.getUserType().equals("Claimant")) {
 			claimant_init();
 			
 		} else if (UserController.getUserType().equals("Approver")) {
 			approver_init();
 			
-		}
+		} 
 
 	}
 	
