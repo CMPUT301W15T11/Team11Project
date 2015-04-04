@@ -28,7 +28,7 @@
             android:textSize="15sp"/>
     </LinearLayout>
 
-    <com.example.team11xtremexpensetracker.FlowLayout
+    <model.FlowLayout
         android:id="@+id/tag_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,6 +36,6 @@
         android:focusable="true"
          >
     
-    </com.example.team11xtremexpensetracker.FlowLayout>
+    </model.FlowLayout>
 
 </LinearLayout>

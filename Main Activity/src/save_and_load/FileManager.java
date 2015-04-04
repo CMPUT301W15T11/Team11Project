@@ -8,11 +8,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 
+import model.ClaimListController;
+import model.ClaimsList;
+import model.UserController;
 import android.content.Context;
 
-import com.example.team11xtremexpensetracker.ClaimListController;
-import com.example.team11xtremexpensetracker.ClaimsList;
-import com.example.team11xtremexpensetracker.UserController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

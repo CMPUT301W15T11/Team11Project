@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context="com.example.team11xtremexpensetracker.activity.CommentsActivity" >
+    tools:context="activities.CommentsActivity" >
     
     <LinearLayout 
         android:layout_width="match_parent"
