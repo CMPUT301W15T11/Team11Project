@@ -17,11 +17,9 @@ public class AccountActivity extends Activity {
 	private Button backButton;
 	private Button confirmButton;
 	private EditText usernameEdit;
-	private UserController userController;
 
 	private void init() {
 
-		userController=new UserController();
 		
 		backButton = (Button) findViewById(R.id.account_back);
 		confirmButton = (Button) findViewById(R.id.account_confirm);
@@ -43,12 +41,12 @@ public class AccountActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				String userName=usernameEdit.getText().toString();
-				userController.setUserName(userName);
-				
+				UserController.setUserName(userName);
+				UserController.setFILENAME(userName);
 				Intent intent=new Intent(AccountActivity.this,ListClaimsActivity.class);
 				
 				startActivity(intent);
-				
+				finish();
 			}
 		});
 		

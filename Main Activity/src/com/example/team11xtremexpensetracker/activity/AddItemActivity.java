@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import network.Client;
+import network.ConnectionChecker;
 
 import com.example.team11xtremexpensetracker.ClaimListController;
 import com.example.team11xtremexpensetracker.ClaimsList;
@@ -185,9 +186,14 @@ public class AddItemActivity extends Activity{
 				newItem.setDescription(itemdescriptionstr);
 				newItem.setDate(adddate);
 				
-				currentClaim.addItem(newItem);
-				client.addClaim(currentClaim);
+				currentClaim.addItem(newItem);				
 				saveInFile();
+				
+				if (new ConnectionChecker().netConnected(AddItemActivity.this) == true) {
+					client.addClaim(currentClaim);
+				} else {
+					Toast.makeText(AddItemActivity.this, "No network connected, apply change locally", Toast.LENGTH_SHORT).show();
+				}
 				
 				Intent backIntent = new Intent();
 				backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

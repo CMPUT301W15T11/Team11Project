@@ -61,7 +61,7 @@ public class AddClaimActivity extends Activity {
 
 	private Client client;
 	private UserController userController;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -168,35 +168,33 @@ public class AddClaimActivity extends Activity {
 					claimID = ClaimListController.getClaimsList().getLength();
 					ClaimListController.getClaimsList().addClaim(newClaim);
 				}
-				
-				newClaim.setClaimantName(UserController.getUserName());
-				
-				saveInFile();
-				
-				client.addClaim(newClaim);
 
-				/*-----------------------Bug---------------------
-				 * the checker somehow ends thread in a wrong way
-				ConnectionChecker netChecker = new ConnectionChecker();
-				if (netChecker.netConnected(AddClaimActivity.this)) {
+				newClaim.setClaimantName(UserController.getUserName());
+
+				saveInFile();
+
+				if (new ConnectionChecker().netConnected(AddClaimActivity.this) == true) {
 					client.addClaim(newClaim);
 				} else {
-					client=null;
-					Toast.makeText(AddClaimActivity.this,
-							"No network found, change will be applied on local file only", Toast.LENGTH_SHORT).show();
+					Toast.makeText(AddClaimActivity.this, "No network connected, save file locally", Toast.LENGTH_SHORT).show();
 				}
-				
-				*/
 
 				new ClaimListController();
 				Intent intent = new Intent(AddClaimActivity.this, ViewClaimActivity.class);
 				intent.putExtra("claimID", claimID);
-				//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
-				finish(); 
+				finish();
 			}
 		});
 
+	}
+
+	@Override
+	public void onBackPressed() {
+		Intent backIntent = new Intent(AddClaimActivity.this, ListClaimsActivity.class);
+		startActivity(backIntent);
+		finish();
 	}
 
 	@Override

@@ -5,6 +5,8 @@
 
 package com.example.team11xtremexpensetracker.activity;
 
+import network.ConnectionChecker;
+
 import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.R.layout;
 import com.example.team11xtremexpensetracker.R.menu;
@@ -40,6 +42,10 @@ public class MainActivity extends Activity {
 	}
 	
 	public void approverSelected(View view){
+		if(new ConnectionChecker().netConnected(MainActivity.this)==false){
+			Toast.makeText(MainActivity.this, "Cannot load data for approver before connect network", Toast.LENGTH_SHORT).show();
+			return;
+		}
 		UserController.setUserType("Approver");
 		Intent intent=new Intent(MainActivity.this,AccountActivity.class);
 		startActivity(intent);

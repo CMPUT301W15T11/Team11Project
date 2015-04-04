@@ -14,8 +14,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import network.Client;
+import network.ConnectionChecker;
+
 import com.example.team11xtremexpensetracker.ClaimListController;
 import com.example.team11xtremexpensetracker.ClaimsList;
+import com.example.team11xtremexpensetracker.ExpenseClaim;
 import com.example.team11xtremexpensetracker.Item;
 import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.SingleDatePickerDialog;
@@ -35,6 +39,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EditItemActivity extends Activity{
 	
@@ -64,6 +69,9 @@ public class EditItemActivity extends Activity{
 	private ClaimsList dataList;
 	private static final String FILENAME = "datafile.sav";
 	private ClaimListController clc;
+	
+	private Client client;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -79,7 +87,7 @@ public class EditItemActivity extends Activity{
 		claimID = intent.getIntExtra("claimID", 0);
 		list= ClaimListController.getClaimsList().getClaimById(claimID).getItemById(itemID);
 		
-		
+		client=new Client();
 
 		itemnamestr = list.getItem().toString();
 		itemname = (EditText)findViewById(R.id.edititemname);
@@ -127,11 +135,6 @@ public class EditItemActivity extends Activity{
 		unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		unitspinner.setAdapter(unitAdapter);
 		
-
-		
-		
-
-
 		//=======datepicker
 		editdate=Calendar.getInstance();
 		edititemdate = (Button)findViewById(R.id.edititemdate);
@@ -180,6 +183,14 @@ public class EditItemActivity extends Activity{
 				list.setDate(editdate);
 				
 				saveInFile();
+				
+				ExpenseClaim currentClaim=ClaimListController.getClaimsList().getClaimById(claimID);
+				
+				if (new ConnectionChecker().netConnected(EditItemActivity.this) == true) {
+					client.addClaim(currentClaim);
+				} else {
+					Toast.makeText(EditItemActivity.this, "No network connected, apply change locally", Toast.LENGTH_SHORT).show();
+				}
 				
 				Intent backIntent = new Intent();
 				backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

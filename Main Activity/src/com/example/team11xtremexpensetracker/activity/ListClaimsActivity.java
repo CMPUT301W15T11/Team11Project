@@ -15,7 +15,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import save_and_load.FileManager;
 import network.Client;
+import network.ConnectionChecker;
 
 import com.example.team11xtremexpensetracker.ApproverClaimListAdapter;
 import com.example.team11xtremexpensetracker.ClaimListController;
@@ -68,12 +70,14 @@ public class ListClaimsActivity extends Activity {
 	private ArrayList<ExpenseClaim> screenList;
 	private ApproverClaimListAdapter claimAdapter2;
 
+	/*
 	@Override
 	protected void onStart() {
 		super.onStart();
 		dataList.sort();
 		
 	}
+	*/
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,9 @@ public class ListClaimsActivity extends Activity {
 		tagSearchEdit = (EditText) findViewById(R.id.tag_filter);
 		addClaimButton=(Button)findViewById(R.id.addClaimButton);
 		// Load in claims from disk, give them to the claimsListController
+		
+		
+		
 		dataList = this.loadFromFile();
 		dataList.sort();
 		clc = new ClaimListController();
@@ -174,6 +181,7 @@ public class ListClaimsActivity extends Activity {
 					intent.putExtra("claimID", correctIndex);
 					startActivity(intent);
 				}
+				finish();
 
 			}
 		});
@@ -289,10 +297,15 @@ public class ListClaimsActivity extends Activity {
 							}
 							saveInFile();
 
-							client.deleteClaim(nameForHttp);
+							if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true){
+								client.deleteClaim(nameForHttp);
+							}else{
+								Toast.makeText(ListClaimsActivity.this, "No network connected, delete file locally", Toast.LENGTH_SHORT).show();
+							}
+							
 
 							dataList = loadFromFile();
-							dataList.sort();
+							//dataList.sort();
 							ClaimListController.setClaimsList(dataList);
 							claimAdapter.notifyDataSetChanged();
 						} else {
@@ -304,10 +317,14 @@ public class ListClaimsActivity extends Activity {
 							ClaimListController.removeClaim(correctIndex);
 							saveInFile();
 
-							client.deleteClaim(nameForHttp);
+							if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true){
+								client.deleteClaim(nameForHttp);
+							}else{
+								Toast.makeText(ListClaimsActivity.this, "No network connected, delete file locally", Toast.LENGTH_SHORT).show();
+							}
 
 							dataList = loadFromFile();
-							dataList.sort();
+							//dataList.sort();
 							ClaimListController.setClaimsList(dataList);
 							claimAdapter.notifyDataSetChanged();
 						}
@@ -347,6 +364,7 @@ public class ListClaimsActivity extends Activity {
 		Intent intent = new Intent(ListClaimsActivity.this, AddClaimActivity.class);
 		intent.putExtra("claimID", -1);
 		startActivity(intent);
+		finish();
 	}
 
 	@Override
@@ -356,6 +374,7 @@ public class ListClaimsActivity extends Activity {
 		startActivity(intentBackPressed);
 	}
 
+	
 	private ClaimsList loadFromFile() {
 		Gson gson = new Gson();
 		dataList = new ClaimsList();

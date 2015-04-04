@@ -14,11 +14,14 @@ public class ConnectionChecker {
 	public boolean netConnected(Activity activity) {
 		ConnectivityManager connectivityManager = (ConnectivityManager) activity
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo mobileNetwork = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		NetworkInfo mobileNetwork = connectivityManager.getActiveNetworkInfo();
 		if(mobileNetwork==null){
 			return false;
-		}else{
+		}
+		if(mobileNetwork.isConnectedOrConnecting()){
 			return true;
+		}else{
+			return false;
 		}
 	}
 }
