@@ -17,6 +17,7 @@
     <string name="account_name">Enter your name below</string>
     <string name="account_back_button">Back</string>
     <string name="account_confirm_button">Confirm</string>
+    <string name="account_delete">Clean current user information</string>
     <string name="submit_button">Submit</string>
     <string name="submitted_button">Submitted</string>
     <string name="approve_button">Approve</string>

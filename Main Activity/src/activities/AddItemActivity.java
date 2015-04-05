@@ -173,8 +173,8 @@ public class AddItemActivity extends Activity{
 				itemamountstr = itemamount.getText().toString();
 				
 				
-				if (itemnamestr.equals("")){
-					Toast.makeText(AddItemActivity.this, "Enter an Expense Name", Toast.LENGTH_SHORT).show();
+				if (itemnamestr.equals("")||itemamountstr.equals("")){
+					Toast.makeText(AddItemActivity.this, "Information is not completed", Toast.LENGTH_SHORT).show();
 					return;
 				}
 				
@@ -196,7 +196,7 @@ public class AddItemActivity extends Activity{
 				}
 				
 				Intent backIntent = new Intent();
-				backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				//backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				backIntent.setClass(AddItemActivity.this, ViewClaimActivity.class);
 				backIntent.putExtra("claimID", claimID);
 				startActivity(backIntent);

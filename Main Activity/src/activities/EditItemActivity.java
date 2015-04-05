@@ -174,6 +174,11 @@ public class EditItemActivity extends Activity{
 				itemdescriptionstr = itemdescription.getText().toString();
 				itemamountstr = itemamount.getText().toString();
 				
+				if (itemnamestr.equals("")||itemamountstr.equals("")){
+					Toast.makeText(EditItemActivity.this, "Information is not completed", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
 				
 				list.setAmount(itemamountstr);
 				list.setItem(itemnamestr);

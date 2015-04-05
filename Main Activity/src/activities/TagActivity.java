@@ -109,6 +109,10 @@ public class TagActivity extends Activity {
 				// TODO Auto-generated method stub
 
 				tagContent = tagEdit.getText().toString();
+				if(tagContent.equals("")){
+					Toast.makeText(TagActivity.this,"Empty input",Toast.LENGTH_SHORT).show();
+					return;
+				}
 				createTag(tagContent);
 			}
 		});

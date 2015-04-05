@@ -9,6 +9,8 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import network.Client;
+import network.ConnectionChecker;
 import model.ClaimListController;
 import model.ClaimsList;
 import model.DestListAdapter;
@@ -36,8 +38,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class AddDestionationActivity extends Activity {
+public class AddDestinationActivity extends Activity {
 
 	private ClaimsList dataList;
 	private static final String FILENAME = "datafile.sav";
@@ -50,6 +53,8 @@ public class AddDestionationActivity extends Activity {
 	private Button addDestButton;
 	private ArrayList<Destination> list;
 	private DestListAdapter listAdapter;
+	
+	private Client client;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ public class AddDestionationActivity extends Activity {
 			//new ClaimListController();
 			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
 		}
-		
+		client=new Client();
 		// get ids
 		addDestButton = (Button) findViewById(R.id.addDest);
 		newDestEditText = (EditText) findViewById(R.id.newDestEditText);
@@ -84,12 +89,25 @@ public class AddDestionationActivity extends Activity {
 				
 				String newName = newDestEditText.getText().toString();
 				String newReason = newReasonEditText.getText().toString();
+				
+				if(newName.equals("")||newReason.equals("")){
+					Toast.makeText(AddDestinationActivity.this, "Information is not completed", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
 				Destination newDest = new Destination(newName);
 				newDest.setReason(newReason);
 				
 				list.add(newDest);
 				
 				saveInFile();
+				
+				if (new ConnectionChecker().netConnected(AddDestinationActivity.this) == true) {
+					client.addClaim(currentClaim);
+				} else {
+					Toast.makeText(AddDestinationActivity.this, "No network connected, save file locally", Toast.LENGTH_SHORT).show();
+				}
+				
 				dataList=loadFromFile();
 				ClaimListController.setClaimsList(dataList);
 				newDestEditText.setText("");
@@ -112,7 +130,7 @@ public class AddDestionationActivity extends Activity {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				onLongClickPos = position;
-				AlertDialog.Builder adb = new AlertDialog.Builder(AddDestionationActivity.this);
+				AlertDialog.Builder adb = new AlertDialog.Builder(AddDestinationActivity.this);
 				adb.setMessage("Delete?");
 				adb.setCancelable(true);
 				adb.setPositiveButton("Delete", new OnClickListener(){
@@ -158,9 +176,9 @@ public class AddDestionationActivity extends Activity {
 	public void onBackPressed(){
 		Intent intentBackPressed = new Intent();
 		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intentBackPressed.setClass(AddDestionationActivity.this, ViewClaimActivity.class);
+		intentBackPressed.setClass(AddDestinationActivity.this, ViewClaimActivity.class);
 		intentBackPressed.putExtra("claimID", claimID);
-		AddDestionationActivity.this.startActivity(intentBackPressed);
+		AddDestinationActivity.this.startActivity(intentBackPressed);
 	}
 	
 	//Populate the listView with the destinations in the claim

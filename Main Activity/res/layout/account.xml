@@ -55,6 +55,7 @@
                 android:gravity="center"
                 android:textSize="22sp"
                 android:textColor="@color/black"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz."
                 />
             
         </LinearLayout>
@@ -89,8 +90,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="4"
-        android:gravity="center"
+        android:gravity="top|center"
         android:orientation="vertical" >
+        
+        <Button
+            android:id="@+id/account_resetButton" 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/account_delete"
+            />
         
     </LinearLayout>
 

@@ -70,15 +70,6 @@ public class ListClaimsActivity extends Activity {
 	private ArrayList<ExpenseClaim> screenList;
 	private ApproverClaimListAdapter claimAdapter2;
 
-	/*
-	@Override
-	protected void onStart() {
-		super.onStart();
-		dataList.sort();
-		
-	}
-	*/
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
