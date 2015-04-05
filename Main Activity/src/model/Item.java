@@ -16,6 +16,8 @@ public class Item {
 	private String unit;
 	private String description;
 	private Boolean indicator = false;
+	private Boolean hasPhoto = false;
+	private Byte[] photo;
 	/**
 	 * get item name
 	 * @return
@@ -113,6 +115,30 @@ public class Item {
 	 */
 	public void setIndecator(Boolean indicator){
 		this.indicator = indicator;
+	}
+	/**
+	 * @return the hasPhoto
+	 */
+	public Boolean getHasPhoto() {
+		return hasPhoto;
+	}
+	/**
+	 * @param hasPhoto the hasPhoto to set
+	 */
+	public void setHasPhoto(Boolean hasPhoto) {
+		this.hasPhoto = hasPhoto;
+	}
+	/**
+	 * @return the photo
+	 */
+	public Byte[] getPhoto() {
+		return photo;
+	}
+	/**
+	 * @param photo the photo to set
+	 */
+	public void setPhoto(Byte[] photo) {
+		this.photo = photo;
 	}
 
 }
