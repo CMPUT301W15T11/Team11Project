@@ -91,6 +91,10 @@
             android:name="model.ApproverViewClaimActivity"
             android:label="@string/title_activity_approver_view_claim" >
         </activity>
+        <activity
+            android:name="activities.ViewPhotoActivity"
+            android:label="@string/title_activity_view_photo" >
+        </activity>
     </application>
 
 </manifest>

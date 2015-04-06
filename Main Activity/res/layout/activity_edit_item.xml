@@ -145,7 +145,8 @@
         android:layout_above="@+id/editconfirm"
         android:layout_marginLeft="16dp"
         android:layout_toRightOf="@+id/editgeolocation"
+        android:longClickable="true"
         android:onClick="choosePhoto"
-        android:text="Select Photo" />
+        android:text="Edit Photo" />
 
 </RelativeLayout>

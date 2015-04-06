@@ -11,20 +11,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import model.ClaimListController;
 import model.ClaimsList;
 import model.Item;
 
+
 import com.example.team11xtremexpensetracker.R;
-import com.example.team11xtremexpensetracker.R.id;
-import com.example.team11xtremexpensetracker.R.layout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -152,6 +151,26 @@ public class ViewItemActivity extends Activity{
 	});
 	}
 	
+	/**
+	 * This function shows a photo attached to the question when it is clicked
+	 * @param v this is another button within the view.
+	 */
+	
+	public void viewPhoto(View v) {
+		if (list.getHasPhoto() == true){
+			Intent showPhoto = new Intent(this,ViewPhotoActivity.class);
+			showPhoto.putExtra("Photo", list.getPhoto());
+			startActivity(showPhoto);
+		}
+		else{
+        	Context context = getApplicationContext();
+        	CharSequence text = "There is no photo of the receipt!";
+        	int duration = Toast.LENGTH_LONG;
+        	Toast toast = Toast.makeText(context, text, duration);
+        	toast.show();
+		}
+
+	}
 
 	@Override
 	public void onBackPressed(){

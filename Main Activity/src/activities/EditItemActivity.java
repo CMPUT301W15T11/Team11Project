@@ -41,6 +41,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -174,6 +175,23 @@ public class EditItemActivity extends Activity{
 		});
 
 		photoButton = (Button) findViewById(R.id.selectPicBut);
+		photoButton.setOnLongClickListener(new OnLongClickListener() { 
+	        @Override
+	        public boolean onLongClick(View v) {
+	            // TODO Auto-generated method stub
+	        	if (list.getHasPhoto() == true){
+	        		list.setHasPhoto(false);
+	        		list.setPhoto(null);
+                	Context context = getApplicationContext();
+                	CharSequence text = "Photo Removed!";
+                	int duration = Toast.LENGTH_LONG;
+                	Toast toast = Toast.makeText(context, text, duration);
+                	toast.show();
+	        	}
+	        	return true;
+	           
+	        }
+	    });
 		//==========================================================================================================
 		//============================confirm the edit
 		
@@ -268,6 +286,10 @@ public class EditItemActivity extends Activity{
 	 * @param v the Select Photo button
 	 */
 	public void choosePhoto(View v){
+    	if (list.getHasPhoto() == true){
+    		list.setHasPhoto(false);
+    		list.setPhoto(null);
+    	}
 		Intent  photoPickerIntent = new Intent(Intent.ACTION_PICK);
 		photoPickerIntent.setType("image/*");
 		startActivityForResult(photoPickerIntent, 1);
