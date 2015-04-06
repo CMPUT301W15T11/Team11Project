@@ -50,7 +50,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class ListClaimsActivity extends Activity {
-	private ClaimsList datafile;
 	// private ListClaimsAdapter listClaimAdapter;
 	private ListView claimsListView;
 	private ImageView searchImage;
@@ -69,6 +68,55 @@ public class ListClaimsActivity extends Activity {
 	private ArrayList<ExpenseClaim> transferList;
 	private ArrayList<ExpenseClaim> screenList;
 	private ApproverClaimListAdapter claimAdapter2;
+	private ArrayList<ExpenseClaim> localList;
+	private String threadPasser;
+	private int threadIntPasser;
+	private ExpenseClaim transferClaim;
+
+	private void claimantRefreshData() {
+		dataList = this.loadFromFile();
+		localList = new ArrayList<ExpenseClaim>();
+		localList = dataList.getClaimsAL();
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				transferList = client.syncLocalFileList();
+			}
+		}).start();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int i = 0; i < localList.size(); i++) {
+			for (int j = 0; j < transferList.size(); j++) {
+				if (!localList.get(i).getStatus().equals("In Progress")
+						&& localList.get(i).getName().equals(transferList.get(j).getName())) {
+					localList.set(i, transferList.get(j));
+				}
+			}
+		}
+		dataList.setClaimsAL(localList);
+		ClaimListController.setClaimsList(dataList);
+		saveInFile();
+
+		return;
+		/*
+		 * for(int i=0;i<localList.size();i++){
+		 * if(!localList.get(i).getStatus().equals("In Progress")){ String
+		 * searchName=localList.get(i).getName(); String
+		 * testYell=client.getClaim(searchName).getComments();
+		 * //localList.set(i,client.getClaim(localList.get(i).getName()));
+		 * //Toast.makeText(ListClaimsActivity.this,
+		 * localList.get(i).getComments(), Toast.LENGTH_SHORT).show();
+		 * Toast.makeText(ListClaimsActivity.this, testYell,
+		 * Toast.LENGTH_SHORT).show(); } }
+		 */
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,37 +125,41 @@ public class ListClaimsActivity extends Activity {
 		claimsListView = (ListView) findViewById(R.id.claimsListView);
 		searchImage = (ImageView) findViewById(R.id.tag_search);
 		tagSearchEdit = (EditText) findViewById(R.id.tag_filter);
-		addClaimButton=(Button)findViewById(R.id.addClaimButton);
+		addClaimButton = (Button) findViewById(R.id.addClaimButton);
 		// Load in claims from disk, give them to the claimsListController
-		
-		
-		
+
+		client = new Client();
+
+		if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true) {
+			if (UserController.getUserType().equals("Claimant")) {
+				claimantRefreshData();
+			}
+		}
+
 		dataList = this.loadFromFile();
 		dataList.sort();
 		clc = new ClaimListController();
 		clc.setClaimsList(dataList);
 		claims = clc.getClaimsList().getClaims();
 
-		client = new Client();
-		
 		if (UserController.getUserType().equals("Claimant")) {
 			claimant_init();
-			
+
 		} else if (UserController.getUserType().equals("Approver")) {
 			approver_init();
-			
+
 		}
 
 	}
-	
-	public void approver_init(){
+
+	public void approver_init() {
 		addClaimButton.setEnabled(false);
-		transferList=new ArrayList<ExpenseClaim>(); 
-		Thread loadThread=new Thread(new Runnable(){
+		transferList = new ArrayList<ExpenseClaim>();
+		Thread loadThread = new Thread(new Runnable() {
 			@Override
-			public void run(){
+			public void run() {
 				transferList.addAll(client.getApproverClaimList());
-			}		
+			}
 		});
 		loadThread.start();
 		try {
@@ -116,18 +168,18 @@ public class ListClaimsActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		SubmittedClaimController.setSubmittedList(transferList);
-		
-		screenList=new ArrayList<ExpenseClaim>();
+
+		screenList = new ArrayList<ExpenseClaim>();
 		screenList.addAll(SubmittedClaimController.getSubmittedList());
-		
-		claimAdapter2=new ApproverClaimListAdapter(this,screenList);
+
+		claimAdapter2 = new ApproverClaimListAdapter(this, screenList);
 		claimsListView.setAdapter(claimAdapter2);
-				
-		indexCorrector=new ArrayList<Integer>();
-		filterFlag=false;
-		
+
+		indexCorrector = new ArrayList<Integer>();
+		filterFlag = false;
+
 		searchImage.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -158,7 +210,7 @@ public class ListClaimsActivity extends Activity {
 			}
 
 		});
-		
+
 		claimsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
@@ -176,7 +228,7 @@ public class ListClaimsActivity extends Activity {
 
 			}
 		});
-	
+
 	}
 
 	public void claimant_init() {
@@ -288,15 +340,15 @@ public class ListClaimsActivity extends Activity {
 							}
 							saveInFile();
 
-							if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true){
+							if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true) {
 								client.deleteClaim(nameForHttp);
-							}else{
-								Toast.makeText(ListClaimsActivity.this, "No network connected, delete file locally", Toast.LENGTH_SHORT).show();
+							} else {
+								Toast.makeText(ListClaimsActivity.this, "No network connected, delete file locally",
+										Toast.LENGTH_SHORT).show();
 							}
-							
 
 							dataList = loadFromFile();
-							//dataList.sort();
+							// dataList.sort();
 							ClaimListController.setClaimsList(dataList);
 							claimAdapter.notifyDataSetChanged();
 						} else {
@@ -308,14 +360,15 @@ public class ListClaimsActivity extends Activity {
 							ClaimListController.removeClaim(correctIndex);
 							saveInFile();
 
-							if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true){
+							if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true) {
 								client.deleteClaim(nameForHttp);
-							}else{
-								Toast.makeText(ListClaimsActivity.this, "No network connected, delete file locally", Toast.LENGTH_SHORT).show();
+							} else {
+								Toast.makeText(ListClaimsActivity.this, "No network connected, delete file locally",
+										Toast.LENGTH_SHORT).show();
 							}
 
 							dataList = loadFromFile();
-							//dataList.sort();
+							// dataList.sort();
 							ClaimListController.setClaimsList(dataList);
 							claimAdapter.notifyDataSetChanged();
 						}
@@ -361,11 +414,11 @@ public class ListClaimsActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		Intent intentBackPressed = new Intent();
+		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentBackPressed.setClass(ListClaimsActivity.this, MainActivity.class);
 		startActivity(intentBackPressed);
 	}
 
-	
 	private ClaimsList loadFromFile() {
 		Gson gson = new Gson();
 		dataList = new ClaimsList();

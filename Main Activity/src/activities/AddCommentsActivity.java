@@ -1,7 +1,10 @@
 package activities;
 
+import java.util.Calendar;
+
 import model.ExpenseClaim;
 import model.SubmittedClaimController;
+import model.UserController;
 import network.Client;
 
 import com.example.team11xtremexpensetracker.R;
@@ -50,6 +53,9 @@ public class AddCommentsActivity extends Activity {
 				} else {
 					currentClaim.setComments(comments);
 					currentClaim.setStatus("Approved");
+					currentClaim.setApproverName(UserController.getUserName());
+					Calendar dd=Calendar.getInstance();
+					currentClaim.setCommentsDate(dd);
 					client.addClaim(currentClaim);
 					//SubmittedClaimController.setSubmittedList(client.getApproverClaimList());
 					Thread updateThread=new Thread(new Runnable(){
@@ -63,7 +69,7 @@ public class AddCommentsActivity extends Activity {
 					});
 					updateThread.start();
 					try {
-						Thread.sleep(500);
+						Thread.sleep(300);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -89,7 +95,11 @@ public class AddCommentsActivity extends Activity {
 				} else {
 					currentClaim.setComments(comments);
 					currentClaim.setStatus("Returned");
+					currentClaim.setApproverName(UserController.getUserName());
+					Calendar dd=Calendar.getInstance();
+					currentClaim.setCommentsDate(dd);
 					client.addClaim(currentClaim);
+					
 					Thread updateThread=new Thread(new Runnable(){
 
 						@Override
@@ -101,7 +111,7 @@ public class AddCommentsActivity extends Activity {
 					});
 					updateThread.start();
 					try {
-						Thread.sleep(500);
+						Thread.sleep(300);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

@@ -50,5 +50,10 @@ public class MainActivity extends Activity {
 		Intent intent=new Intent(MainActivity.this,AccountActivity.class);
 		startActivity(intent);
 	}
+	
+	@Override
+	public void onBackPressed(){
+		finish();
+	}
 
 }

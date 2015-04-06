@@ -87,6 +87,12 @@ public class TagActivity extends Activity {
 				currentClaim = SubmittedClaimController.getSubmittedClaimById(claimID);
 			}
 		}
+		
+		if(currentClaim.getStatus().equals("Submitted")||currentClaim.getStatus().equals("Approved")){
+			tagEdit.setFocusable(false);
+			tagEdit.setFocusableInTouchMode(false);
+			tagEdit.setHint(R.string.status_lock);
+		}
 
 		client = new Client();
 		/**

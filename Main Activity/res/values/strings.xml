@@ -21,7 +21,7 @@
     <string name="submit_button">Submit</string>
     <string name="submitted_button">Submitted</string>
     <string name="approve_button">Approve</string>
-    <string name="approved_button">Aprroved</string>
+    <string name="approved_button">Approved</string>
     <string name="return_button">Return</string>
     <string name="returned_button">Returned</string>
     <string name="title_activity_comments">CommentsActivity</string>
@@ -32,6 +32,7 @@
 	<string name="add_comments_title">Type your comments below</string>
 	<string name="approveClaim_button">Approve current claim</string>
 	<string name="returnClaim_button">Return current claim</string>
+	<string name="status_lock">Not editable</string>
     
     
 </resources>

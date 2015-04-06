@@ -85,7 +85,7 @@ public class AccountActivity extends Activity {
 				if (userName.equals("")) {
 					Toast.makeText(AccountActivity.this, "Empty input", Toast.LENGTH_SHORT).show();
 					return;
-				} else {
+				} else if(UserController.getUserType().equals("Claimant")){
 					AccountActivity.this.saveUserInFile(userName);
 				}
 				Intent intent = new Intent(AccountActivity.this, ListClaimsActivity.class);

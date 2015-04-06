@@ -71,6 +71,10 @@ public class ClaimsList {
 		return allClaimsList;
 	} 
 	
+	public void setClaimsAL(ArrayList<ExpenseClaim> targetList){
+		this.allClaimsList=targetList;
+	}
+	
 	// Refreshes Listeners
 	public void updateSubmitted(){
 		notifyListeners();

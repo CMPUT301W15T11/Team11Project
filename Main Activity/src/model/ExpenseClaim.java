@@ -16,10 +16,10 @@ public class ExpenseClaim {
 	private String approverName;
 	private String name;
 	private String comments;
-	private Calendar commentDate;
 	
 	private Calendar startDate;
 	private Calendar endDate;
+	private Calendar commentsDate;
 	private ArrayList<Destination>  destinations;
 	private String status;
 	private  ArrayList<Tag> tagList;
@@ -34,6 +34,8 @@ public class ExpenseClaim {
 		approverName="";
 		status="In progress";
 		isEditable = true;
+		Calendar cc=Calendar.getInstance();
+		commentsDate=cc;
 		destinations = new ArrayList <Destination>() ;
 		Itemlist = new ArrayList <Item>();
 		tagList=new ArrayList<Tag>();
@@ -160,6 +162,17 @@ public class ExpenseClaim {
 		return returnString;
 		//return this.startDate.set(startYear, startMonthOfYear+1, startDayOfMonth).toString() + " - " + this.endDate.set(startYear, startMonthOfYear+1, startDayOfMonth).toString();
 	}
+	
+	public String getCommentsDateString(){
+		
+		int monthC=this.commentsDate.get(Calendar.MONTH);
+		int dayC=this.commentsDate.get(Calendar.DAY_OF_MONTH);
+		int yearC=this.commentsDate.get(Calendar.YEAR);
+		
+		String outputString=String.format("%d - %d - %d",monthC,dayC,yearC);
+		return outputString;
+	}
+	
 	/**
 	 * Get destination list.
 	 * @return destinations
@@ -214,11 +227,11 @@ public class ExpenseClaim {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public Calendar getCommentDate() {
-		return commentDate;
+	public Calendar getCommentsDate() {
+		return commentsDate;
 	}
-	public void setCommentDate(Calendar commentDate) {
-		this.commentDate = commentDate;
+	public void setCommentsDate(Calendar commentsDate) {
+		this.commentsDate = commentsDate;
 	}
 	
 	// total currency
@@ -266,6 +279,8 @@ public class ExpenseClaim {
 	public void setApproverName(String approverName) {
 		this.approverName = approverName;
 	}
+	
+
 	//Used to display information in list view
 	/**
 	 * Return the object string as its name.
@@ -274,5 +289,7 @@ public class ExpenseClaim {
 		// TODO the structure is weird, it's hard to manage with only claimList, we may need to add userList as well
 		return name;
 	}
+	
+	
 	
 }

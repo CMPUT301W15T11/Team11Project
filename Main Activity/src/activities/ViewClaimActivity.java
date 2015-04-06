@@ -123,6 +123,12 @@ public class ViewClaimActivity extends Activity {
 		if (claimID >= 0
 				&& ((UserController.getUserType().equals("Claimant")) && (currentClaim.getStatus().equals("Submitted")))
 				|| (currentClaim.getStatus().equals("Approved"))) {
+			if(currentClaim.getStatus().equals("Submitted")){
+				ApproveOrSubmitButton.setText(R.string.submitted_button);
+			}
+			if(currentClaim.getStatus().equals("Approved")){
+				ApproveOrSubmitButton.setText(R.string.approved_button);
+			}
 			ApproveOrSubmitButton.setEnabled(false);
 			editFlag = false;
 			// editClaimItem.setEnabled(false);

@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class CommentsActivity extends Activity {
-	
+
 	private TextView statusView;
 	private TextView approverView;
 	private TextView dateView;
@@ -27,11 +27,10 @@ public class CommentsActivity extends Activity {
 	private int claimID;
 	private Client client;
 	private ExpenseClaim currentClaim;
-	
 
-	private void init(){
-		
-		client=new Client();
+	private void init() {
+
+		client = new Client();
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", 0);
 
@@ -43,28 +42,31 @@ public class CommentsActivity extends Activity {
 				currentClaim = SubmittedClaimController.getSubmittedClaimById(claimID);
 			}
 		}
-		
-		statusView=(TextView)findViewById(R.id.comments_status);
-		approverView=(TextView)findViewById(R.id.comments_approverName);
-		dateView=(TextView)findViewById(R.id.comments_date);
-		commentsView=(TextView)findViewById(R.id.claim_comments_view);
-		
-		statusView.setText(currentClaim.getStatus());
-		approverView.setText(currentClaim.getApproverName());
-		commentsView.setText(currentClaim.getComments());
-		
+
+		statusView = (TextView) findViewById(R.id.comments_status);
+		approverView = (TextView) findViewById(R.id.comments_approverName);
+		dateView = (TextView) findViewById(R.id.comments_date);
+		commentsView = (TextView) findViewById(R.id.claim_comments_view);
+
+		if (!currentClaim.getStatus().equals("In Progress") && !currentClaim.getStatus().equals("Submitted")) {
+			statusView.setText(currentClaim.getStatus());
+			approverView.setText(currentClaim.getApproverName());
+			commentsView.setText(currentClaim.getComments());
+			dateView.setText(currentClaim.getCommentsDateString());
+		}
 	}
-	
+
 	@Override
-	public void onBackPressed(){
-		
+	public void onBackPressed() {
+
 		finish();
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comments);
+		init();
 	}
 
 	@Override

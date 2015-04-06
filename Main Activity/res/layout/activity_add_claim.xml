@@ -7,13 +7,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
-        android:layout_weight="30" >
+        android:layout_weight="10"
+        android:gravity="center" >
         
 
         <TextView
             android:id="@+id/textViewEnterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text="Enter Name:" />
 
         <EditText
@@ -21,6 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
             android:ems="10" >
 
             <requestFocus />
@@ -32,26 +36,28 @@
         android:id="@+id/startDatePickerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="29.88"
+        android:layout_weight="10"
+        android:layout_margin="10dp"
         android:text="Start Date Picker" />
 
     <Button
         android:id="@+id/endDatePickerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="29.99"
+        android:layout_weight="10"
+        android:layout_margin="10dp"
         android:text="End Date Picker" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="10" >
+        android:layout_weight="10"
+        android:gravity="center" >
 
         <Button
             android:id="@+id/addClaimDoneButton"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
             android:text="Done" />
 
     </LinearLayout>

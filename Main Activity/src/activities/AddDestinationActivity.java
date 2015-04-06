@@ -18,6 +18,8 @@ import model.Destination;
 import model.ExpenseClaim;
 import model.Item;
 import model.ItemlistAdapter;
+import model.SubmittedClaimController;
+import model.UserController;
 
 import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.R.layout;
@@ -66,16 +68,31 @@ public class AddDestinationActivity extends Activity {
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", -1);
 		//Toast.makeText(this, "Claim: " + (new Integer(claimID).toString()), Toast.LENGTH_SHORT).show();
-		if (claimID >= 0){
-			//new ClaimListController();
-			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
+		if (claimID >= 0) {
+
+			if (UserController.getUserType().equals("Claimant")) {
+				currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
+			} else if (UserController.getUserType().equals("Approver")) {
+				currentClaim = SubmittedClaimController.getSubmittedClaimById(claimID);
+			}
 		}
-		client=new Client();
-		// get ids
+		
 		addDestButton = (Button) findViewById(R.id.addDest);
 		newDestEditText = (EditText) findViewById(R.id.newDestEditText);
 		newReasonEditText = (EditText) findViewById(R.id.newReasonEditText);
 		existingDestsListView = (ListView) findViewById(R.id.existingDestsListView);
+		
+		if(currentClaim.getStatus().equals("Submitted")||currentClaim.getStatus().equals("Approved")){
+			newDestEditText.setFocusable(false);
+			newDestEditText.setFocusableInTouchMode(false);
+			newDestEditText.setHint(R.string.status_lock);
+			newReasonEditText.setFocusable(false);
+			newReasonEditText.setFocusableInTouchMode(false);
+			newReasonEditText.setHint(R.string.status_lock);
+		}
+		client=new Client();
+		// get ids
+		
 		
 		list= currentClaim.getDestinations();
 		listAdapter = new DestListAdapter(this, list);

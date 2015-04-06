@@ -34,6 +34,7 @@ public class Client {
 	private static final String LOG_TAG = "ClaimSearch";
 
 	private Gson gson;
+	private ExpenseClaim claim;
 
 	public Client() {
 		gson = new Gson();
@@ -41,21 +42,22 @@ public class Client {
 
 	public ExpenseClaim getClaim(String claimName) {
 		// TODO Auto-generated method stub
+		HttpGet getRequest = new HttpGet(RESOURCE_URL + "Claims/" + claimName + "/");
+		HttpResponse getResponse;
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(RESOURCE_URL + "Claims/" + claimName + "/");
-		HttpResponse response;
-
 		try {
-			response = httpClient.execute(httpGet);
-			SearchHit<ExpenseClaim> sr = parseClaimHit(response);
-			return sr.getSource();
-
+			getResponse = httpClient.execute(getRequest);
+			String json = getEntityContent(getResponse);
+			Type searchHitType = new TypeToken<SearchHit<ExpenseClaim>>() {
+			}.getType();
+			SearchHit<ExpenseClaim> esResponse = gson.fromJson(json, searchHitType);
+			return esResponse.getSource();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return null;
-
 	}
 
 	public void addClaim(final ExpenseClaim claim) {
@@ -175,6 +177,38 @@ public class Client {
 			if (claims.get(i).getClaimantName().equals(UserController.getUserName())) {
 				claims.remove(i);
 			}
+		}
+
+		return claims;
+	}
+
+	public ArrayList<ExpenseClaim> syncLocalFileList() {
+		String searchString = "*";
+		ArrayList<ExpenseClaim> claims = new ArrayList<ExpenseClaim>();
+
+		try {
+			HttpPost searchRequest = createSearchRequest(searchString);
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpResponse response = httpClient.execute(searchRequest);
+
+			// String status = response.getStatusLine().toString();
+
+			SearchResponse<ExpenseClaim> esResponse = parseSearchResponse(response);
+			Hits<ExpenseClaim> hits = esResponse.getHits();
+
+			if (hits != null) {
+				if (hits.getHits() != null) {
+					for (SearchHit<ExpenseClaim> sesr : hits.getHits()) {
+						claims.add((sesr.getSource()));
+					}
+				}
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		return claims;
