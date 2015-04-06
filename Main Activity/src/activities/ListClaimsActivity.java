@@ -14,8 +14,9 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
-import save_and_load.FileManager;
 import model.ApproverClaimListAdapter;
 import model.ClaimListController;
 import model.ClaimsList;
@@ -27,9 +28,6 @@ import network.Client;
 import network.ConnectionChecker;
 
 import com.example.team11xtremexpensetracker.R;
-import com.example.team11xtremexpensetracker.R.id;
-import com.example.team11xtremexpensetracker.R.layout;
-import com.example.team11xtremexpensetracker.R.menu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -69,9 +67,6 @@ public class ListClaimsActivity extends Activity {
 	private ArrayList<ExpenseClaim> screenList;
 	private ApproverClaimListAdapter claimAdapter2;
 	private ArrayList<ExpenseClaim> localList;
-	private String threadPasser;
-	private int threadIntPasser;
-	private ExpenseClaim transferClaim;
 
 	private void claimantRefreshData() {
 		dataList = this.loadFromFile();
@@ -105,17 +100,7 @@ public class ListClaimsActivity extends Activity {
 		saveInFile();
 
 		return;
-		/*
-		 * for(int i=0;i<localList.size();i++){
-		 * if(!localList.get(i).getStatus().equals("In Progress")){ String
-		 * searchName=localList.get(i).getName(); String
-		 * testYell=client.getClaim(searchName).getComments();
-		 * //localList.set(i,client.getClaim(localList.get(i).getName()));
-		 * //Toast.makeText(ListClaimsActivity.this,
-		 * localList.get(i).getComments(), Toast.LENGTH_SHORT).show();
-		 * Toast.makeText(ListClaimsActivity.this, testYell,
-		 * Toast.LENGTH_SHORT).show(); } }
-		 */
+
 	}
 
 	@Override
@@ -137,7 +122,7 @@ public class ListClaimsActivity extends Activity {
 		}
 
 		dataList = this.loadFromFile();
-		dataList.sort();
+		//dataList.sort();
 		clc = new ClaimListController();
 		clc.setClaimsList(dataList);
 		claims = clc.getClaimsList().getClaims();
@@ -168,7 +153,17 @@ public class ListClaimsActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Collections.sort(transferList,new Comparator<ExpenseClaim>(){
 
+			@Override
+			public int compare(ExpenseClaim claim1, ExpenseClaim claim2) {
+				// TODO Auto-generated method stub
+				return claim1.getStartDate().compareTo(claim2.getStartDate());
+			}
+			
+		});
+		
 		SubmittedClaimController.setSubmittedList(transferList);
 
 		screenList = new ArrayList<ExpenseClaim>();

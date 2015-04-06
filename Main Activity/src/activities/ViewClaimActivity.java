@@ -23,6 +23,7 @@ import model.ItemlistAdapter;
 import model.SubmittedClaimController;
 import model.UserController;
 import network.Client;
+import network.ConnectionChecker;
 
 import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.R.id;
@@ -187,7 +188,14 @@ public class ViewClaimActivity extends Activity {
 					ApproveOrSubmitButton.setEnabled(false);
 					// editClaimItem.setEnabled(false);
 					saveInFile();
-					client.addClaim(currentClaim);
+					
+					if (new ConnectionChecker().netConnected(ViewClaimActivity.this) == true) {
+						client.addClaim(currentClaim);
+					} else {
+						Toast.makeText(ViewClaimActivity.this, "No network connected, cannot submit", Toast.LENGTH_SHORT).show();
+						return;
+					}
+					
 				} else if (UserController.getUserType().equals("Approver")) {
 					Toast.makeText(ViewClaimActivity.this, "Please add comments first",Toast.LENGTH_SHORT).show();
 					return;

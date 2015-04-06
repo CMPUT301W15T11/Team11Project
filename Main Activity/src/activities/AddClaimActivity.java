@@ -165,12 +165,18 @@ public class AddClaimActivity extends Activity {
 				}
 				newClaim.setName(claimName);
 				if (claimID == -1) {
-					claimID = ClaimListController.getClaimsList().getLength();
+					//claimID = ClaimListController.getClaimsList().getLength();
+					//doing this will cause conflict with sort, should correct index before pass to next activity
 					ClaimListController.getClaimsList().addClaim(newClaim);
 				}
 
 				newClaim.setClaimantName(UserController.getUserName());
-
+				ClaimListController.getClaimsList().sort();
+				for(int k=0;k<ClaimListController.getClaimsList().getClaimsAL().size();k++){
+					if(ClaimListController.getClaimsList().getClaimsAL().get(k).getName().equals(claimName)){
+						claimID=k;
+					}
+				}
 				saveInFile();
 
 				if (new ConnectionChecker().netConnected(AddClaimActivity.this) == true) {
@@ -179,7 +185,7 @@ public class AddClaimActivity extends Activity {
 					Toast.makeText(AddClaimActivity.this, "No network connected, save file locally", Toast.LENGTH_SHORT).show();
 				}
 
-				new ClaimListController();
+				
 				Intent intent = new Intent(AddClaimActivity.this, ViewClaimActivity.class);
 				intent.putExtra("claimID", claimID);
 				// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
