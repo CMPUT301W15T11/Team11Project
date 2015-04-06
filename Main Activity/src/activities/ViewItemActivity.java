@@ -52,6 +52,7 @@ public class ViewItemActivity extends Activity{
 	private Item list;
 	private boolean indicator;
 	private CheckBox completeness;
+	private TextView hasPhoto;
 	
 	private ClaimsList dataList;
 	private static final String FILENAME = "datafile.sav";
@@ -108,7 +109,14 @@ public class ViewItemActivity extends Activity{
 		itemamountstr = list.getAmount().toString();
 		itemamount = (TextView)findViewById(R.id.amountspentView);
 		itemamount.setText(itemamountstr);
-		
+
+		hasPhoto = (TextView) findViewById(R.id.hasPhotoTxt);
+		if (list.getHasPhoto() == true){
+			hasPhoto.setText("There is a photo of the receipt.");
+		}
+		else{
+			hasPhoto.setText("There is no photo of the receipt.");
+		}		
 		
 
 		
