@@ -17,7 +17,7 @@ public class Item {
 	private String description;
 	private Boolean indicator = false;
 	private Boolean hasPhoto = false;
-	private Byte[] photo;
+	private byte[] photo = null;
 	/**
 	 * get item name
 	 * @return
@@ -131,13 +131,13 @@ public class Item {
 	/**
 	 * @return the photo
 	 */
-	public Byte[] getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
 	/**
 	 * @param photo the photo to set
 	 */
-	public void setPhoto(Byte[] photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
 

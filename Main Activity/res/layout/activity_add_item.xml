@@ -137,21 +137,23 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/addgeolocation"
         android:text="Save" />
+
      <Button
-        android:id="@+id/takePhotoButt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/confirmadd"
-        android:layout_marginLeft="30dp"
-        android:layout_toRightOf="@+id/addgeolocation"
-        android:text="Take Photo" />
+         android:id="@+id/addPicBut"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/confirmadd"
+         android:layout_marginLeft="30dp"
+         android:layout_toRightOf="@+id/addgeolocation"
+         android:text="Add Photo" 
+         android:onClick="choosePhoto"/>
 
     <TextView
         android:id="@+id/takePhototxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/takePhotoButt"
-        android:layout_alignLeft="@+id/takePhotoButt"
+        android:layout_above="@+id/addPicBut"
+        android:layout_alignLeft="@+id/addPicBut"
         android:text="Photo of Receipt"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
