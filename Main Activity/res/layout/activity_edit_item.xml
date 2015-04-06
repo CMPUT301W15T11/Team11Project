@@ -127,23 +127,25 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/editgeolocation"
         android:text="Save" />
-    <Button
-        android:id="@+id/editPhotoButt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/editconfirm"
-        android:layout_marginLeft="35dp"
-        android:layout_toRightOf="@+id/editgeolocation"
-        android:text="Edit Photo" />
 
     <TextView
         android:id="@+id/editPhotoTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editPhotoButt"
-        android:layout_alignLeft="@+id/editPhotoButt"
+        android:layout_above="@+id/selectPicBut"
+        android:layout_alignLeft="@+id/selectPicBut"
         android:layout_marginLeft="14dp"
         android:text="Photo Receipt"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/selectPicBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editconfirm"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/editgeolocation"
+        android:onClick="choosePhoto"
+        android:text="Select Photo" />
 
 </RelativeLayout>

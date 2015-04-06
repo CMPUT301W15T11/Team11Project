@@ -87,12 +87,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView" />
-    
-    <TextView
-        android:id="@+id/hasPhotoTxt"
+
+    <Button
+        android:id="@+id/viewPicBut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="View Receipt" />
 
     <CheckBox
         android:id="@+id/completed"

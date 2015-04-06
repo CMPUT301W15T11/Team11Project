@@ -5,6 +5,7 @@ package activities;
  * Checks to make sure expense claim has a name
  */
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,9 +31,16 @@ import com.example.team11xtremexpensetracker.R.layout;
 import com.google.gson.Gson; 
 import com.google.gson.reflect.TypeToken;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +52,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class AddItemActivity extends Activity{
 	
 	private ClaimsList datafile;
@@ -70,6 +79,12 @@ public class AddItemActivity extends Activity{
 	private ClaimListController clc;
 	
 	private Client client;
+
+	private Bitmap photoBitmap;
+	private boolean hasPhoto = false;
+	private byte[] pressedPhoto = new byte[65536];
+	private Button photoButton;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -154,6 +169,7 @@ public class AddItemActivity extends Activity{
 			}
 		});
 		
+		photoButton = (Button) findViewById(R.id.addPicBut);
 		//Button Add
 		Button itemadd = (Button)findViewById(R.id.confirmadd);
 		
@@ -185,6 +201,8 @@ public class AddItemActivity extends Activity{
 				newItem.setAmount(itemamountstr);
 				newItem.setDescription(itemdescriptionstr);
 				newItem.setDate(adddate);
+				newItem.setHasPhoto(hasPhoto);
+				newItem.setPhoto(pressedPhoto);
 				
 				currentClaim.addItem(newItem);				
 				saveInFile();
@@ -269,5 +287,51 @@ public class AddItemActivity extends Activity{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * sends an intent to the gallery application to get a picture in return
+	 * @param v the Add Photo button
+	 */
+	public void choosePhoto(View v){
+		Intent  photoPickerIntent = new Intent(Intent.ACTION_PICK);
+		photoPickerIntent.setType("image/*");
+		startActivityForResult(photoPickerIntent, 1);
+	
+	}
+	/**
+	 * When the user returns from the gallery application they are directed towards this method where the 
+	 * photo bitmap is converted to a JPEG, compressed and stored in a byte array where it is 
+	 * uploaded with the expense item that has been created. 
+	 */
+	protected void onActivityResult(int requestCode, int resultCode,
+	        Intent intent) {
+	    super.onActivityResult(requestCode, resultCode, intent);
 
+	    if (resultCode == RESULT_OK) {
+	        Uri photoUri = intent.getData();
+
+	        if (photoUri != null) {
+	            try {
+	                photoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+	                int byteCount = photoBitmap.getByteCount();
+	                
+	                if (byteCount > 0){
+	                	Context context = getApplicationContext();
+	                	CharSequence text = "Photo Added!";
+	                	int duration = Toast.LENGTH_LONG;
+	                	Toast toast = Toast.makeText(context, text, duration);
+	                	toast.show();
+	                	hasPhoto = true;
+	                	Log.i("Image Upload", ""+byteCount);
+	                }
+	                ByteArrayOutputStream blob = new ByteArrayOutputStream();
+	                photoBitmap.compress(CompressFormat.JPEG, 20, blob);
+	                pressedPhoto= blob.toByteArray();
+	                Log.i("size of byte array", ""+ (int)pressedPhoto.length);
+
+	            }catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	}
 }
