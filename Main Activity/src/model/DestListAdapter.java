@@ -30,11 +30,20 @@ public class DestListAdapter extends ArrayAdapter<Destination>{
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.dest_list_item,parent,false);
 			}
 		TextView destName = (TextView)convertView.findViewById(R.id.destName);
-		destName.setText(tempDest.getDest());
+		destName.setText("Destination: "+tempDest.getDest());
 		
 		TextView destReason = (TextView)convertView.findViewById(R.id.destReason);
-		destReason.setText(tempDest.getReason());
+		destReason.setText("Reason: "+tempDest.getReason());
 		
+		String temp = tempDest.getLocationStr();
+		GeoLocation tempG = GeoLocation.toGeoLocation(temp);
+		
+		
+		TextView destLati = (TextView)convertView.findViewById(R.id.destLati);
+		destLati.setText("Latitude: "+String.valueOf(tempG.getLatitude()));
+		
+		TextView destLong = (TextView)convertView.findViewById(R.id.destLong);
+		destLong.setText("Longitude: "+String.valueOf(tempG.getLongitude()));
 		
 		return convertView;
 	}

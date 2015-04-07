@@ -15,8 +15,6 @@ public class MapViewController {
 
 	public static void initializeLocationManager(Context context) {
 		if (lm == null) {
-			// referenced https://github.com/joshua2ua/MockLocationTester on
-			// March 26th 2015
 			lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, new LocationListener() {
 

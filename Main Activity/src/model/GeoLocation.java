@@ -35,8 +35,8 @@ public class GeoLocation {
 		this.longitude = lng;
 	}
 
-	public String toString() {
-		return new String(this.latitude + "," + this.longitude);
+	public static String toString(GeoLocation location) {
+		return new String(location.latitude + "," + location.longitude);
 	}
 
 	public static GeoLocation toGeoLocation(String geolocation) {

@@ -2,6 +2,7 @@ package activities;
 
 import model.GeoLocation;
 import model.MapViewController;
+import model.UserController;
 
 import org.osmdroid.api.IMapController;
 
@@ -30,14 +31,32 @@ public class MapActivity extends Activity {
 	private GeoLocation currentLocation;
 	private GeoPoint currentGeoPoint;
 	private GeoPoint currentPoint;
+	private int mapMode;
+	private int claimID;
+	private int itemID;
+	private int destID;
 
+	/*
+	 * Map Picker:
+	 * mode 1:pick home location
+	 * mode 2:pick expense item location
+	 * mode 3:pick destination location
+	 * 
+	 */
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
-
 		
 		
+		Intent intent = getIntent();
+		mapMode = intent.getIntExtra("mapMode", 0);
+		
+		if (mapMode == 2){
+			claimID = intent.getIntExtra("claimID", -1);
+			destID = intent.getIntExtra("destID", -1);
+		}
 		
 		
 		map = (MapView) findViewById(R.id.mapview);
@@ -52,7 +71,26 @@ public class MapActivity extends Activity {
 		mapController.setZoom(30);
 		
 		MapViewController.initializeLocationManager(this);
-		currentLocation = MapViewController.getLocation();
+		
+		if (mapMode == 1){
+			if (UserController.getHomeLocation()!=null){
+				currentLocation = GeoLocation.toGeoLocation(UserController.getHomeLocation());
+				//Toast.makeText(getApplicationContext(), UserController.getHomeLocation(), Toast.LENGTH_LONG).show();
+			}
+			else{
+				currentLocation = MapViewController.getLocation();
+			}
+		}
+		else if (mapMode == 2){
+			currentLocation = MapViewController.getLocation();
+		}
+		else if (mapMode == 3){
+			
+		}
+		else{
+			currentLocation = MapViewController.getLocation();
+		}
+		
 		
 		currentPoint = new GeoPoint(currentLocation.getLatitude(),currentLocation.getLongitude());
 
@@ -71,11 +109,25 @@ public class MapActivity extends Activity {
 			public void onClick(View v) {
 				currentPoint = current.getPosition();
 				currentLocation.setLatLng(currentPoint.getLatitude(), currentPoint.getLongitude());
-				GeoLocation test = new GeoLocation(53.526546, -113.528155);
-				Toast.makeText(getApplicationContext(), String.valueOf(GeoLocation.distanceBetween(test,currentLocation)), Toast.LENGTH_LONG).show();
-				/*Intent backIntent = new Intent(MapActivity.this, AddItemActivity.class);
-				startActivity(backIntent);
-				finish();*/
+				
+				switch (mapMode){
+				
+				case 1:
+					Intent intent1 = new Intent(MapActivity.this, ListClaimsActivity.class);
+					UserController.setHomeLocation(GeoLocation.toString(currentLocation));
+					startActivity(intent1);
+					
+				case 2:
+					Intent intent2 = new Intent();
+					intent2.setClass(MapActivity.this, AddDestinationActivity.class);
+					intent2.putExtra("claimID", claimID);
+					intent2.putExtra("locationStr", GeoLocation.toString(currentLocation));
+					MapActivity.this.startActivity(intent2);
+				case 3:
+				
+				case 0:
+					finish();
+				}
 			}
 
 		});

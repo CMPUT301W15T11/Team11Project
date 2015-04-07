@@ -21,6 +21,7 @@ import model.ApproverClaimListAdapter;
 import model.ClaimListController;
 import model.ClaimsList;
 import model.ExpenseClaim;
+import model.GeoLocation;
 import model.Listener;
 import model.SubmittedClaimController;
 import model.UserController;
@@ -67,6 +68,7 @@ public class ListClaimsActivity extends Activity {
 	private ArrayList<ExpenseClaim> screenList;
 	private ApproverClaimListAdapter claimAdapter2;
 	private ArrayList<ExpenseClaim> localList;
+	private Button setHomeButton;
 
 	private void claimantRefreshData() {
 		dataList = this.loadFromFile();
@@ -112,6 +114,7 @@ public class ListClaimsActivity extends Activity {
 		searchImage = (ImageView) findViewById(R.id.tag_search);
 		tagSearchEdit = (EditText) findViewById(R.id.tag_filter);
 		addClaimButton = (Button) findViewById(R.id.addClaimButton);
+		setHomeButton = (Button) findViewById(R.id.setHomeButton);
 		// Load in claims from disk, give them to the claimsListController
 
 		client = new Client();
@@ -136,6 +139,16 @@ public class ListClaimsActivity extends Activity {
 			approver_init();
 
 		}
+		
+		
+		setHomeButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.putExtra("mapMode", 1);
+				intent.setClass(ListClaimsActivity.this, MapActivity.class);
+				startActivity(intent);
+			}});
 
 	}
 
