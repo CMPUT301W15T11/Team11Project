@@ -43,7 +43,7 @@ public class ExpenseClaim {
 	// item list
 	/**
 	 * Get item list.
-	 * @return Item list
+	 * @return Itemlist
 	 */
 	public ArrayList<Item> getItemlist() {
 		return Itemlist;
@@ -78,7 +78,7 @@ public class ExpenseClaim {
 	/**
 	 * Get item by id from item list.
 	 * @param ID
-	 * @return
+	 * @return Itemlist.get(ID)
 	 */
 	public Item getItemById(int ID){
 		return Itemlist.get(ID);

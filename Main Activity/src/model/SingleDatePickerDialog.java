@@ -15,7 +15,11 @@ import android.widget.DatePicker.OnDateChangedListener;
 /*
  * A data picker class
  */
-
+/**
+ * A data picker class
+ * @author Stin
+ *
+ */
 public class SingleDatePickerDialog extends AlertDialog implements OnClickListener, OnDateChangedListener {
 // copy code from DoubleDatePickerDialog
 	private static final String START_YEAR = "start_year";
@@ -46,7 +50,16 @@ public class SingleDatePickerDialog extends AlertDialog implements OnClickListen
 		this(context, 0, callBack, year, monthOfYear, dayOfMonth, true);
 	}
 
-	
+	/**
+	 * set date
+	 * @param context
+	 * @param theme
+	 * @param callBack
+	 * @param year
+	 * @param monthOfYear
+	 * @param dayOfMonth
+	 * @param isDayVisible
+	 */
 	public SingleDatePickerDialog(Context context, int theme, OnDateSetListener callBack, int year, int monthOfYear,
 			int dayOfMonth, boolean isDayVisible) {
 		super(context, theme);
@@ -68,7 +81,7 @@ public class SingleDatePickerDialog extends AlertDialog implements OnClickListen
 		
 
 	}
-
+	
 	public void onClick(DialogInterface dialog, int which) {
 
 		if (which == BUTTON_POSITIVE)

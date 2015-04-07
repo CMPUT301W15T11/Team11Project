@@ -1,6 +1,7 @@
 package model;
 
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 
 import com.example.team11xtremexpensetracker.R;
@@ -11,15 +12,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+/**
+ * adaptet for approver claim list
+ * @author Stin
+ *
+ */
 
 public class ApproverClaimListAdapter extends ArrayAdapter<ExpenseClaim>{
-	
+	/**
+	 * Constructor for Approver claim list
+	 * @param context
+	 * @param claimList
+	 */
 	public ApproverClaimListAdapter(Context context,ArrayList<ExpenseClaim> claimList){
 		super(context,0,claimList);
 		
 	}
 	
-	@Override	
+	@Override
+	
 	public View getView(int position,View convertView,ViewGroup parent){
 		ExpenseClaim tempClaim = getItem(position);
 		if (convertView == null){

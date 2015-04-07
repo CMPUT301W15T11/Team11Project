@@ -14,10 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
+/**
+ * An Adapter for expense item lists
+ * @author Stin
+ *
+ */
 public class ItemlistAdapter extends ArrayAdapter<Item>{
 
-
+	/**
+	 * Expense item list adapter
+	 * @param context
+	 * @param itemlist
+	 */
 	
 	public ItemlistAdapter(Context context,ArrayList<Item> itemlist){
 		super(context,0,itemlist);
