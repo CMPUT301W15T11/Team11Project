@@ -1,6 +1,6 @@
 package com.example.team11xtremexpensetracker;
-import com.example.team11xtremexpensetracker.Destination;
 
+import model.Destination;
 import junit.framework.TestCase;
 
 

@@ -1,7 +1,12 @@
 package com.example.team11xtremexpensetracker.activity;
 
+import model.UserController;
+
 import com.example.team11xtremexpensetracker.R;
 
+import activities.AddClaimActivity;
+import activities.ListClaimsActivity;
+import activities.ViewClaimActivity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
@@ -26,27 +31,31 @@ public class ListClaimsActivityTest extends ActivityInstrumentationTestCase2<Lis
 	int origNumberClaims;
 	int newNumClaims;
 	
+	int claimID;
+	
 	
 	public ListClaimsActivityTest() {
 		super(ListClaimsActivity.class);
 	}
 	
 	protected void setUp() throws Exception {
-		super.setUp();
 		setActivityInitialTouchMode(true);
-		mActivity = getActivity();
+		UserController UC = new UserController();
+		UC.setUserType("Claimant");
 		
+		claimID = 0;
 		Intent intent = new Intent();
-		intent.putExtra("claimID", 2);
+		intent.putExtra("claimID", claimID);
 		setActivityIntent(intent);
-
 		
+		mActivity = getActivity();
+			
 		tag_filter = (EditText)mActivity.findViewById(R.id.tag_filter);
 		tag_search = (ImageView)mActivity.findViewById(R.id.tag_search);
 		addClaimButton = (Button)mActivity.findViewById(R.id.addClaimButton);
 		claimsListView = (ListView)mActivity.findViewById(R.id.claimsListView);
 		
-		
+		super.setUp();
 	}
 
 	@MediumTest
@@ -90,13 +99,14 @@ public class ListClaimsActivityTest extends ActivityInstrumentationTestCase2<Lis
 	
 	@MediumTest
 	public void testAddClaimButton() throws Exception {
-	    final View decorView = mActivity.getWindow().getDecorView();
+	    
+		final View decorView = mActivity.getWindow().getDecorView();
 
 	    ViewAsserts.assertOnScreen(decorView, addClaimButton);
 
 	    final ViewGroup.LayoutParams layoutParams = addClaimButton.getLayoutParams();
 	    assertNotNull(layoutParams);
-
+		
 	    tearDown();
 	}
 	

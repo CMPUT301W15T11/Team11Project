@@ -18,8 +18,6 @@ import model.ClaimsList;
 import model.Item;
 
 
-import model.UserController;
-
 import com.example.team11xtremexpensetracker.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -112,7 +110,6 @@ public class ViewItemActivity extends Activity{
 		itemamount.setText(itemamountstr);
 	
 		
-		
 
 		
 		//==========================================================================================================
@@ -120,11 +117,6 @@ public class ViewItemActivity extends Activity{
 	
 	
 	Button edititem = (Button) findViewById(R.id.edit);
-	
-	if(UserController.getUserType().equals("Approver")){
-		edititem.setEnabled(false);
-	}
-	
 	edititem.setOnClickListener(new View.OnClickListener(){
 
 		@Override
