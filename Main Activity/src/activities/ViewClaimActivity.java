@@ -156,7 +156,6 @@ public class ViewClaimActivity extends Activity {
 		// populate name and dateRange fields.
 		nameView.setText(currentClaim.getName());
 		dateRangeView.setText(currentClaim.getDateRange());
-		currentClaim.currencySumClaim();
 		currencyView.setText(currentClaim.getSpendStr());
 		
 		// Toast.makeText(this, "DateRange: " + currentClaim.getDateRange(),

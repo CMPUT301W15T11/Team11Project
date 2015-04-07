@@ -23,58 +23,36 @@ public class ExpenseClaim {
 	private ArrayList<Destination> destinations;
 	private String status;
 	private ArrayList<Tag> tagList;
-	private ArrayList<Integer> sumList;
-	private ArrayList<String> unitList;
 	private Boolean isEditable;
+	private double totalCurrency;
 	private ArrayList<Item> Itemlist;
 
-	
-	
-	
-	public String getSpendStr(){
-		this.currencySumClaim();
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < sumList.size();i++){
-			sb.append(sumList.get(i).toString());
-			sb.append(" ");
-			sb.append(unitList.get(i).toUpperCase(Locale.ENGLISH));
-			if (i != (sumList.size()-1)){
-				sb.append("; ");
-				
-			}
-			
-		}
-		
-		
-		return sb.toString();
-	}
-	
 	/**
 	 * get total currency
 	 */
-	public void currencySumClaim() {
-		sumList = new ArrayList<Integer>();
-		unitList = new ArrayList<String>();
+	public String getSpendStr() {
+
+		ArrayList<Integer> sumList = new ArrayList<Integer>();
+		ArrayList<String> unitList = new ArrayList<String>();
 
 		for (int x = 0; x < (this.Itemlist.size()); x++) {
 			// initialize
 			String currentUnit = this.Itemlist.get(x).getUnit();
 			Integer currentAmount;
 
-			if ((this.Itemlist.get(x).getAmount()!=null)&&(this.Itemlist.get(x).getAmount()!="")){
-				currentAmount =  Integer.parseInt(this.Itemlist.get(x).getAmount());
-			}
-			else {
+			if ((this.Itemlist.get(x).getAmount() != null) && (this.Itemlist.get(x).getAmount() != "")) {
+				currentAmount = Integer.parseInt(this.Itemlist.get(x).getAmount());
+			} else {
 				currentAmount = 0;
 			}
 			Boolean flag = false;
 			// adding item to result
-			if (this.unitList.isEmpty() != true) {
-				for (int y = 0; y < (this.unitList.size()); y++) {
-					String currentULU = this.unitList.get(y);
+			if (unitList.isEmpty() != true) {
+				for (int y = 0; y < (unitList.size()); y++) {
+					String currentULU = unitList.get(y);
 					if (currentUnit.equals(currentULU)) {
-						int currentULS = this.sumList.get(y);
-						this.sumList.set(y, currentULS + currentAmount);
+						int currentULS = sumList.get(y);
+						sumList.set(y, currentULS + currentAmount);
 						flag = true;
 					}
 
@@ -91,8 +69,21 @@ public class ExpenseClaim {
 			}
 
 		}
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < sumList.size(); i++) {
+			sb.append(sumList.get(i).toString());
+			sb.append(" ");
+			sb.append(unitList.get(i).toUpperCase(Locale.ENGLISH));
+			if (i != (sumList.size() - 1)) {
+				sb.append("; ");
 
+			}
+
+		}
+
+		return sb.toString();
 	}
+
 	// getters and setters
 	/**
 	 * Constructor of Expense Claim
@@ -258,9 +249,9 @@ public class ExpenseClaim {
 		// startMonthOfYear+1, startDayOfMonth).toString();
 	}
 
-
 	/**
 	 * get date string
+	 * 
 	 * @return
 	 */
 	public String getCommentsDateString() {
@@ -346,7 +337,6 @@ public class ExpenseClaim {
 	public void setCommentsDate(Calendar commentsDate) {
 		this.commentsDate = commentsDate;
 	}
-
 
 	/**
 	 * Check if the claim is editable.
