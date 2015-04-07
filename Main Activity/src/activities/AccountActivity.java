@@ -131,13 +131,7 @@ public class AccountActivity extends Activity {
 							// shit----------------------------//
 							// client.deleteClaim("sa");
 							// client.deleteClaim("zhz")
-							/*
-							 * client.deleteClaim("xjhds");
-							 * client.deleteClaim("xbdh");
-							 * client.deleteClaim("jdjd");
-							 * client.deleteClaim("js");
-							 * client.deleteClaim("Maui");
-							 */
+
 						} else {
 							Toast.makeText(AccountActivity.this, "No network connected, action denied",
 									Toast.LENGTH_SHORT).show();
