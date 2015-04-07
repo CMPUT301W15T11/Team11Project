@@ -2,6 +2,9 @@ package com.example.team11xtremexpensetracker;
 
 import java.util.Calendar;
 
+import model.ClaimsList;
+import model.ExpenseClaim;
+import model.Item;
 import junit.framework.TestCase;
 
 public class ItemTests extends TestCase {

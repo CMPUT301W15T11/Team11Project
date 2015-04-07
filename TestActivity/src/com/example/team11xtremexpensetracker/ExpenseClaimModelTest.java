@@ -1,12 +1,11 @@
 package com.example.team11xtremexpensetracker;
-
-
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.example.team11xtremexpensetracker.Destination;
-
+import model.ClaimsList;
+import model.Destination;
+import model.ExpenseClaim;
+import model.Tag;
 import junit.framework.TestCase;
 
 public class ExpenseClaimModelTest extends TestCase {
