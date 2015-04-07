@@ -248,6 +248,7 @@ public class AddItemActivity extends Activity {
 				newItem.setDescription(itemdescriptionstr);
 				newItem.setDate(adddate);
 				newItem.setHasPhoto(hasPhoto);
+				newItem.setLocation(locationStr);
 				if (hasPhoto == true) {
 					newItem.setPhoto(pressedPhoto);
 				}

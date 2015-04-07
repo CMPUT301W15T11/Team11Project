@@ -220,6 +220,7 @@ public class EditItemActivity extends Activity {
 				list.setCategory(itemcategorystr);
 				list.setDescription(itemdescriptionstr);
 				list.setUnit(itemunitstr);
+				list.setLocation(locationStr);
 				list.setDate(editdate);
 				list.setHasPhoto(hasPhoto);
 				if (hasPhoto == true) {
