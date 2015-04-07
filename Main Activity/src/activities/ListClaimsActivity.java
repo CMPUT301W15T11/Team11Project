@@ -71,7 +71,7 @@ public class ListClaimsActivity extends Activity {
 	private ArrayList<ExpenseClaim> localList;
 	private Button setHomeButton;
 	
-	private char isATest;
+	private char isATest = 'n';
 
 	private void claimantRefreshData() {
 		dataList = this.loadFromFile();
@@ -127,7 +127,7 @@ public class ListClaimsActivity extends Activity {
 
 		if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true) {
 			if (UserController.getUserType().equals("Claimant")) {
-				if (isATest == 'n') {
+				if (isATest != 'y') {
 				claimantRefreshData();
 				//Toast.makeText(ListClaimsActivity.this, "Data synchronized from online database", Toast.LENGTH_SHORT).show();
 				}
