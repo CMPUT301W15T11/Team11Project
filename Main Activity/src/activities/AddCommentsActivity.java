@@ -22,9 +22,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 /**
  * Activity for approver to add comments to submitted claim and approve or return it
  * @author Mingtuo
+ * @author Stin
  *
  */
 public class AddCommentsActivity extends Activity {
@@ -92,6 +94,7 @@ public class AddCommentsActivity extends Activity {
 			}
 
 		});
+
 		
 		
 		/**

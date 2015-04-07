@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+
 /**
  * Adapter for listview which shows all submitted claims for approver
  * @author Mingtuo
+ * @author Stin
  *
  */
 public class ApproverClaimListAdapter extends ArrayAdapter<ExpenseClaim>{

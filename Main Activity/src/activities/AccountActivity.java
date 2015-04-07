@@ -31,12 +31,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 /**
  * 
  * The activity to make sure that claimant is unique, approver name can be
  * changed freely.
  * 
  * @author Mingtuo
+ * @author Stin
  *
  */
 public class AccountActivity extends Activity {

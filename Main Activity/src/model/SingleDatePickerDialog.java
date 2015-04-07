@@ -15,7 +15,11 @@ import android.widget.DatePicker.OnDateChangedListener;
 /**
  * A data picker class
  */
-
+/**
+ * A data picker class
+ * @author Stin
+ *
+ */
 public class SingleDatePickerDialog extends AlertDialog implements OnClickListener, OnDateChangedListener {
 
 	private static final String START_YEAR = "start_year";
@@ -46,7 +50,16 @@ public class SingleDatePickerDialog extends AlertDialog implements OnClickListen
 		this(context, 0, callBack, year, monthOfYear, dayOfMonth, true);
 	}
 
-	
+	/**
+	 * create a date pick dialog
+	 * @param context
+	 * @param theme
+	 * @param callBack
+	 * @param year
+	 * @param monthOfYear
+	 * @param dayOfMonth
+	 * @param isDayVisible
+	 */
 	public SingleDatePickerDialog(Context context, int theme, OnDateSetListener callBack, int year, int monthOfYear,
 			int dayOfMonth, boolean isDayVisible) {
 		super(context, theme);
@@ -82,19 +95,29 @@ public class SingleDatePickerDialog extends AlertDialog implements OnClickListen
 	
 
 	}
-
+/**
+ * start date picker
+ * @return mDatePicker_start
+ */
 	public DatePicker getDatePickerStart() {
 		return mDatePicker_start;
 	}
 
 
-
+	/**
+	 * update start year
+	 * @param year
+	 * @param monthOfYear
+	 * @param dayOfMonth
+	 */
 	public void updateStartDate(int year, int monthOfYear, int dayOfMonth) {
 		mDatePicker_start.updateDate(year, monthOfYear, dayOfMonth);
 	}
 
 
-	
+	/**
+	 * notify date set
+	 */
 	private void tryNotifyDateSet() {
 		if (mCallBack != null) {
 			mDatePicker_start.clearFocus();

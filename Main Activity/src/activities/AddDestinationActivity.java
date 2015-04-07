@@ -43,7 +43,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Activity to add destination
+ * @author Stin
+ *
+ */
 public class AddDestinationActivity extends Activity {
 
 	private ClaimsList dataList;
@@ -114,7 +118,9 @@ public class AddDestinationActivity extends Activity {
 		existingDestsListView.setAdapter(listAdapter);
 
 		// create listeners
-
+		/**
+		 * click to start the map
+		 */
 		addMapButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -128,7 +134,9 @@ public class AddDestinationActivity extends Activity {
 			}
 
 		});
-
+		/**
+		 *click add the destination 
+		 */
 		addDestButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -172,7 +180,9 @@ public class AddDestinationActivity extends Activity {
 			}
 
 		});
-
+		/**
+		 * set long click to delete
+		 */
 		existingDestsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
 			private int onLongClickPos;

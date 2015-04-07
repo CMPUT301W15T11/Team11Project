@@ -18,9 +18,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+
 /**
  * The activity for claimant to check comments
  * @author Mingtuo
+ * @author Stin
  *
  */
 public class CommentsActivity extends Activity {

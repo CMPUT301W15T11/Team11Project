@@ -19,9 +19,14 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 /**
+<<<<<<< HEAD
  * 
  * Choose to enter as claimant or approver in this activity
  * @author Mingtuo
+=======
+ * Main activity. Holds claimant and approver buttons
+ * @author Stin
+>>>>>>> d9164c75b2c1bb2e383c9efa21734952e14e72ad
  *
  */
 public class MainActivity extends Activity {

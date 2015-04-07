@@ -56,6 +56,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
+/**
+ * Activity thats presents UI for user to add a new expense claim
+ * @author Stin
+ *
+ */
 public class AddItemActivity extends Activity {
 
 	private ClaimsList datafile;

@@ -1,9 +1,6 @@
 package activities;
 
-/**
- * Lets users view and edit a selected claim
- * Also lets users add expense items to claims
- */
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -48,7 +45,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Activity lets users view and edit a selected claim
+ * Also lets users add expense items to claims
+ * @author Stin
+ *
+ */
 public class ViewClaimActivity extends Activity {
 
 	private ExpenseClaim currentClaim;
@@ -163,7 +165,9 @@ public class ViewClaimActivity extends Activity {
 			}
 
 		});
-
+		/**
+		 * click to submit this claim
+		 */
 		ApproveOrSubmitButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -202,7 +206,9 @@ public class ViewClaimActivity extends Activity {
 			}
 
 		});
-
+		/**
+		 * click to add expense button
+		 */
 		addExpenseButton = (Button) findViewById(R.id.buttonClaimAddExpense);
 		addExpenseButton.setOnClickListener(new View.OnClickListener() {
 
@@ -215,7 +221,9 @@ public class ViewClaimActivity extends Activity {
 			}
 
 		});
-
+		/**
+		 * click to add destination
+		 */
 		addDestButton = (Button) findViewById(R.id.addDestButton);
 		addDestButton.setOnClickListener(new View.OnClickListener() {
 
@@ -233,6 +241,9 @@ public class ViewClaimActivity extends Activity {
 		// nameView.setText(claimName);
 
 		// set Listener for item list view
+		/**
+		 * set listener for item list view and click to view the expense item
+		 */
 		itemlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -247,8 +258,12 @@ public class ViewClaimActivity extends Activity {
 
 			}
 		});
-		// ==========================================================================================================
-		// ============================long click to delete
+		
+		//long click to delete
+		/**
+		 * Long click to delete the the expense item
+		 */
+		
 		itemlistview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
 			private int onLongClickPos;

@@ -36,7 +36,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
+/**
+ * Activity that provdies the UI to add new Expense Claims
+ * @author Stin
+ *
+ */
 public class AddClaimActivity extends Activity {
 
 	private ExpenseClaim oldClaim;
@@ -87,6 +91,9 @@ public class AddClaimActivity extends Activity {
 		}
 
 		// Sets date picker button to open a date picker when clicked
+		/**
+		 * Sets date picker button to open a date picker when clicked
+		 */
 		startDatePickerButton.setOnClickListener(new View.OnClickListener() {
 			Calendar c = Calendar.getInstance();
 
@@ -109,6 +116,9 @@ public class AddClaimActivity extends Activity {
 		});
 
 		// sets date picker button to open a date picker when clicked
+		/**
+		 * sets date picker button to open a date picker when clicked
+		 */
 		endDatePickerButton.setOnClickListener(new View.OnClickListener() {
 			Calendar c = Calendar.getInstance();
 
@@ -133,6 +143,14 @@ public class AddClaimActivity extends Activity {
 		// Adds it to the list, and brings user to view the claim and add
 		// expense.
 		// Else it prompts user to enter more info
+		/**
+		 * Defines what is executed when done button is pressed
+		 * If name is entered, and dates are ok it creates a new claim,
+		 * Adds it to the list, and brings user to view the claim and add
+		 * expense.
+		 * Else it prompts user to enter more info
+		 * 
+		 */
 		doneButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

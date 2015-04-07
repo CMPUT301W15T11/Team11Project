@@ -10,21 +10,21 @@
     tools:context=".AddDestionation" >
 
     <Button
-        android:id="@+id/addDest"
+        android:id="@+id/destMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="Add"
+        android:text="Map"
         android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/newDestEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/addDest"
+        android:layout_alignBottom="@+id/destMap"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/addDest"
-        android:layout_toLeftOf="@+id/addDest"
+        android:layout_alignTop="@+id/destMap"
+        android:layout_toLeftOf="@+id/destMap"
         android:hint="New Destination"
         android:textColor="@color/white" >
 
@@ -35,7 +35,7 @@
         android:id="@+id/newReasonEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/destMap"
+        android:layout_alignBottom="@+id/addDest"
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/newDestEditText"
         android:layout_below="@+id/newDestEditText"
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40sp"
         android:layout_alignLeft="@+id/newReasonEditText"
-        android:layout_alignRight="@+id/destMap"
+        android:layout_alignRight="@+id/addDest"
         android:layout_below="@+id/newReasonEditText"
         android:layout_marginLeft="10sp"
         android:text="Current latitude: \nCurrent longitude:"
@@ -69,13 +69,12 @@
         android:textSize="15sp" />
 
     <Button
-        android:id="@+id/destMap"
+        android:id="@+id/addDest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/addDest"
-        android:layout_alignRight="@+id/addDest"
-        android:layout_below="@+id/addDest"
-        android:text="Map"
+        android:layout_alignLeft="@+id/destMap"
+        android:layout_below="@+id/destMap"
+        android:text="Add"
         android:textColor="@color/white" />
 
 </RelativeLayout>

@@ -49,7 +49,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
+/**
+ * Displays a list of existing expense claims to the user
+ * @author Stin
+ *
+ */
 public class ListClaimsActivity extends Activity {
 	// private ListClaimsAdapter listClaimAdapter;
 	private ListView claimsListView;
@@ -71,6 +75,8 @@ public class ListClaimsActivity extends Activity {
 	private ApproverClaimListAdapter claimAdapter2;
 	private ArrayList<ExpenseClaim> localList;
 	private Button setHomeButton;
+	
+	private char isATest = 'n';
 
 	private void claimantRefreshData() {
 		dataList = this.loadFromFile();
@@ -121,14 +127,22 @@ public class ListClaimsActivity extends Activity {
 		tagSearchEdit = (EditText) findViewById(R.id.tag_filter);
 		addClaimButton = (Button) findViewById(R.id.addClaimButton);
 		setHomeButton = (Button) findViewById(R.id.setHomeButton);
+		Intent intent = getIntent();
+		isATest = intent.getCharExtra("aTest", 'n');
+		
 		// Load in claims from disk, give them to the claimsListController
 
 		client = new Client();
 
 		if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true) {
 			if (UserController.getUserType().equals("Claimant")) {
+				if (isATest != 'y') {
 				claimantRefreshData();
+
 				Toast.makeText(ListClaimsActivity.this, "Data synchronized from online database", Toast.LENGTH_SHORT).show();
+
+				}
+
 			}
 		}
 
@@ -157,7 +171,9 @@ public class ListClaimsActivity extends Activity {
 			}});
 
 	}
-
+	/**
+	 * initialize the approver
+	 */
 	public void approver_init() {
 		addClaimButton.setEnabled(false);
 		transferList = new ArrayList<ExpenseClaim>();
@@ -226,7 +242,9 @@ public class ListClaimsActivity extends Activity {
 			}
 
 		});
-
+		/**
+		 * click to view the claim
+		 */
 		claimsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
@@ -246,7 +264,9 @@ public class ListClaimsActivity extends Activity {
 		});
 
 	}
-
+	/**
+	 * Setup adapter for list so claims can be displayed
+	 */
 	public void claimant_init() {
 		// Setup adapter for list so claims can be displayed
 		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);

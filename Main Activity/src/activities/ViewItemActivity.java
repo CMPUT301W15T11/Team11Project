@@ -38,7 +38,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Activity lets users view and edit expense Items
+ * @author Stin
+ *
+ */
 public class ViewItemActivity extends Activity{
 	
 	private ClaimsList datafile;
@@ -76,8 +80,8 @@ public class ViewItemActivity extends Activity{
 		completeness = (CheckBox)findViewById(R.id.completed);	
 		
 		addListenerOnChkIos();
-		//==========================================================================================================
-		//============================load and display
+		
+		// Load and display
 		
 		
 		
@@ -159,6 +163,9 @@ public class ViewItemActivity extends Activity{
 	
 	//==========================================================================================================
 	//============================connect to view list
+	/**
+	 * Back intent to claim view
+	 */
 	Button backtoitemlist = (Button)findViewById(R.id.backtoitemlist);
 	backtoitemlist.setOnClickListener(new View.OnClickListener() {
 		
