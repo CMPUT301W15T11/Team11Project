@@ -56,7 +56,7 @@ public class ListClaimsAdapter extends ArrayAdapter<ExpenseClaim> {
 			GeoLocation currentlocation = GeoLocation.toGeoLocation(tempdest.getLocationStr());
 
 			double distance = GeoLocation.distanceBetween(homelocation, currentlocation);
-			ClaimDistanceView.setText(String.valueOf(distance));
+			ClaimDistanceView.setText("Distance from home: "+String.valueOf(distance));
 			
 			if (distance>0 && distance<500){
 				ClaimDistanceView.setTextColor(Color.parseColor("#D3D3D3"));
