@@ -112,14 +112,11 @@ public class ViewClaimActivity extends Activity {
 		client = new Client();
 		editFlag = true;
 
-		// TODO: load from file
-		// get widgets
 		tagsButton = (Button) findViewById(R.id.buttonClaimTags);
 		ApproveOrSubmitButton = (Button) findViewById(R.id.buttonApproveSubmit);
 		addExpenseButton = (Button) findViewById(R.id.buttonClaimAddExpense);
 		nameView = (TextView) findViewById(R.id.textViewClaimName);
 		dateRangeView = (TextView) findViewById(R.id.textViewClaimDateRange);
-		// final MenuItem editClaimItem=(MenuItem)findViewById(R.id.editClaim);
 
 		if (claimID >= 0
 				&& ((UserController.getUserType().equals("Claimant")) && (currentClaim.getStatus().equals("Submitted")))

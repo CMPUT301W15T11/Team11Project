@@ -5,6 +5,7 @@ package activities;
  * Checks to make sure expense claim has a name
  */
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,9 +38,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,9 +84,9 @@ public class AddItemActivity extends Activity {
 	private Client client;
 
 	private Bitmap photoBitmap;
-	private boolean hasPhoto = false;
+	private boolean hasPhoto;
 	private byte[] pressedPhoto = new byte[65536];
-	private Button photoButton;
+	private String photo;
 	private Button mapButton;
 
 	@Override
@@ -99,6 +102,7 @@ public class AddItemActivity extends Activity {
 		}
 
 		client = new Client();
+		hasPhoto=false;
 
 		// ==========================================================================================================
 		// ============================spinner created for category and unit
@@ -181,7 +185,6 @@ public class AddItemActivity extends Activity {
 			}
 		});
 
-		photoButton = (Button) findViewById(R.id.addPicBut);
 		// Button Add
 		Button itemadd = (Button) findViewById(R.id.confirmadd);
 
@@ -205,6 +208,7 @@ public class AddItemActivity extends Activity {
 				}
 
 				Item newItem = new Item();
+								
 				newItem.setItem(itemnamestr);
 				newItem.setUnit(itemunitstr);
 				newItem.setCategory(itemcategorystr);
@@ -212,17 +216,23 @@ public class AddItemActivity extends Activity {
 				newItem.setDescription(itemdescriptionstr);
 				newItem.setDate(adddate);
 				newItem.setHasPhoto(hasPhoto);
-				if(hasPhoto==true){
-				newItem.setPhoto(pressedPhoto);}
-
+				if (hasPhoto == true) {
+					//newItem.setPhoto("123");
+					newItem.setPhoto(photo);
+				}
+				
+				Toast.makeText(AddItemActivity.this, newItem.getPhoto(), Toast.LENGTH_LONG).show();
 				currentClaim.addItem(newItem);
 				saveInFile();
 
 				if (new ConnectionChecker().netConnected(AddItemActivity.this) == true) {
+					
 					client.addClaim(currentClaim);
+					
 				} else {
 
-					Toast.makeText(AddItemActivity.this, "No network connected, applying change locally", Toast.LENGTH_SHORT).show();
+					Toast.makeText(AddItemActivity.this, "No network connected, applying change locally",
+							Toast.LENGTH_SHORT).show();
 
 				}
 
@@ -248,13 +258,6 @@ public class AddItemActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-
 	}
 
 	// Load claims from file
@@ -316,37 +319,31 @@ public class AddItemActivity extends Activity {
 	 * expense item that has been created.
 	 */
 
-	protected void onActivityResult(int requestCode, int resultCode,
-	        Intent intent) {
-	    super.onActivityResult(requestCode, resultCode, intent);
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
 
-	    if (resultCode == RESULT_OK) {
-	        Uri photoUri = intent.getData();
+		if (resultCode == RESULT_OK) {
+			Uri photoUri = intent.getData();
 
-	        if (photoUri != null) {
-	            try {
-	                photoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
-	                int byteCount = photoBitmap.getByteCount();
-	                
-	                if (byteCount > 0){
-	                	Context context = getApplicationContext();
-	                	CharSequence text = "Photo Added!";
-	                	int duration = Toast.LENGTH_LONG;
-	                	//Toast toast = Toast.makeText(context, text, duration);
-	                	//toast.show();
-	                	hasPhoto = true;
-	                	Log.i("Image Upload", ""+byteCount);
-	                }
-	                ByteArrayOutputStream blob = new ByteArrayOutputStream();
-	                photoBitmap.compress(CompressFormat.JPEG, 20, blob);
-	                pressedPhoto= blob.toByteArray();
-	                Log.i("size of byte array", ""+ (int)pressedPhoto.length);
-
-	            }catch (Exception e) {
-	                e.printStackTrace();
-	            }
-	        }
-	    }
-
+			if (photoUri != null) {
+				try {
+					photoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+					ByteArrayOutputStream blob = new ByteArrayOutputStream();
+					photoBitmap.compress(CompressFormat.JPEG, 70, blob);
+					pressedPhoto = blob.toByteArray();
+					if (pressedPhoto.length > 65536) {
+						CharSequence text = "Photo is too large!";						
+						Toast.makeText(AddItemActivity.this, text, Toast.LENGTH_LONG).show();
+					} else {
+						CharSequence text = "Photo added!";
+						Toast.makeText(AddItemActivity.this, text, Toast.LENGTH_LONG).show();
+						hasPhoto = true;
+						photo = Base64.encodeToString(pressedPhoto, Base64.NO_WRAP);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

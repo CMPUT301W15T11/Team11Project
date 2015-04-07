@@ -23,6 +23,7 @@ import model.ClaimsList;
 import model.ExpenseClaim;
 import model.Listener;
 import model.SubmittedClaimController;
+import model.TagListController;
 import model.UserController;
 import network.Client;
 import network.ConnectionChecker;
@@ -72,7 +73,10 @@ public class ListClaimsActivity extends Activity {
 		dataList = this.loadFromFile();
 		localList = new ArrayList<ExpenseClaim>();
 		localList = dataList.getClaimsAL();
-
+		if(localList.size()==0||localList==null){
+			return;
+		}
+		transferList=new ArrayList<ExpenseClaim>();
 		new Thread(new Runnable() {
 
 			@Override
@@ -87,6 +91,7 @@ public class ListClaimsActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		TagListController.setAvailableTagList(transferList);
 		for (int i = 0; i < localList.size(); i++) {
 			for (int j = 0; j < transferList.size(); j++) {
 				if (!localList.get(i).getStatus().equals("In Progress")
@@ -119,7 +124,7 @@ public class ListClaimsActivity extends Activity {
 		if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true) {
 			if (UserController.getUserType().equals("Claimant")) {
 				claimantRefreshData();
-				//Toast.makeText(ListClaimsActivity.this, "Data synchronized from online database", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ListClaimsActivity.this, "Data synchronized from online database", Toast.LENGTH_SHORT).show();
 			}
 		}
 

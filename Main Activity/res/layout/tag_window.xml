@@ -2,23 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/lightskyblue" >
+    android:background="@color/lightskyblue"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/linear_test"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center" 
-        android:orientation="horizontal">
-        
+        android:gravity="center"
+        android:orientation="horizontal" >
+
         <EditText
             android:id="@+id/add_tag_editText"
             android:layout_width="180dp"
             android:layout_height="40dp"
             android:hint="@string/tag_hint"
-            android:textSize="15sp">
-            
+            android:textColor="@color/white"
+            android:textSize="15sp" >
         </EditText>
 
         <Button
@@ -27,17 +27,33 @@
             android:layout_height="40dp"
             android:text="@string/tag_add_button"
             android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="15sp" />
     </LinearLayout>
 
     <model.FlowLayout
         android:id="@+id/tag_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:focusable="true"
-         >
-    
+        android:layout_weight="1"
+        android:focusable="true" >
     </model.FlowLayout>
+
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:text="@string/available_tags"
+        />
+    
+    <ListView
+        android:id="@+id/tagListView"
+        android:layout_weight="1"
+        android:layout_margin="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>

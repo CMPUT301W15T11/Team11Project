@@ -31,6 +31,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * 
+ * The activity to make sure that claimant is unique, approver name can be changed freely.
+ * @author Mingtuo
+ *
+ */
 public class AccountActivity extends Activity {
 
 	private Button backButton;
@@ -95,6 +101,10 @@ public class AccountActivity extends Activity {
 			}
 		});
 
+		/**
+		 * All related online data will be deleted as well if you choose to clean local user information
+		 * 
+		 */
 		cleanButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -116,10 +126,7 @@ public class AccountActivity extends Activity {
 							
 							//---------------------clear shit----------------------------//
 							//client.deleteClaim("sa");
-							//client.deleteClaim("zhz");
-							
-							
-						
+							//client.deleteClaim("zhz")							
 							
 						}else{
 							Toast.makeText(AccountActivity.this, "No network connected, action denied", Toast.LENGTH_SHORT).show();
@@ -139,13 +146,10 @@ public class AccountActivity extends Activity {
 						// TODO Auto-generated method stub
 
 					}
-
 				});
-				adb.show();
-				
+				adb.show();				
 			}
 		});
-
 	}
 
 	@Override
@@ -176,7 +180,6 @@ public class AccountActivity extends Activity {
 
 	private String loadUserFromFile() {
 		Gson gson = new Gson();
-
 		try {
 			FileInputStream fis = openFileInput(USERFILE);
 			InputStreamReader in = new InputStreamReader(fis);
@@ -197,7 +200,6 @@ public class AccountActivity extends Activity {
 	// Saves claimsList to file
 	private void saveUserInFile(String userName) {
 		Gson gson = new Gson();
-
 		try {
 			FileOutputStream fos = openFileOutput(USERFILE, MODE_PRIVATE);
 			OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -213,6 +215,10 @@ public class AccountActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Delete local file as well when you clear user information
+	 * 
+	 */
 	private void cleanLocalClaimFile() {
 		Gson gson = new Gson();
 		ClaimsList clean = new ClaimsList();

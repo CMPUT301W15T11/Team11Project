@@ -14,6 +14,8 @@ import model.ExpenseClaim;
 import model.FlowLayout;
 import model.SubmittedClaimController;
 import model.Tag;
+import model.TagListAdapter;
+import model.TagListController;
 import model.UserController;
 import network.Client;
 import network.ConnectionChecker;
@@ -37,8 +39,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,8 +62,10 @@ public class TagActivity extends Activity {
 	private ExpenseClaim currentClaim;
 
 	private FlowLayout tagLayout;
-
+	private ListView tagListview;
 	private ClaimsList dataList;
+	private TagListAdapter tagAdapter;
+	
 	private static final String FILENAME = "datafile.sav";
 	private ClaimListController clc;
 
@@ -76,6 +82,7 @@ public class TagActivity extends Activity {
 		tagEdit = (EditText) findViewById(R.id.add_tag_editText);
 		tagAdd = (Button) findViewById(R.id.add_tag_button);
 		tagLayout = (FlowLayout) findViewById(R.id.tag_layout);
+		tagListview=(ListView)findViewById(R.id.tagListView);
 
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", 0);
@@ -95,6 +102,23 @@ public class TagActivity extends Activity {
 		}
 
 		client = new Client();
+		
+		
+		/**
+		 * 
+		 *  Get all available tag for current user
+		 */
+		tagAdapter=new TagListAdapter(this,TagListController.getAvailableTagList());
+		tagListview.setAdapter(tagAdapter);
+		
+		tagListview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Auto-generated method stub
+				tagEdit.setText(TagListController.getAvailableTagList().get(position));
+			}});
+		
 		/**
 		 * check tagList() is empty or not, if not empty pop every tag onto
 		 * screen
@@ -155,8 +179,9 @@ public class TagActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						for (int index = 0; index < currentClaim.getTagList().size(); index++) {
-							if (currentClaim.getTagList().get(index).equals(newTag.getText().toString())) {
+							if (currentClaim.getTagList().get(index).getTagName().equals(newTag.getText().toString())) {
 								currentClaim.getTagList().remove(index);
+								tagLayout.removeView(newTag);
 							}
 						}
 						saveInFile();
@@ -165,9 +190,19 @@ public class TagActivity extends Activity {
 						} else {
 							Toast.makeText(TagActivity.this, "No network connected, applying change locally", Toast.LENGTH_SHORT).show();
 						}
-						// tagLayout.notify();
+						
 					}
 				});
+				adb.setNegativeButton("Cancel",new OnClickListener(){
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				});
+				adb.show();
 				return false;
 			}
 		});
@@ -215,8 +250,9 @@ public class TagActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						for (int index = 0; index < currentClaim.getTagList().size(); index++) {
-							if (currentClaim.getTagList().get(index).equals(newTag.getText().toString())) {
+							if (currentClaim.getTagList().get(index).getTagName().equals(newTag.getText().toString())) {
 								currentClaim.getTagList().remove(index);
+								tagLayout.removeView(newTag);
 							}
 						}
 						saveInFile();
@@ -225,9 +261,19 @@ public class TagActivity extends Activity {
 						} else {
 							Toast.makeText(TagActivity.this, "No network connected, applying change locally", Toast.LENGTH_SHORT).show();
 						}
-						// tagLayout.notify();
+						
 					}
 				});
+				adb.setNegativeButton("Cancel",new OnClickListener(){
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				});
+				adb.show();
 				return false;
 			}
 		});

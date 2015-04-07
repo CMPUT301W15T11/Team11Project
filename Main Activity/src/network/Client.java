@@ -27,6 +27,13 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * 
+ * This class is for connecting with database
+ * @author Mingtuo
+ *
+ */
+
 public class Client {
 
 	private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301w15t11/Claims/_search";
@@ -34,17 +41,27 @@ public class Client {
 	private static final String LOG_TAG = "ClaimSearch";
 
 	private Gson gson;
-	private ExpenseClaim claim;
+	private HttpClient httpClient;
 
+	/**
+	 * 
+	 *  Constructor
+	 */
 	public Client() {
 		gson = new Gson();
+		httpClient = new DefaultHttpClient();
 	}
 
+	/**
+	 * 
+	 * search claim by its name
+	 * @param claimName
+	 * @return ExpenseClaim
+	 */
 	public ExpenseClaim getClaim(String claimName) {
 		// TODO Auto-generated method stub
 		HttpGet getRequest = new HttpGet(RESOURCE_URL + "Claims/" + claimName + "/");
 		HttpResponse getResponse;
-		HttpClient httpClient = new DefaultHttpClient();
 		try {
 			getResponse = httpClient.execute(getRequest);
 			String json = getEntityContent(getResponse);
@@ -60,49 +77,57 @@ public class Client {
 		return null;
 	}
 
-	public void addClaim(final ExpenseClaim claim) {
+	/**
+	 * add or UPDATE claim by passing the ExpenseClaim object
+	 * @param claim
+	 * @throws IllegalStateException
+	 */
+	public void addClaim(final ExpenseClaim claim) throws IllegalStateException {
 
-		new Thread(new Runnable() {
+		Thread thread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				Gson gson = new Gson();
-				HttpClient httpClient = new DefaultHttpClient();
 				try {
-
 					HttpPost addRequest = new HttpPost(RESOURCE_URL + "Claims/" + claim.getName() + "/");
 					StringEntity stringEntity = new StringEntity(gson.toJson(claim));
 					addRequest.setEntity(stringEntity);
 					addRequest.setHeader("Accept", "application/json");
-
 					HttpResponse response = httpClient.execute(addRequest);
-
 					String status = response.getStatusLine().toString();
 					Log.i(LOG_TAG, status);
 
 				} catch (JsonIOException e) {
 					throw new RuntimeException(e);
 
-				} catch (JsonSyntaxException e) {
+				} catch (ClientProtocolException e) {
 					throw new RuntimeException(e);
 
-				} catch (IllegalStateException e) {
-					throw new RuntimeException(e);
-
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} catch (IOException e) {
-					throw new RuntimeException(e);
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 			}
-		}).start();
+		});
+		thread.start();
 		try {
-			Thread.sleep(200);
+			Thread.sleep(500);
+			thread.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Delete the ExpenseClaim by its name
+	 * @param claimName
+	 */
 	public void deleteClaim(final String claimName) {
 
 		new Thread(new Runnable() {
@@ -110,7 +135,6 @@ public class Client {
 			@Override
 			public void run() {
 
-				HttpClient httpClient = new DefaultHttpClient();
 				try {
 					HttpDelete deleteRequest = new HttpDelete(RESOURCE_URL + "Claims/" + claimName + "/");
 					deleteRequest.setHeader("Accept", "application/json");
@@ -143,6 +167,10 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Get all submitted for user who log in as approver
+	 * @return ArrayList<ExpenseClaim>
+	 */
 	public ArrayList<ExpenseClaim> getApproverClaimList() {
 		String searchString = "Submitted";
 		ArrayList<ExpenseClaim> claims = new ArrayList<ExpenseClaim>();
@@ -151,7 +179,6 @@ public class Client {
 		}
 		try {
 			HttpPost searchRequest = createSearchRequest(searchString);
-			HttpClient httpClient = new DefaultHttpClient();
 			HttpResponse response = httpClient.execute(searchRequest);
 
 			String status = response.getStatusLine().toString();
@@ -182,20 +209,20 @@ public class Client {
 		return claims;
 	}
 
+	/**
+	 * This one is for download data from online database when every time enter ListClaimsActivity
+	 * @return ArrayList<ExpenseClaim>
+	 */
 	public ArrayList<ExpenseClaim> syncLocalFileList() {
 		String searchString = "*";
 		ArrayList<ExpenseClaim> claims = new ArrayList<ExpenseClaim>();
 
 		try {
 			HttpPost searchRequest = createSearchRequest(searchString);
-			HttpClient httpClient = new DefaultHttpClient();
 			HttpResponse response = httpClient.execute(searchRequest);
-
-			// String status = response.getStatusLine().toString();
-
+			String status = response.getStatusLine().toString();
 			SearchResponse<ExpenseClaim> esResponse = parseSearchResponse(response);
 			Hits<ExpenseClaim> hits = esResponse.getHits();
-
 			if (hits != null) {
 				if (hits.getHits() != null) {
 					for (SearchHit<ExpenseClaim> sesr : hits.getHits()) {
@@ -214,6 +241,11 @@ public class Client {
 		return claims;
 	}
 
+	/**
+	 * Copied from lab code
+	 * @param response
+	 * @return SearchHit<ExpenseClaim>
+	 */
 	private SearchHit<ExpenseClaim> parseClaimHit(HttpResponse response) {
 		try {
 			String json = getEntityContent(response);
@@ -228,6 +260,12 @@ public class Client {
 		return null;
 	}
 
+	/**
+	 * copied from lab code
+	 * @param searchString
+	 * @return HttpPost
+	 * @throws UnsupportedEncodingException
+	 */
 	private HttpPost createSearchRequest(String searchString) throws UnsupportedEncodingException {
 		// TODO Auto-generated method stub
 		HttpPost searchRequest = new HttpPost(SEARCH_URL);

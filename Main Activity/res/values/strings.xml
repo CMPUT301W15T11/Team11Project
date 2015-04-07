@@ -34,5 +34,6 @@
     <string name="returnClaim_button">Return current claim</string>
     <string name="status_lock">Not editable</string>
     <string name="title_activity_view_photo">ViewPhotoActivity</string>
+    <string name="available_tags">Available tag list</string>
 
 </resources>

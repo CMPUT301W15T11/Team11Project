@@ -18,6 +18,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+/**
+ * The activity for claimant to check comments
+ * @author Mingtuo
+ *
+ */
 public class CommentsActivity extends Activity {
 
 	private TextView statusView;
@@ -28,6 +33,10 @@ public class CommentsActivity extends Activity {
 	private Client client;
 	private ExpenseClaim currentClaim;
 
+	/**
+	 * Load data and set to corresponding view when create activity
+	 * 
+	 */
 	private void init() {
 
 		client = new Client();

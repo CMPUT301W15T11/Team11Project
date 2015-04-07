@@ -15,7 +15,7 @@ public class ViewPhotoActivity extends Activity {
 	byte[] photo;
 	Bitmap bitmap;
 
-	/* This activity displays the photo receipt for the expense item.
+	/** This activity displays the photo receipt for the expense item.
 	 * It is only invoked in the event that there is a photo present.
 	 */
 	@Override

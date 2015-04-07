@@ -18,7 +18,12 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
-
+/**
+ * 
+ * Choose to enter as claimant or approver in this activity
+ * @author Mingtuo
+ *
+ */
 public class MainActivity extends Activity {
 
 	@Override

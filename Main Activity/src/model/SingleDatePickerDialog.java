@@ -12,12 +12,12 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 
-/*
+/**
  * A data picker class
  */
 
 public class SingleDatePickerDialog extends AlertDialog implements OnClickListener, OnDateChangedListener {
-// copy code from DoubleDatePickerDialog
+
 	private static final String START_YEAR = "start_year";
 
 	private static final String START_MONTH = "start_month";

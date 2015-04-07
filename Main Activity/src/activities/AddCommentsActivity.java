@@ -22,6 +22,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Activity for approver to add comments to submitted claim and approve or return it
+ * @author Mingtuo
+ *
+ */
 public class AddCommentsActivity extends Activity {
 
 	private Button approveButton;
@@ -42,6 +47,10 @@ public class AddCommentsActivity extends Activity {
 		commentsEdit = (EditText) findViewById(R.id.add_comments_edit);
 		client=new Client();
 
+		/**
+		 * Change claim's status and sync to online database
+		 * 
+		 */
 		approveButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -84,6 +93,11 @@ public class AddCommentsActivity extends Activity {
 
 		});
 		
+		
+		/**
+		 * Change claim's status and sync to online database
+		 * 
+		 */
 		returnButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
