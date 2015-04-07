@@ -41,10 +41,12 @@ public class ListClaimsAdapter extends ArrayAdapter<ExpenseClaim> {
 		TextView ClaimDistanceView = (TextView) convertView.findViewById(R.id.ClaimDistanceView);
 		ClaimNameView.setText(tempClaim.getName());
 
+
 		String home = UserController.getHomeLocation();
 		ArrayList<Destination> dests = tempClaim.getDestinations();
 		
-		if (home != null&& dests.size()!=0){
+		
+		if ((home != null)&&(home.length()!=0)&& (dests.size()!=0)){
 			homelocation = GeoLocation.toGeoLocation(home);
 			tempdest = dests.get(0);
 		}
