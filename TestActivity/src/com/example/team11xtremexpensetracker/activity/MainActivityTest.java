@@ -2,6 +2,8 @@ package com.example.team11xtremexpensetracker.activity;
 
 import com.example.team11xtremexpensetracker.R;
 
+import activities.ListClaimsActivity;
+import activities.MainActivity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;

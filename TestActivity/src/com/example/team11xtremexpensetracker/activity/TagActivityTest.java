@@ -2,6 +2,7 @@ package com.example.team11xtremexpensetracker.activity;
 
 import com.example.team11xtremexpensetracker.R;
 
+import activities.TagActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
 import android.view.View;

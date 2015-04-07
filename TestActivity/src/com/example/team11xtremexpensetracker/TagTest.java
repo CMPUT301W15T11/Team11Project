@@ -1,5 +1,8 @@
 package com.example.team11xtremexpensetracker;
 
+import model.ClaimsList;
+import model.ExpenseClaim;
+import model.Tag;
 import junit.framework.TestCase;
 
 public class TagTest extends TestCase {
