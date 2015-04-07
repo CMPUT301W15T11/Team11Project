@@ -119,7 +119,7 @@ public class ListClaimsActivity extends Activity {
 		if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true) {
 			if (UserController.getUserType().equals("Claimant")) {
 				claimantRefreshData();
-				Toast.makeText(ListClaimsActivity.this, "Data synchronized from online database", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(ListClaimsActivity.this, "Data synchronized from online database", Toast.LENGTH_SHORT).show();
 			}
 		}
 

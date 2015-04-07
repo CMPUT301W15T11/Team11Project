@@ -185,8 +185,8 @@ public class EditItemActivity extends Activity{
                 	Context context = getApplicationContext();
                 	CharSequence text = "Photo Removed!";
                 	int duration = Toast.LENGTH_LONG;
-                	Toast toast = Toast.makeText(context, text, duration);
-                	toast.show();
+                	//Toast toast = Toast.makeText(context, text, duration);
+                	//toast.show();
 	        	}
 	        	return true;
 	           
@@ -229,7 +229,7 @@ public class EditItemActivity extends Activity{
 				if (new ConnectionChecker().netConnected(EditItemActivity.this) == true) {
 					client.addClaim(currentClaim);
 				} else {
-					Toast.makeText(EditItemActivity.this, "No network connected, apply change locally", Toast.LENGTH_SHORT).show();
+					Toast.makeText(EditItemActivity.this, "No network connected, applying change locally", Toast.LENGTH_SHORT).show();
 				}
 				
 				Intent backIntent = new Intent();

@@ -220,8 +220,9 @@ public class AddItemActivity extends Activity {
 				if (new ConnectionChecker().netConnected(AddItemActivity.this) == true) {
 					client.addClaim(currentClaim);
 				} else {
-					Toast.makeText(AddItemActivity.this, "No network connected, apply change locally",
-							Toast.LENGTH_SHORT).show();
+
+					Toast.makeText(AddItemActivity.this, "No network connected, applying change locally", Toast.LENGTH_SHORT).show();
+
 				}
 
 				Intent backIntent = new Intent();
@@ -313,35 +314,38 @@ public class AddItemActivity extends Activity {
 	 * compressed and stored in a byte array where it is uploaded with the
 	 * expense item that has been created.
 	 */
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
 
-		if (resultCode == RESULT_OK) {
-			Uri photoUri = intent.getData();
+	protected void onActivityResult(int requestCode, int resultCode,
+	        Intent intent) {
+	    super.onActivityResult(requestCode, resultCode, intent);
 
-			if (photoUri != null) {
-				try {
-					photoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
-					int byteCount = photoBitmap.getByteCount();
+	    if (resultCode == RESULT_OK) {
+	        Uri photoUri = intent.getData();
 
-					if (byteCount > 0) {
-						Context context = getApplicationContext();
-						CharSequence text = "Photo Added!";
-						int duration = Toast.LENGTH_LONG;
-						Toast toast = Toast.makeText(context, text, duration);
-						toast.show();
-						hasPhoto = true;
-						Log.i("Image Upload", "" + byteCount);
-					}
-					ByteArrayOutputStream blob = new ByteArrayOutputStream();
-					photoBitmap.compress(CompressFormat.JPEG, 20, blob);
-					pressedPhoto = blob.toByteArray();
-					Log.i("size of byte array", "" + (int) pressedPhoto.length);
+	        if (photoUri != null) {
+	            try {
+	                photoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+	                int byteCount = photoBitmap.getByteCount();
+	                
+	                if (byteCount > 0){
+	                	Context context = getApplicationContext();
+	                	CharSequence text = "Photo Added!";
+	                	int duration = Toast.LENGTH_LONG;
+	                	//Toast toast = Toast.makeText(context, text, duration);
+	                	//toast.show();
+	                	hasPhoto = true;
+	                	Log.i("Image Upload", ""+byteCount);
+	                }
+	                ByteArrayOutputStream blob = new ByteArrayOutputStream();
+	                photoBitmap.compress(CompressFormat.JPEG, 20, blob);
+	                pressedPhoto= blob.toByteArray();
+	                Log.i("size of byte array", ""+ (int)pressedPhoto.length);
 
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+	            }catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+
 	}
 }
