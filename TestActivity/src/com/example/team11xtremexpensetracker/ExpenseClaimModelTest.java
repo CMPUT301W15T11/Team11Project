@@ -65,13 +65,7 @@ public class ExpenseClaimModelTest extends TestCase {
 	}
 	
 	
-	public void testTotalCurrency() {
-		ExpenseClaim test = new ExpenseClaim();
-		double testCurrency = 100;
-		test.setTotalCurrency(testCurrency);
-		assertTrue("claimant name",test.getTotalCurrency()==testCurrency);
-	}
-
+	
 	public void testIsEditable() {
 		ExpenseClaim test = new ExpenseClaim();
 		boolean testIsEditable = true;

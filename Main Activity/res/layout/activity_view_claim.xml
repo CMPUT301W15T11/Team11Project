@@ -41,7 +41,7 @@
         android:id="@+id/textViewClaimName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.10"
+        android:layout_weight="0.05"
         android:textColor="@color/white"
         android:text="Name" />
 
@@ -49,10 +49,17 @@
         android:id="@+id/textViewClaimDateRange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.10"
+        android:layout_weight="0.05"
         android:textColor="@color/white"
         android:text="Date" />
-
+    <TextView
+        android:id="@+id/textViewTotalCurrency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:textColor="@color/white"
+        android:text="Total Spend" />
+    
     <Button
         android:id="@+id/buttonClaimAddExpense"
         android:layout_width="match_parent"

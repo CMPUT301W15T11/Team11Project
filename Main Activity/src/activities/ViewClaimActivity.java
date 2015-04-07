@@ -78,6 +78,7 @@ public class ViewClaimActivity extends Activity {
 
 	private Client client;
 	private boolean editFlag;
+	private TextView currencyView;
 
 	@Override
 	protected void onStart() {
@@ -119,6 +120,9 @@ public class ViewClaimActivity extends Activity {
 		addExpenseButton = (Button) findViewById(R.id.buttonClaimAddExpense);
 		nameView = (TextView) findViewById(R.id.textViewClaimName);
 		dateRangeView = (TextView) findViewById(R.id.textViewClaimDateRange);
+		currencyView = (TextView) findViewById(R.id.textViewTotalCurrency);
+		
+		
 		// final MenuItem editClaimItem=(MenuItem)findViewById(R.id.editClaim);
 
 		if (claimID >= 0
@@ -152,6 +156,9 @@ public class ViewClaimActivity extends Activity {
 		// populate name and dateRange fields.
 		nameView.setText(currentClaim.getName());
 		dateRangeView.setText(currentClaim.getDateRange());
+		currentClaim.currencySumClaim();
+		currencyView.setText(currentClaim.getSpendStr());
+		
 		// Toast.makeText(this, "DateRange: " + currentClaim.getDateRange(),
 		// Toast.LENGTH_LONG).show();
 		// create listeners
