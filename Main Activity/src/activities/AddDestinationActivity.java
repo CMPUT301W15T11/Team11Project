@@ -122,7 +122,7 @@ public class AddDestinationActivity extends Activity {
 				if (new ConnectionChecker().netConnected(AddDestinationActivity.this) == true) {
 					client.addClaim(currentClaim);
 				} else {
-					Toast.makeText(AddDestinationActivity.this, "No network connected, save file locally", Toast.LENGTH_SHORT).show();
+					Toast.makeText(AddDestinationActivity.this, "No network connected, saving file locally", Toast.LENGTH_SHORT).show();
 				}
 				
 				dataList=loadFromFile();

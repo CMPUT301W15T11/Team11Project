@@ -163,7 +163,7 @@ public class TagActivity extends Activity {
 						if (new ConnectionChecker().netConnected(TagActivity.this) == true) {
 							client.addClaim(currentClaim);
 						} else {
-							Toast.makeText(TagActivity.this, "No network connected, apply change locally", Toast.LENGTH_SHORT).show();
+							Toast.makeText(TagActivity.this, "No network connected, applying change locally", Toast.LENGTH_SHORT).show();
 						}
 						// tagLayout.notify();
 					}
@@ -181,7 +181,7 @@ public class TagActivity extends Activity {
 		if (new ConnectionChecker().netConnected(TagActivity.this) == true) {
 			client.addClaim(currentClaim);
 		} else {
-			Toast.makeText(TagActivity.this, "No network connected, apply change locally", Toast.LENGTH_SHORT).show();
+			Toast.makeText(TagActivity.this, "No network connected, applying change locally", Toast.LENGTH_SHORT).show();
 		}
 
 	}
@@ -223,7 +223,7 @@ public class TagActivity extends Activity {
 						if (new ConnectionChecker().netConnected(TagActivity.this) == true) {
 							client.addClaim(currentClaim);
 						} else {
-							Toast.makeText(TagActivity.this, "No network connected, apply change locally", Toast.LENGTH_SHORT).show();
+							Toast.makeText(TagActivity.this, "No network connected, applying change locally", Toast.LENGTH_SHORT).show();
 						}
 						// tagLayout.notify();
 					}

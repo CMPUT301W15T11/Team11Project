@@ -178,7 +178,7 @@ public class AddClaimActivity extends Activity {
 				if (new ConnectionChecker().netConnected(AddClaimActivity.this) == true) {
 					client.addClaim(newClaim);
 				} else {
-					Toast.makeText(AddClaimActivity.this, "No network connected, save file locally", Toast.LENGTH_SHORT).show();
+					Toast.makeText(AddClaimActivity.this, "No network connected, saving file locally", Toast.LENGTH_SHORT).show();
 				}
 
 				

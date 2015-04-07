@@ -166,8 +166,8 @@ public class ViewItemActivity extends Activity{
         	Context context = getApplicationContext();
         	CharSequence text = "There is no photo of the receipt!";
         	int duration = Toast.LENGTH_LONG;
-        	Toast toast = Toast.makeText(context, text, duration);
-        	toast.show();
+        	//Toast toast = Toast.makeText(context, text, duration);
+        	//toast.show();
 		}
 
 	}

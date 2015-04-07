@@ -210,7 +210,7 @@ public class AddItemActivity extends Activity{
 				if (new ConnectionChecker().netConnected(AddItemActivity.this) == true) {
 					client.addClaim(currentClaim);
 				} else {
-					Toast.makeText(AddItemActivity.this, "No network connected, apply change locally", Toast.LENGTH_SHORT).show();
+					Toast.makeText(AddItemActivity.this, "No network connected, applying change locally", Toast.LENGTH_SHORT).show();
 				}
 				
 				Intent backIntent = new Intent();
@@ -318,8 +318,8 @@ public class AddItemActivity extends Activity{
 	                	Context context = getApplicationContext();
 	                	CharSequence text = "Photo Added!";
 	                	int duration = Toast.LENGTH_LONG;
-	                	Toast toast = Toast.makeText(context, text, duration);
-	                	toast.show();
+	                	//Toast toast = Toast.makeText(context, text, duration);
+	                	//toast.show();
 	                	hasPhoto = true;
 	                	Log.i("Image Upload", ""+byteCount);
 	                }
