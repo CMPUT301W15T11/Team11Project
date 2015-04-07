@@ -60,7 +60,7 @@ public class AddItemActivity extends Activity{
 	private String itemnamestr;
 	private String itemunitstr;
 	private String itemcategorystr;
-	private String itemamountstr;
+	private Integer itemamountstr;
 	private EditText itemamount;
 	private String itemdescriptionstr;
 	private EditText itemdescription;
@@ -186,7 +186,7 @@ public class AddItemActivity extends Activity{
 				itemunitstr = unitspinner.getSelectedItem().toString();
 				itemcategorystr = categoryspinner.getSelectedItem().toString();
 				itemdescriptionstr = itemdescription.getText().toString();
-				itemamountstr = itemamount.getText().toString();
+				itemamountstr = Integer.parseInt(itemamount.getText().toString());
 				
 				
 				if (itemnamestr.equals("")||itemamountstr.equals("")){

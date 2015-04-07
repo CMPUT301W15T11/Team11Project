@@ -12,7 +12,7 @@ public class Item {
 	private String item;
 	private Calendar date;
 	private String category;
-	private String amount;
+	private Integer amount;
 	private String unit;
 	private String description;
 	private Boolean indicator = false;
@@ -64,14 +64,14 @@ public class Item {
 	 * get item amount spent
 	 * @return
 	 */
-	public String getAmount() {
+	public Integer getAmount() {
 		return amount;
 	}
 	/**
 	 * set item amount spent
 	 * @param amount
 	 */
-	public void setAmount(String amount) {
+	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
 	/**

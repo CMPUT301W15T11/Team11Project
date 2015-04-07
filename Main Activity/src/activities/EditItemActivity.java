@@ -61,7 +61,7 @@ public class EditItemActivity extends Activity{
 	private String itemnamestr;
 	private String itemunitstr;
 	private String itemdescriptionstr;
-	private String itemamountstr;
+	private Integer itemamountstr;
 	private String itemcategorystr;
 	private Calendar itemdate;
 	
@@ -112,7 +112,7 @@ public class EditItemActivity extends Activity{
 		itemdescription = (EditText)findViewById(R.id.editdescription);
 		itemdescription.setText(itemdescriptionstr);
 		
-		itemamountstr = list.getAmount().toString();
+		itemamountstr = Integer.parseInt(list.getAmount().toString());
 		itemamount = (EditText)findViewById(R.id.editamountspent);
 		itemamount.setText(itemamountstr);
 		
@@ -205,7 +205,7 @@ public class EditItemActivity extends Activity{
 				itemunitstr = unitspinner.getSelectedItem().toString();
 				itemcategorystr = categoryspinner.getSelectedItem().toString();
 				itemdescriptionstr = itemdescription.getText().toString();
-				itemamountstr = itemamount.getText().toString();
+				itemamountstr = Integer.parseInt(itemamount.getText().toString());
 				
 				if (itemnamestr.equals("")||itemamountstr.equals("")){
 					Toast.makeText(EditItemActivity.this, "Information is not completed", Toast.LENGTH_SHORT).show();
