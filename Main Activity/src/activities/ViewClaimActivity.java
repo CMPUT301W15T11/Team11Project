@@ -288,15 +288,15 @@ public class ViewClaimActivity extends Activity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-
+						
 						list.remove(onLongClickPos);
 						client.addClaim(currentClaim);
 						saveInFile();
 						dataList = loadFromFile();
 						ClaimListController.setClaimsList(dataList);
-
+						
 						itemlistAdapter.notifyDataSetChanged();
-
+						currencyView.setText(currentClaim.getSpendStr());
 					}
 
 				});
