@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -158,9 +159,11 @@ public class ViewItemActivity extends Activity{
 	
 	public void viewPhoto(View v) {
 		if (list.getHasPhoto() == true){
-			Intent showPhoto = new Intent(this,ViewPhotoActivity.class);
-			showPhoto.putExtra("Photo", list.getPhoto());
-			startActivity(showPhoto);
+			String initPhoto = list.getPhoto();
+			byte[] photoDecoded= Base64.decode(initPhoto, Base64.DEFAULT);
+			Intent viewPhoto = new Intent(this,ViewPhotoActivity.class);
+			viewPhoto.putExtra("Photo", photoDecoded);
+			startActivity(viewPhoto);
 		}
 		else{
         	Context context = getApplicationContext();

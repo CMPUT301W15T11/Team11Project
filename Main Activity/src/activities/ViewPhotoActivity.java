@@ -10,10 +10,9 @@ import android.widget.ImageView;
 
 public class ViewPhotoActivity extends Activity {
 
-	ImageView receiptPhoto;
-	boolean hasPhoto = false;
-	byte[] photo;
-	Bitmap bitmap;
+	private ImageView receiptPhoto;
+	private byte[] photo;
+	private Bitmap bitmap;
 
 	/* This activity displays the photo receipt for the expense item.
 	 * It is only invoked in the event that there is a photo present.

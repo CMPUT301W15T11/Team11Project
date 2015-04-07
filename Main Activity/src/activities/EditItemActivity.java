@@ -39,6 +39,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnLongClickListener;
@@ -84,8 +85,9 @@ public class EditItemActivity extends Activity{
 
 	private Bitmap photoBitmap;
 	private boolean hasPhoto = false;
-	private byte[] pressedPhoto = new byte[65536];
+	private byte[] pressedPhoto;
 	private Button photoButton;
+	private String photo = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -220,7 +222,7 @@ public class EditItemActivity extends Activity{
 				list.setUnit(itemunitstr);
 				list.setDate(editdate);
 				list.setHasPhoto(hasPhoto);
-				list.setPhoto(pressedPhoto);
+				list.setPhoto(photo);
 				
 				saveInFile();
 				
@@ -310,21 +312,26 @@ public class EditItemActivity extends Activity{
 	        if (photoUri != null) {
 	            try {
 	                photoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
-	                int byteCount = photoBitmap.getByteCount();
-	                
-	                if (byteCount > 0){
+	                ByteArrayOutputStream blob = new ByteArrayOutputStream();
+	                photoBitmap.compress(CompressFormat.JPEG, 20, blob);
+	                pressedPhoto= blob.toByteArray();
+	                if(pressedPhoto.length > 65536){
+	                	Context context = getApplicationContext();
+	                	CharSequence text = "Image is too big!";
+	                	int duration = Toast.LENGTH_LONG;
+	                	Toast toast = Toast.makeText(context, text, duration);
+	                	toast.show();
+	                	hasPhoto = false;
+	                }
+	                else{
 	                	Context context = getApplicationContext();
 	                	CharSequence text = "Photo Added!";
 	                	int duration = Toast.LENGTH_LONG;
 	                	Toast toast = Toast.makeText(context, text, duration);
 	                	toast.show();
-	                	hasPhoto = true;
-	                	Log.i("Image Upload", ""+byteCount);
+	                	hasPhoto = true;	                	
+	                	photo = Base64.encodeToString(pressedPhoto, Base64.DEFAULT);
 	                }
-	                ByteArrayOutputStream blob = new ByteArrayOutputStream();
-	                photoBitmap.compress(CompressFormat.JPEG, 20, blob);
-	                pressedPhoto= blob.toByteArray();
-	                Log.i("size of byte array", ""+ (int)pressedPhoto.length);
 
 	            }catch (Exception e) {
 	                e.printStackTrace();
