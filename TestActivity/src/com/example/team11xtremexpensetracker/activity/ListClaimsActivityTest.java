@@ -46,6 +46,7 @@ public class ListClaimsActivityTest extends ActivityInstrumentationTestCase2<Lis
 		claimID = 0;
 		Intent intent = new Intent();
 		intent.putExtra("claimID", claimID);
+		intent.putExtra("aTest", 'y');
 		setActivityIntent(intent);
 		
 		mActivity = getActivity();
@@ -94,7 +95,7 @@ public class ListClaimsActivityTest extends ActivityInstrumentationTestCase2<Lis
 	    assertNotNull(layoutParams);
 
 	    tearDown();
-	}
+	} 
 	
 	
 	@MediumTest
