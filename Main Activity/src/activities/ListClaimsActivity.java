@@ -46,7 +46,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
+/**
+ * Displays a list of existing expense claims to the user
+ * Allows user to filter by tags, create a new claim, delete claims, or view/edit claims
+ * @author Stin
+ *
+ */
 public class ListClaimsActivity extends Activity {
 	// private ListClaimsAdapter listClaimAdapter;
 	private ListView claimsListView;
@@ -112,7 +117,9 @@ public class ListClaimsActivity extends Activity {
 		tagSearchEdit = (EditText) findViewById(R.id.tag_filter);
 		addClaimButton = (Button) findViewById(R.id.addClaimButton);
 		// Load in claims from disk, give them to the claimsListController
-
+		/**
+		 * Load in claims from disk, give them to the claimsListController
+		 */
 		client = new Client();
 
 		if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true) {
@@ -136,7 +143,9 @@ public class ListClaimsActivity extends Activity {
 		}
 
 	}
-
+	/**
+	 * Initialize approver
+	 */
 	public void approver_init() {
 		addClaimButton.setEnabled(false);
 		transferList = new ArrayList<ExpenseClaim>();
@@ -174,7 +183,9 @@ public class ListClaimsActivity extends Activity {
 
 		indexCorrector = new ArrayList<Integer>();
 		filterFlag = false;
-
+		/**
+		 * set listener, on click to view
+		 */
 		searchImage.setOnClickListener(new View.OnClickListener() {
 
 			@Override

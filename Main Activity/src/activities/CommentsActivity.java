@@ -17,7 +17,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
+/**
+ * Activity of comments
+ * @author Stin
+ *
+ */
 public class CommentsActivity extends Activity {
 
 	private TextView statusView;
@@ -57,6 +61,9 @@ public class CommentsActivity extends Activity {
 	}
 
 	@Override
+	/**
+	 * intent back
+	 */
 	public void onBackPressed() {
 
 		finish();

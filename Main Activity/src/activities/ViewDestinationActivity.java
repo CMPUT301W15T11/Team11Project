@@ -7,7 +7,11 @@ import com.example.team11xtremexpensetracker.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
-
+/**
+ * Activity lets user to view destination
+ * @author Stin
+ *
+ */
 public class ViewDestinationActivity extends Activity {
 
 	@Override

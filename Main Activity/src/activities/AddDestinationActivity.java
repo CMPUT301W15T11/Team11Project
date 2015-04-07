@@ -41,7 +41,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Activity lets user to add destination
+ * @author Stin
+ *
+ */
 public class AddDestinationActivity extends Activity {
 
 	private ClaimsList dataList;
@@ -99,6 +103,9 @@ public class AddDestinationActivity extends Activity {
 		existingDestsListView.setAdapter(listAdapter);
 		
 		// create listeners
+		/**
+		 * listener to add destination button
+		 */
 		addDestButton.setOnClickListener(new View.OnClickListener() {	
 	
 			@Override
@@ -137,7 +144,9 @@ public class AddDestinationActivity extends Activity {
 		});
 		
 		
-		
+		/**
+		 * listener long click to delete the destination
+		 */
 		existingDestsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
 			private int onLongClickPos;
@@ -182,6 +191,9 @@ public class AddDestinationActivity extends Activity {
 	}
 
 	@Override
+	/**
+	 * inflate the menu
+	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.add_destionation, menu);
@@ -190,6 +202,9 @@ public class AddDestinationActivity extends Activity {
 	
 	
 	@Override
+	/**
+	 * back intent
+	 */
 	public void onBackPressed(){
 		Intent intentBackPressed = new Intent();
 		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -202,7 +217,10 @@ public class AddDestinationActivity extends Activity {
 	//If an item in the list gets hold-clicked it should be deleted
 	//if an item gets clicked should bring to a destination detail view
 	//Also need somewhere to add "Reason for Travel"
-	
+	/**
+	 * Gson Load from file
+	 * @return dataList
+	 */
 	private ClaimsList loadFromFile() {
 		Gson gson = new Gson();
 		dataList = new ClaimsList();
@@ -222,7 +240,9 @@ public class AddDestinationActivity extends Activity {
 		}
 		return dataList;
 	}
-
+	/**
+	 * save in file
+	 */
 	private void saveInFile() {
 		Gson gson = new Gson();
 		try {

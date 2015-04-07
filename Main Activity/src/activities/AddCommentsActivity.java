@@ -2,6 +2,7 @@ package activities;
 
 import java.util.Calendar;
 
+
 import model.ExpenseClaim;
 import model.SubmittedClaimController;
 import model.UserController;
@@ -21,7 +22,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+/**
+ * Activity lets user to add comments
+ * @author Stin
+ *
+ */
 public class AddCommentsActivity extends Activity {
 
 	private Button approveButton;

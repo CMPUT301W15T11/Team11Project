@@ -1,7 +1,7 @@
 package activities;
 
 /**
- * Lets users view and edit a selected claim
+ * Activity lets users view and edit a selected claim
  * Also lets users add expense items to claims
  */
 
@@ -48,7 +48,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Activity lets users view and edit a selected claim
+ * @author Stin
+ *
+ */
 public class ViewClaimActivity extends Activity {
 
 	private ExpenseClaim currentClaim;

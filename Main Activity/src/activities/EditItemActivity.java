@@ -52,6 +52,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
+/**
+ * Activity lets user to edit item
+ * @author Stin
+ *
+ */
 public class EditItemActivity extends Activity{
 	
 	private ClaimsList datafile;
@@ -121,6 +126,9 @@ public class EditItemActivity extends Activity{
 		
 		//==========================================================================================================
 		//============================create spinner
+		/**
+		 * Spinner for category
+		 */
 		
 		categoryspinner = (Spinner)findViewById(R.id.editcategory);
 		ArrayList<String> categorylist	= new ArrayList<String>();
@@ -138,7 +146,9 @@ public class EditItemActivity extends Activity{
 		categoryAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,categorylist);
 		categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		categoryspinner.setAdapter(categoryAdapter);
-		
+		/**
+		 * category for unit
+		 */
 		unitspinner = (Spinner)findViewById(R.id.editunit);
 		ArrayList<String> unitlist	= new ArrayList<String>();
 		unitlist.add("CAD");

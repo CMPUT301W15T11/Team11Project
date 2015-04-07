@@ -7,7 +7,11 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ImageView;
-
+/**
+ * Activity lets users to view photos
+ * @author Stin
+ *
+ */
 public class ViewPhotoActivity extends Activity {
 
 	private ImageView receiptPhoto;

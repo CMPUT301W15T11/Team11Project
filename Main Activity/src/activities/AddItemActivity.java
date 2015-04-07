@@ -6,6 +6,7 @@ package activities;
  */
 
 import java.io.ByteArrayOutputStream;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -54,6 +55,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
+/**
+ * Activity thats presents UI for user to add a new expense claim
+ * @author Stin
+ *
+ */
 public class AddItemActivity extends Activity{
 	
 	private ClaimsList datafile;
@@ -101,8 +107,11 @@ public class AddItemActivity extends Activity{
 		client=new Client();
 		
 
-		//==========================================================================================================
-		//============================spinner created for category and unit		
+		
+		//spinner created for category and unit	
+		/**
+		 * spinner created for category
+		 */
 		categoryspinner = (Spinner)findViewById(R.id.additemcategory);
 		ArrayList<String> categorylist	= new ArrayList<String>();
 		categorylist.add("Air Fare");
@@ -116,12 +125,15 @@ public class AddItemActivity extends Activity{
 		categorylist.add("Meal");
 		categorylist.add("Supplies");
 
-		//==========================================================================================================
-		//============================spinner created for category and unit
+		
+		//spinner created for category and unit
+		
 		categoryAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,categorylist);
 		categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		categoryspinner.setAdapter(categoryAdapter);
-		
+		/**
+		 * spinner created for unit	
+		 */
 		unitspinner = (Spinner)findViewById(R.id.additemunit);
 		ArrayList<String> unitlist	= new ArrayList<String>();
 		unitlist.add("CAD");
@@ -135,8 +147,8 @@ public class AddItemActivity extends Activity{
 		unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		unitspinner.setAdapter(unitAdapter);
 		
-		//==========================================================================================================
-		//============================get input text to string and save into Gson,		
+		
+		//get input text to string and save into Gson,		
 		
 		//datafile = this.loadFromFile();
 		itemname = (EditText)findViewById(R.id.additemname);
@@ -177,6 +189,9 @@ public class AddItemActivity extends Activity{
 		// If expense item has a name,
 		// A new expense item is generated and added to the list
 		// User is brought back to the viewClaim activity
+		/**
+		 * listener: click to view the expense item
+		 */
 		itemadd.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -250,6 +265,10 @@ public class AddItemActivity extends Activity{
 	}
 
 	// Load claims from file
+	/**
+	 * Gson load from file
+	 * @return datalist
+	 */
 	private ClaimsList loadFromFile() {
 		Gson gson = new Gson();
 		dataList = new ClaimsList();
@@ -271,6 +290,9 @@ public class AddItemActivity extends Activity{
 	}
 
 	// Save claims to file
+	/**
+	 * save in file
+	 */
 	private void saveInFile() {
 		Gson gson = new Gson();
 		try {

@@ -18,7 +18,11 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
-
+/**
+ * Main activity. Holds claimant and approver buttons
+ * @author Stin
+ *
+ */
 public class MainActivity extends Activity {
 
 	@Override

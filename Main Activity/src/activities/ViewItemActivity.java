@@ -33,7 +33,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Activity lets users view and edit expense Items.
+ * @author Stin
+ *
+ */
 public class ViewItemActivity extends Activity{
 	
 	private ClaimsList datafile;

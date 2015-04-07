@@ -40,7 +40,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
+/**
+ * activity lets users tp add claim
+ * @author Stin
+ *
+ */
 public class AddClaimActivity extends Activity {
 
 	private ExpenseClaim oldClaim;
@@ -74,6 +78,9 @@ public class AddClaimActivity extends Activity {
 		client = new Client();
 
 		// get widgets
+		/**
+		 * get widgets
+		 */
 		startDatePickerButton = (Button) findViewById(R.id.startDatePickerButton);
 		endDatePickerButton = (Button) findViewById(R.id.endDatePickerButton);
 		doneButton = (Button) findViewById(R.id.addClaimDoneButton);
@@ -84,6 +91,9 @@ public class AddClaimActivity extends Activity {
 		// set listener
 
 		// Ok, now if you get some extra, set Buttons to start values of claim
+		/**
+		 * get claimID
+		 */
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", -1);
 		if (claimID >= 0) {
@@ -94,6 +104,9 @@ public class AddClaimActivity extends Activity {
 		}
 
 		// Sets date picker button to open a date picker when clicked
+		/**
+		 * pick start date
+		 */
 		startDatePickerButton.setOnClickListener(new View.OnClickListener() {
 			Calendar c = Calendar.getInstance();
 
@@ -116,6 +129,9 @@ public class AddClaimActivity extends Activity {
 		});
 
 		// sets date picker button to open a date picker when clicked
+		/**
+		 * pick end date
+		 */
 		endDatePickerButton.setOnClickListener(new View.OnClickListener() {
 			Calendar c = Calendar.getInstance();
 
@@ -140,6 +156,9 @@ public class AddClaimActivity extends Activity {
 		// Adds it to the list, and brings user to view the claim and add
 		// expense.
 		// Else it prompts user to enter more info
+		/**
+		 * set listener
+		 */
 		doneButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -197,6 +216,9 @@ public class AddClaimActivity extends Activity {
 	}
 
 	@Override
+	/**
+	 * back intent
+	 */
 	public void onBackPressed() {
 		Intent backIntent = new Intent(AddClaimActivity.this, ListClaimsActivity.class);
 		startActivity(backIntent);
@@ -204,6 +226,9 @@ public class AddClaimActivity extends Activity {
 	}
 
 	@Override
+	/**
+	 * option menu
+	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.add_claim, menu);
@@ -211,6 +236,10 @@ public class AddClaimActivity extends Activity {
 	}
 
 	// Loads claimsList from file
+	/**
+	 * load from file
+	 * @return dataList
+	 */
 	private ClaimsList loadFromFile() {
 		Gson gson = new Gson();
 		dataList = new ClaimsList();
@@ -232,6 +261,9 @@ public class AddClaimActivity extends Activity {
 	}
 
 	// Saves claimsList to file
+	/**
+	 * save in file
+	 */
 	private void saveInFile() {
 		Gson gson = new Gson();
 		try {
