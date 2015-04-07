@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:id="@+id/editClaim" android:onClick="editClaim" android:title="Edit Claim"></item>
+    <item android:id="@+id/commentClaim" android:onClick="commentClaim" android:title="Claim comments"></item>
+    
+</menu>
