@@ -28,7 +28,7 @@ import network.ConnectionChecker;
 import com.example.team11xtremexpensetracker.R;
 import com.example.team11xtremexpensetracker.R.id;
 import com.example.team11xtremexpensetracker.R.layout;
-import com.google.gson.Gson; 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import android.annotation.SuppressLint;
@@ -53,8 +53,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class AddItemActivity extends Activity{
-	
+public class AddItemActivity extends Activity {
+
 	private ClaimsList datafile;
 	private EditText itemname;
 	private String itemnamestr;
@@ -73,37 +73,37 @@ public class AddItemActivity extends Activity{
 	private int claimID;
 	private String textString_start;
 	private ExpenseClaim currentClaim;
-	
+
 	private ClaimsList dataList;
 	private static final String FILENAME = "datafile.sav";
 	private ClaimListController clc;
-	
+
 	private Client client;
 
 	private Bitmap photoBitmap;
 	private boolean hasPhoto = false;
 	private byte[] pressedPhoto = new byte[65536];
 	private Button photoButton;
-	
+	private Button mapButton;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_item);
-		Intent intent= getIntent();
+		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", 0);
-		if (claimID >= 0){
-			//new ClaimListController();
+		if (claimID >= 0) {
+			// new ClaimListController();
 			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
 		}
-		
-		client=new Client();
-		
 
-		//==========================================================================================================
-		//============================spinner created for category and unit		
-		categoryspinner = (Spinner)findViewById(R.id.additemcategory);
-		ArrayList<String> categorylist	= new ArrayList<String>();
+		client = new Client();
+
+		// ==========================================================================================================
+		// ============================spinner created for category and unit
+		categoryspinner = (Spinner) findViewById(R.id.additemcategory);
+		ArrayList<String> categorylist = new ArrayList<String>();
 		categorylist.add("Air Fare");
 		categorylist.add("Ground Transport");
 		categorylist.add("Vehicle Rental");
@@ -115,14 +115,14 @@ public class AddItemActivity extends Activity{
 		categorylist.add("Meal");
 		categorylist.add("Supplies");
 
-		//==========================================================================================================
-		//============================spinner created for category and unit
-		categoryAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,categorylist);
+		// ==========================================================================================================
+		// ============================spinner created for category and unit
+		categoryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorylist);
 		categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		categoryspinner.setAdapter(categoryAdapter);
-		
-		unitspinner = (Spinner)findViewById(R.id.additemunit);
-		ArrayList<String> unitlist	= new ArrayList<String>();
+
+		unitspinner = (Spinner) findViewById(R.id.additemunit);
+		ArrayList<String> unitlist = new ArrayList<String>();
 		unitlist.add("CAD");
 		unitlist.add("USD");
 		unitlist.add("EUR");
@@ -130,26 +130,27 @@ public class AddItemActivity extends Activity{
 		unitlist.add("CHF");
 		unitlist.add("JPY");
 		unitlist.add("CNY");
-		unitAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,unitlist);
+		unitAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, unitlist);
 		unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		unitspinner.setAdapter(unitAdapter);
-		
-		//==========================================================================================================
-		//============================get input text to string and save into Gson,		
-		
-		//datafile = this.loadFromFile();
-		itemname = (EditText)findViewById(R.id.additemname);
-		unitspinner = (Spinner)findViewById(R.id.additemunit);
-		categoryspinner = (Spinner)findViewById(R.id.additemcategory);
-		itemamount = (EditText)findViewById(R.id.addamountspent);
-		itemdescription = (EditText)findViewById(R.id.adddescription);
-		
-		
-		//button add date
-		adddate=Calendar.getInstance();
-		additemdate = (Button)findViewById(R.id.additemdate);
+
+		// ==========================================================================================================
+		// ============================get input text to string and save into
+		// Gson,
+
+		// datafile = this.loadFromFile();
+		itemname = (EditText) findViewById(R.id.additemname);
+		unitspinner = (Spinner) findViewById(R.id.additemunit);
+		categoryspinner = (Spinner) findViewById(R.id.additemcategory);
+		itemamount = (EditText) findViewById(R.id.addamountspent);
+		itemdescription = (EditText) findViewById(R.id.adddescription);
+
+		// button add date
+		adddate = Calendar.getInstance();
+		additemdate = (Button) findViewById(R.id.additemdate);
 		additemdate.setOnClickListener(new View.OnClickListener() {
 			Calendar c = Calendar.getInstance();
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -158,27 +159,37 @@ public class AddItemActivity extends Activity{
 					@Override
 					public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
 							int startDayOfMonth) {
-						textString_start = String.format("%d-%d-%d", startYear, startMonthOfYear + 1,
-								startDayOfMonth);
+						textString_start = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
 						additemdate.setText(textString_start);
-						adddate.set(startYear, startMonthOfYear+1, startDayOfMonth);
-						
+						adddate.set(startYear, startMonthOfYear + 1, startDayOfMonth);
+
 					}
 				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), true).show();
-				
+
 			}
 		});
-		
+
+		mapButton = (Button) findViewById(R.id.addgeolocation);
+
+		mapButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(AddItemActivity.this, MapActivity.class);
+				intent.putExtra("claimID", claimID);
+				startActivity(intent);
+			}
+		});
+
 		photoButton = (Button) findViewById(R.id.addPicBut);
-		//Button Add
-		Button itemadd = (Button)findViewById(R.id.confirmadd);
-		
-		
+		// Button Add
+		Button itemadd = (Button) findViewById(R.id.confirmadd);
+
 		// If expense item has a name,
 		// A new expense item is generated and added to the list
 		// User is brought back to the viewClaim activity
 		itemadd.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -187,13 +198,12 @@ public class AddItemActivity extends Activity{
 				itemcategorystr = categoryspinner.getSelectedItem().toString();
 				itemdescriptionstr = itemdescription.getText().toString();
 				itemamountstr = itemamount.getText().toString();
-				
-				
-				if (itemnamestr.equals("")||itemamountstr.equals("")){
+
+				if (itemnamestr.equals("") || itemamountstr.equals("")) {
 					Toast.makeText(AddItemActivity.this, "Information is not completed", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				
+
 				Item newItem = new Item();
 				newItem.setItem(itemnamestr);
 				newItem.setUnit(itemunitstr);
@@ -203,31 +213,27 @@ public class AddItemActivity extends Activity{
 				newItem.setDate(adddate);
 				newItem.setHasPhoto(hasPhoto);
 				newItem.setPhoto(pressedPhoto);
-				
-				currentClaim.addItem(newItem);				
+
+				currentClaim.addItem(newItem);
 				saveInFile();
-				
+
 				if (new ConnectionChecker().netConnected(AddItemActivity.this) == true) {
 					client.addClaim(currentClaim);
 				} else {
-					Toast.makeText(AddItemActivity.this, "No network connected, apply change locally", Toast.LENGTH_SHORT).show();
+					Toast.makeText(AddItemActivity.this, "No network connected, apply change locally",
+							Toast.LENGTH_SHORT).show();
 				}
-				
+
 				Intent backIntent = new Intent();
-				//backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				// backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				backIntent.setClass(AddItemActivity.this, ViewClaimActivity.class);
 				backIntent.putExtra("claimID", claimID);
 				startActivity(backIntent);
 				finish();
-				
+
 			}
 		});
-		
 
-		
-
-	
-	
 	}
 
 	@Override
@@ -287,51 +293,55 @@ public class AddItemActivity extends Activity{
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * sends an intent to the gallery application to get a picture in return
-	 * @param v the Add Photo button
+	 * 
+	 * @param v
+	 *            the Add Photo button
 	 */
-	public void choosePhoto(View v){
-		Intent  photoPickerIntent = new Intent(Intent.ACTION_PICK);
+	public void choosePhoto(View v) {
+		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 		photoPickerIntent.setType("image/*");
 		startActivityForResult(photoPickerIntent, 1);
-	
+
 	}
+
 	/**
-	 * When the user returns from the gallery application they are directed towards this method where the 
-	 * photo bitmap is converted to a JPEG, compressed and stored in a byte array where it is 
-	 * uploaded with the expense item that has been created. 
+	 * When the user returns from the gallery application they are directed
+	 * towards this method where the photo bitmap is converted to a JPEG,
+	 * compressed and stored in a byte array where it is uploaded with the
+	 * expense item that has been created.
 	 */
-	protected void onActivityResult(int requestCode, int resultCode,
-	        Intent intent) {
-	    super.onActivityResult(requestCode, resultCode, intent);
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
 
-	    if (resultCode == RESULT_OK) {
-	        Uri photoUri = intent.getData();
+		if (resultCode == RESULT_OK) {
+			Uri photoUri = intent.getData();
 
-	        if (photoUri != null) {
-	            try {
-	                photoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
-	                int byteCount = photoBitmap.getByteCount();
-	                
-	                if (byteCount > 0){
-	                	Context context = getApplicationContext();
-	                	CharSequence text = "Photo Added!";
-	                	int duration = Toast.LENGTH_LONG;
-	                	Toast toast = Toast.makeText(context, text, duration);
-	                	toast.show();
-	                	hasPhoto = true;
-	                	Log.i("Image Upload", ""+byteCount);
-	                }
-	                ByteArrayOutputStream blob = new ByteArrayOutputStream();
-	                photoBitmap.compress(CompressFormat.JPEG, 20, blob);
-	                pressedPhoto= blob.toByteArray();
-	                Log.i("size of byte array", ""+ (int)pressedPhoto.length);
+			if (photoUri != null) {
+				try {
+					photoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+					int byteCount = photoBitmap.getByteCount();
 
-	            }catch (Exception e) {
-	                e.printStackTrace();
-	            }
-	        }
-	    }
+					if (byteCount > 0) {
+						Context context = getApplicationContext();
+						CharSequence text = "Photo Added!";
+						int duration = Toast.LENGTH_LONG;
+						Toast toast = Toast.makeText(context, text, duration);
+						toast.show();
+						hasPhoto = true;
+						Log.i("Image Upload", "" + byteCount);
+					}
+					ByteArrayOutputStream blob = new ByteArrayOutputStream();
+					photoBitmap.compress(CompressFormat.JPEG, 20, blob);
+					pressedPhoto = blob.toByteArray();
+					Log.i("size of byte array", "" + (int) pressedPhoto.length);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
