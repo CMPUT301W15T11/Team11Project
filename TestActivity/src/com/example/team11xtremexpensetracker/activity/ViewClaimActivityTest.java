@@ -1,7 +1,10 @@
 package com.example.team11xtremexpensetracker.activity;
 
+import model.UserController;
+
 import com.example.team11xtremexpensetracker.R;
 
+import activities.ViewClaimActivity;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
@@ -30,13 +33,15 @@ public class ViewClaimActivityTest extends ActivityInstrumentationTestCase2<View
 	}
 	
 	protected void setUp() throws Exception {
-		super.setUp();
 		setActivityInitialTouchMode(true);
-		mActivity = getActivity();
+		UserController UC = new UserController();
+		UC.setUserType("Claimant");
 		
 		Intent intent = new Intent();
         intent.putExtra("claimID",0);
         setActivityIntent(intent);
+        
+        mActivity = getActivity();
         
         buttonClaimTags = (Button)mActivity.findViewById(R.id.buttonClaimTags);
         buttonApproveSubmit = (Button)mActivity.findViewById(R.id.buttonApproveSubmit);
@@ -45,6 +50,7 @@ public class ViewClaimActivityTest extends ActivityInstrumentationTestCase2<View
         buttonClaimAddExpense = (Button)mActivity.findViewById(R.id.buttonClaimAddExpense);
         expenseListView = (ListView)mActivity.findViewById(R.id.expenseListView);
 		
+        super.setUp();
 	}
 	
 	@MediumTest

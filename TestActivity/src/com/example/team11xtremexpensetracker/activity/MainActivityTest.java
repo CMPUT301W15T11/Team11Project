@@ -2,6 +2,9 @@ package com.example.team11xtremexpensetracker.activity;
 
 import com.example.team11xtremexpensetracker.R;
 
+import activities.AccountActivity;
+import activities.ListClaimsActivity;
+import activities.MainActivity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
@@ -60,7 +63,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	@MediumTest
 	public void testbuttonGoesToNew() throws Exception{
 		//setUp();
-		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(ListClaimsActivity.class.getName(), null, false);
+		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(AccountActivity.class.getName(), null, false);
 		
 		mActivity.runOnUiThread(new Runnable(){
 			@Override
@@ -68,9 +71,9 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 				claimantButton.performClick();
 			}
 		});
-		ListClaimsActivity listClaimAct = (ListClaimsActivity)getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 0);
-		assertNotNull("Activity did not start", listClaimAct);
-		listClaimAct.finish();
+		AccountActivity accountAct = (AccountActivity)getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 0);
+		assertNotNull("Activity did not start", accountAct);
+		accountAct.finish();
 		tearDown();
 	}
 	
