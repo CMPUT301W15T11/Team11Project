@@ -21,7 +21,11 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.Toast;
-
+/**
+ * Activity lets the users to use map function
+ * @author Stin
+ *
+ */
 public class MapActivity extends Activity {
 
 	private IMapController mapController;
@@ -51,6 +55,12 @@ public class MapActivity extends Activity {
 	 */
 	
 	@Override
+	/**
+	 * Map Picker:
+	 * mode 1:pick home location
+	 * mode 2:pick expense item location
+	 * mode 3:pick destination location
+	 */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);

@@ -51,6 +51,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
+/**
+ * Activity lets user edit a pre-existing item
+ * @author Stin
+ *
+ */
 public class EditItemActivity extends Activity {
 
 	private ClaimsList datafile;

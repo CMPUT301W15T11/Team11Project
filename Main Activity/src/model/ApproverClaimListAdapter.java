@@ -11,7 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
+/**
+ * Adapter for approver
+ * @author Stin
+ *
+ */
 public class ApproverClaimListAdapter extends ArrayAdapter<ExpenseClaim>{
 	
 	public ApproverClaimListAdapter(Context context,ArrayList<ExpenseClaim> claimList){

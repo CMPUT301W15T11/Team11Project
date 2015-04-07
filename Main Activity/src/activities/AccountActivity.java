@@ -30,7 +30,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+/**
+ * Activity for account
+ * @author Stin
+ *
+ */
 public class AccountActivity extends Activity {
 
 	private Button backButton;

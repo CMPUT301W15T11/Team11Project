@@ -17,7 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
+/**
+ * An Adapter for Expense Claims List
+ * @author Stin
+ *
+ */
 public class ListClaimsAdapter extends ArrayAdapter<ExpenseClaim> {
 
 	private Context context;
@@ -31,7 +35,7 @@ public class ListClaimsAdapter extends ArrayAdapter<ExpenseClaim> {
 		this.claimList = claimList;
 
 	}
-
+	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ExpenseClaim tempClaim = getItem(position);
 		if (convertView == null) {

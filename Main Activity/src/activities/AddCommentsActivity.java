@@ -21,7 +21,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+/**
+ * Activity lets users to add comments
+ * @author Stin
+ *
+ */
 public class AddCommentsActivity extends Activity {
 
 	private Button approveButton;
@@ -83,7 +87,9 @@ public class AddCommentsActivity extends Activity {
 			}
 
 		});
-		
+		/**
+		 * click to view the comments
+		 */
 		returnButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override

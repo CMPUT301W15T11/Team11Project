@@ -17,7 +17,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
+/**
+ * Activity lets the users to view the comments
+ * @author Stin
+ *
+ */
 public class CommentsActivity extends Activity {
 
 	private TextView statusView;
