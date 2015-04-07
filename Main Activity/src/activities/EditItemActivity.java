@@ -220,7 +220,8 @@ public class EditItemActivity extends Activity{
 				list.setUnit(itemunitstr);
 				list.setDate(editdate);
 				list.setHasPhoto(hasPhoto);
-				list.setPhoto(pressedPhoto);
+				if(hasPhoto==true){
+				list.setPhoto(pressedPhoto);}
 				
 				saveInFile();
 				

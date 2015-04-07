@@ -212,7 +212,8 @@ public class AddItemActivity extends Activity {
 				newItem.setDescription(itemdescriptionstr);
 				newItem.setDate(adddate);
 				newItem.setHasPhoto(hasPhoto);
-				newItem.setPhoto(pressedPhoto);
+				if(hasPhoto==true){
+				newItem.setPhoto(pressedPhoto);}
 
 				currentClaim.addItem(newItem);
 				saveInFile();
