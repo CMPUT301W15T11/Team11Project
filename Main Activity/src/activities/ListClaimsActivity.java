@@ -74,6 +74,8 @@ public class ListClaimsActivity extends Activity {
 	private ApproverClaimListAdapter claimAdapter2;
 	private ArrayList<ExpenseClaim> localList;
 	private Button setHomeButton;
+	
+	private char isATest = 'n';
 
 	private void claimantRefreshData() {
 		dataList = this.loadFromFile();
@@ -120,14 +122,19 @@ public class ListClaimsActivity extends Activity {
 		tagSearchEdit = (EditText) findViewById(R.id.tag_filter);
 		addClaimButton = (Button) findViewById(R.id.addClaimButton);
 		setHomeButton = (Button) findViewById(R.id.setHomeButton);
+		Intent intent = getIntent();
+		isATest = intent.getCharExtra("aTest", 'n');
+		
 		// Load in claims from disk, give them to the claimsListController
 
 		client = new Client();
 
 		if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true) {
 			if (UserController.getUserType().equals("Claimant")) {
+				if (isATest != 'y') {
 				claimantRefreshData();
 				//Toast.makeText(ListClaimsActivity.this, "Data synchronized from online database", Toast.LENGTH_SHORT).show();
+				}
 			}
 		}
 
