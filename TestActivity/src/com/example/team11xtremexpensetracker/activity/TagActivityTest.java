@@ -40,18 +40,21 @@ public class TagActivityTest extends ActivityInstrumentationTestCase2<TagActivit
 	}
 	
 	
-	public void testTagButton(){
+	public void testTagButton() throws Exception{
 		final View decorView = tActivity.getWindow().getDecorView();
 		ViewAsserts.assertOnScreen(decorView, addTagButton);
 		final ViewGroup.LayoutParams layoutParams = addTagButton.getLayoutParams();
 		assertNotNull(layoutParams);
+		tearDown();
 	} 
 	
-	public void testTagEditText(){
+	
+	public void testTagEditText() throws Exception{
 		final View decorView = tActivity.getWindow().getDecorView();
 		ViewAsserts.assertOnScreen(decorView, enterTagEditText);
 		final ViewGroup.LayoutParams layoutParams = enterTagEditText.getLayoutParams();
 		assertNotNull(layoutParams);
+		tearDown();
 	}
 
 }
