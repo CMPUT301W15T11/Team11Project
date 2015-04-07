@@ -232,7 +232,7 @@ public class ListClaimsActivity extends Activity {
 		// Setup adapter for list so claims can be displayed
 		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);
 		final ArrayAdapter<ExpenseClaim> claimAdapter = new ArrayAdapter<ExpenseClaim>(this,
-				android.R.layout.simple_expandable_list_item_1, list);
+				R.layout.claimlist_item, list);
 		claimsListView.setAdapter(claimAdapter);
 
 		indexCorrector = new ArrayList<Integer>();
