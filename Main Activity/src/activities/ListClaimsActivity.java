@@ -90,7 +90,8 @@ public class ListClaimsActivity extends Activity {
 		for (int i = 0; i < localList.size(); i++) {
 			for (int j = 0; j < transferList.size(); j++) {
 				if (!localList.get(i).getStatus().equals("In Progress")
-						&& localList.get(i).getName().equals(transferList.get(j).getName())) {
+						&& localList.get(i).getName().equals(transferList.get(j).getName())
+						&& localList.get(i).getClaimantName().equals(transferList.get(j).getClaimantName())) {
 					localList.set(i, transferList.get(j));
 				}
 			}
@@ -118,11 +119,12 @@ public class ListClaimsActivity extends Activity {
 		if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true) {
 			if (UserController.getUserType().equals("Claimant")) {
 				claimantRefreshData();
+				Toast.makeText(ListClaimsActivity.this, "Data synchronized from online database", Toast.LENGTH_SHORT).show();
 			}
 		}
 
 		dataList = this.loadFromFile();
-		//dataList.sort();
+		// dataList.sort();
 		clc = new ClaimListController();
 		clc.setClaimsList(dataList);
 		claims = clc.getClaimsList().getClaims();
@@ -153,17 +155,17 @@ public class ListClaimsActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		Collections.sort(transferList,new Comparator<ExpenseClaim>(){
+
+		Collections.sort(transferList, new Comparator<ExpenseClaim>() {
 
 			@Override
 			public int compare(ExpenseClaim claim1, ExpenseClaim claim2) {
 				// TODO Auto-generated method stub
 				return claim1.getStartDate().compareTo(claim2.getStartDate());
 			}
-			
+
 		});
-		
+
 		SubmittedClaimController.setSubmittedList(transferList);
 
 		screenList = new ArrayList<ExpenseClaim>();

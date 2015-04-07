@@ -6,6 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/lightskyblue"
     tools:context=".AddDestionation" >
 
     <Button
@@ -13,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:textColor="@color/white"
         android:text="Add" />
 
     <EditText
@@ -23,6 +25,7 @@
         android:layout_alignBottom="@+id/addDest"
         android:layout_alignParentLeft="true"
         android:ems="10"
+        android:textColor="@color/white"
         android:hint="New Destination" >
 
         <requestFocus />
@@ -34,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_below = "@+id/newDestEditText"
         android:ems="10"
+        android:textColor="@color/white"
         android:hint="New Reason" >
 
         <requestFocus />

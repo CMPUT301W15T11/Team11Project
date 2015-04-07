@@ -22,7 +22,7 @@ public class ExpenseClaim {
 	private Calendar commentsDate;
 	private ArrayList<Destination>  destinations;
 	private String status;
-	private  ArrayList<Tag> tagList;
+	private ArrayList<Tag> tagList;
 	private Double totalCurrency;
 	private Boolean isEditable;	
 	private ArrayList<Item>Itemlist;

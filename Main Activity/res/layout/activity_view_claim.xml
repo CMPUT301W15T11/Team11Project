@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/starnight"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -15,6 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.32"
             android:textSize="15sp"
+            android:textColor="@color/white"
             android:text="Tags" />
 
         <Button
@@ -23,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.44"
             android:textSize="15sp"
+            android:textColor="@color/white"
             android:text="@string/submit_button" />
         <Button
             android:id="@+id/addDestButton"
@@ -30,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.44"
             android:textSize="15sp"
+            android:textColor="@color/white"
             android:text="Destination" />
     </LinearLayout>
 
@@ -38,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.10"
+        android:textColor="@color/white"
         android:text="Name" />
 
     <TextView
@@ -45,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.10"
+        android:textColor="@color/white"
         android:text="Date" />
 
     <Button
@@ -52,6 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="addExpenseItem"
+        android:textColor="@color/white"
         android:text="Add Expense Item" />
 
     <ListView

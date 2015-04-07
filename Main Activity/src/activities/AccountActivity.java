@@ -113,6 +113,12 @@ public class AccountActivity extends Activity {
 							for (int i = 0; i < dataList.getClaimsAL().size(); i++) {
 								client.deleteClaim(dataList.getClaimsAL().get(i).getName());
 							}
+							
+							//---------------------clear shit----------------------------//
+							//client.deleteClaim("sa");
+							//client.deleteClaim("zhz");
+						
+							
 						}else{
 							Toast.makeText(AccountActivity.this, "No network connected, action denied", Toast.LENGTH_SHORT).show();
 							return;

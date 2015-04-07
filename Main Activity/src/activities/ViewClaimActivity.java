@@ -136,6 +136,7 @@ public class ViewClaimActivity extends Activity {
 		}
 		if (claimID >= 0 && UserController.getUserType().equals("Approver")) {
 			ApproveOrSubmitButton.setText(R.string.approve_button);
+			addExpenseButton.setEnabled(false);
 			editFlag = false;
 		}
 		// Expense Item list view

@@ -31,9 +31,13 @@ public class ItemlistAdapter extends ArrayAdapter<Item>{
 			//convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_expandable_list_item_1,parent,false);
 			}
 		TextView itemName = (TextView)convertView.findViewById(R.id.itemNameView);
+		itemName.setAlpha(125);
+		itemName.setTextColor(-1);
 		itemName.setText(tempitem.getItem());
 		
 		TextView itemAmt = (TextView)convertView.findViewById(R.id.itemAmountView);
+		itemAmt.setAlpha(125);
+		itemAmt.setTextColor(-1);
 		itemAmt.setText(tempitem.getUnit()+" : "+tempitem.getAmount());
 		
 		

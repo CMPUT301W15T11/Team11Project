@@ -19,14 +19,10 @@ import model.ClaimsList;
 import model.ExpenseClaim;
 import model.SingleDatePickerDialog;
 import model.UserController;
-import model.SingleDatePickerDialog.OnDateSetListener;
 import network.Client;
 import network.ConnectionChecker;
 
 import com.example.team11xtremexpensetracker.R;
-import com.example.team11xtremexpensetracker.R.id;
-import com.example.team11xtremexpensetracker.R.layout;
-import com.example.team11xtremexpensetracker.R.menu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

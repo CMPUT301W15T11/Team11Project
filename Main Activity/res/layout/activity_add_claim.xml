@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/starnight"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -16,6 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:text="Enter Name:" />
 
         <EditText
@@ -25,6 +28,7 @@
             android:layout_weight="1"
             android:layout_marginRight="5dp"
             android:gravity="center"
+            android:textColor="@color/white"
             android:ems="10" >
 
             <requestFocus />
@@ -38,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="10"
         android:layout_margin="10dp"
+        android:textColor="@color/white"
         android:text="Start Date Picker" />
 
     <Button
@@ -46,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="10"
         android:layout_margin="10dp"
+        android:textColor="@color/white"
         android:text="End Date Picker" />
 
     <LinearLayout
@@ -58,6 +64,7 @@
             android:id="@+id/addClaimDoneButton"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:text="Done" />
 
     </LinearLayout>

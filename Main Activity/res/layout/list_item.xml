@@ -8,12 +8,16 @@
         android:id="@+id/itemNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/white"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/itemAmountView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/white"
         android:text="TextView" />
 
 </LinearLayout>
