@@ -13,11 +13,15 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.Calendar;
 
+import network.Client;
 import model.ClaimListController;
 import model.ClaimsList;
-import model.GeoLocation;
-import model.Item;
 
+import model.ExpenseClaim;
+
+import model.GeoLocation;
+
+import model.Item;
 
 import com.example.team11xtremexpensetracker.R;
 import com.google.gson.Gson;
@@ -27,13 +31,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Activity lets users view and edit expense Items
+ * @author Stin
+ *
+ */
 public class ViewItemActivity extends Activity{
 	
 	private ClaimsList datafile;
@@ -61,6 +70,8 @@ public class ViewItemActivity extends Activity{
 	private String itemlocation;
 	private TextView geolocationView;
 	
+	private Client client;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -69,8 +80,8 @@ public class ViewItemActivity extends Activity{
 		completeness = (CheckBox)findViewById(R.id.completed);	
 		
 		addListenerOnChkIos();
-		//==========================================================================================================
-		//============================load and display
+		
+		// Load and display
 		
 		
 		
@@ -78,6 +89,11 @@ public class ViewItemActivity extends Activity{
 		final int itemID = intent.getIntExtra("itemID",0);
 		claimID = intent.getIntExtra("claimID", 0);
 		list= ClaimListController.getClaimsList().getClaimById(claimID).getItemById(itemID);
+		
+		client=new Client();
+		ExpenseClaim currentClaim=ClaimListController.getClaimsList().getClaimById(claimID);
+		client.addClaim(currentClaim);
+		
 		indicator = list.getIndecator();
 		if (indicator == false){
 			//Toast.makeText(ViewItemActivity.this, "first not Checked", Toast.LENGTH_SHORT).show();
@@ -123,8 +139,6 @@ public class ViewItemActivity extends Activity{
 		itemamount.setText(itemamountstr);
 	
 		
-
-		
 		//==========================================================================================================
 		//============================connect to edit view
 	
@@ -149,6 +163,9 @@ public class ViewItemActivity extends Activity{
 	
 	//==========================================================================================================
 	//============================connect to view list
+	/**
+	 * Back intent to claim view
+	 */
 	Button backtoitemlist = (Button)findViewById(R.id.backtoitemlist);
 	backtoitemlist.setOnClickListener(new View.OnClickListener() {
 		
@@ -171,16 +188,18 @@ public class ViewItemActivity extends Activity{
 	
 	public void viewPhoto(View v) {
 		if (list.getHasPhoto() == true){
+			String photo = list.getPhoto();
+			byte[] photoDecoded = Base64.decode(photo, Base64.DEFAULT);
 			Intent showPhoto = new Intent(this,ViewPhotoActivity.class);
-			showPhoto.putExtra("Photo", list.getPhoto());
+			showPhoto.putExtra("Photo", photoDecoded);
 			startActivity(showPhoto);
 		}
 		else{
         	Context context = getApplicationContext();
         	CharSequence text = "There is no photo of the receipt!";
         	int duration = Toast.LENGTH_LONG;
-        	//Toast toast = Toast.makeText(context, text, duration);
-        	//toast.show();
+        	Toast toast = Toast.makeText(context, text, duration);
+        	toast.show();
 		}
 
 	}
@@ -188,7 +207,7 @@ public class ViewItemActivity extends Activity{
 	@Override
 	public void onBackPressed(){
 		Intent intentBackPressed = new Intent();
-		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		//intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentBackPressed.setClass(ViewItemActivity.this, ViewClaimActivity.class);
 		intentBackPressed.putExtra("claimID", claimID);
 		ViewItemActivity.this.startActivity(intentBackPressed);

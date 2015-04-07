@@ -31,6 +31,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+/**
+ * 
+ * The activity to make sure that claimant is unique, approver name can be
+ * changed freely.
+ * 
+ * @author Mingtuo
+ * @author Stin
+ *
+ */
 public class AccountActivity extends Activity {
 
 	private Button backButton;
@@ -85,7 +95,7 @@ public class AccountActivity extends Activity {
 				if (userName.equals("")) {
 					Toast.makeText(AccountActivity.this, "Empty input", Toast.LENGTH_SHORT).show();
 					return;
-				} else if(UserController.getUserType().equals("Claimant")){
+				} else if (UserController.getUserType().equals("Claimant")) {
 					AccountActivity.this.saveUserInFile(userName);
 				}
 				Intent intent = new Intent(AccountActivity.this, ListClaimsActivity.class);
@@ -95,6 +105,11 @@ public class AccountActivity extends Activity {
 			}
 		});
 
+		/**
+		 * All related online data will be deleted as well if you choose to
+		 * clean local user information
+		 * 
+		 */
 		cleanButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -103,7 +118,7 @@ public class AccountActivity extends Activity {
 				AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
 				adb.setMessage("Warning:All local and online information of current user will be deleted.");
 				adb.setCancelable(true);
-				adb.setPositiveButton("Continue", new OnClickListener(){
+				adb.setPositiveButton("Continue", new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -113,16 +128,15 @@ public class AccountActivity extends Activity {
 							for (int i = 0; i < dataList.getClaimsAL().size(); i++) {
 								client.deleteClaim(dataList.getClaimsAL().get(i).getName());
 							}
-							
-							//---------------------clear shit----------------------------//
-							//client.deleteClaim("sa");
-							//client.deleteClaim("zhz");
-							
-							
-						
-							
-						}else{
-							Toast.makeText(AccountActivity.this, "No network connected, action denied", Toast.LENGTH_SHORT).show();
+
+							// ---------------------clear
+							// shit----------------------------//
+							// client.deleteClaim("sa");
+							// client.deleteClaim("zhz")
+
+						} else {
+							Toast.makeText(AccountActivity.this, "No network connected, action denied",
+									Toast.LENGTH_SHORT).show();
 							return;
 						}
 						AccountActivity.this.saveUserInFile("");
@@ -131,7 +145,8 @@ public class AccountActivity extends Activity {
 						usernameEdit.setFocusable(true);
 						usernameEdit.setFocusableInTouchMode(true);
 						usernameEdit.requestFocus();
-					}});
+					}
+				});
 				adb.setNegativeButton("Cancel", new OnClickListener() {
 
 					@Override
@@ -139,13 +154,10 @@ public class AccountActivity extends Activity {
 						// TODO Auto-generated method stub
 
 					}
-
 				});
 				adb.show();
-				
 			}
 		});
-
 	}
 
 	@Override
@@ -176,7 +188,6 @@ public class AccountActivity extends Activity {
 
 	private String loadUserFromFile() {
 		Gson gson = new Gson();
-
 		try {
 			FileInputStream fis = openFileInput(USERFILE);
 			InputStreamReader in = new InputStreamReader(fis);
@@ -197,7 +208,6 @@ public class AccountActivity extends Activity {
 	// Saves claimsList to file
 	private void saveUserInFile(String userName) {
 		Gson gson = new Gson();
-
 		try {
 			FileOutputStream fos = openFileOutput(USERFILE, MODE_PRIVATE);
 			OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -213,6 +223,10 @@ public class AccountActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Delete local file as well when you clear user information
+	 * 
+	 */
 	private void cleanLocalClaimFile() {
 		Gson gson = new Gson();
 		ClaimsList clean = new ClaimsList();

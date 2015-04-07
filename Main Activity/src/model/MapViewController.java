@@ -7,7 +7,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-
+/**
+ * Controller for maps view
+ * @author Stin
+ *
+ */
 public class MapViewController {
 	private static Location currentLocation = null;
 	private static LocationManager lm = null;
@@ -49,7 +53,10 @@ public class MapViewController {
 			});
 		}
 	}
-
+	/**
+	 * get geolocation
+	 * @return GeoLocation(currentLocation.getLatitude(), currentLocation.getLongitude())
+	 */
 	public static GeoLocation getLocation() {
 		if (lm == null) {
 			throw new RuntimeException("Location manager was not initialized");

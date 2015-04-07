@@ -25,6 +25,7 @@ import model.GeoLocation;
 import model.ListClaimsAdapter;
 import model.Listener;
 import model.SubmittedClaimController;
+import model.TagListController;
 import model.UserController;
 import network.Client;
 import network.ConnectionChecker;
@@ -48,7 +49,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
+/**
+ * Displays a list of existing expense claims to the user
+ * @author Stin
+ *
+ */
 public class ListClaimsActivity extends Activity {
 	// private ListClaimsAdapter listClaimAdapter;
 	private ListView claimsListView;
@@ -71,13 +76,16 @@ public class ListClaimsActivity extends Activity {
 	private ArrayList<ExpenseClaim> localList;
 	private Button setHomeButton;
 	
-	private char isATest;
+	private char isATest = 'n';
 
 	private void claimantRefreshData() {
 		dataList = this.loadFromFile();
 		localList = new ArrayList<ExpenseClaim>();
 		localList = dataList.getClaimsAL();
-
+		if(localList.size()==0||localList==null){
+			return;
+		}
+		transferList=new ArrayList<ExpenseClaim>();
 		new Thread(new Runnable() {
 
 			@Override
@@ -92,6 +100,7 @@ public class ListClaimsActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		TagListController.setAvailableTagList(transferList);
 		for (int i = 0; i < localList.size(); i++) {
 			for (int j = 0; j < transferList.size(); j++) {
 				if (!localList.get(i).getStatus().equals("In Progress")
@@ -127,10 +136,13 @@ public class ListClaimsActivity extends Activity {
 
 		if (new ConnectionChecker().netConnected(ListClaimsActivity.this) == true) {
 			if (UserController.getUserType().equals("Claimant")) {
-				if (isATest == 'n') {
+				if (isATest != 'y') {
 				claimantRefreshData();
-				//Toast.makeText(ListClaimsActivity.this, "Data synchronized from online database", Toast.LENGTH_SHORT).show();
+
+				Toast.makeText(ListClaimsActivity.this, "Data synchronized from online database", Toast.LENGTH_SHORT).show();
+
 				}
+
 			}
 		}
 
@@ -159,7 +171,9 @@ public class ListClaimsActivity extends Activity {
 			}});
 
 	}
-
+	/**
+	 * initialize the approver
+	 */
 	public void approver_init() {
 		addClaimButton.setEnabled(false);
 		transferList = new ArrayList<ExpenseClaim>();
@@ -228,7 +242,9 @@ public class ListClaimsActivity extends Activity {
 			}
 
 		});
-
+		/**
+		 * click to view the claim
+		 */
 		claimsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
@@ -248,7 +264,9 @@ public class ListClaimsActivity extends Activity {
 		});
 
 	}
-
+	/**
+	 * Setup adapter for list so claims can be displayed
+	 */
 	public void claimant_init() {
 		// Setup adapter for list so claims can be displayed
 		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);

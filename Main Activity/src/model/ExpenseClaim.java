@@ -102,8 +102,7 @@ public class ExpenseClaim {
 	// item list
 	/**
 	 * Get item list.
-	 * 
-	 * @return Item list
+	 * @return Itemlist
 	 */
 	public ArrayList<Item> getItemlist() {
 		return Itemlist;
@@ -144,7 +143,7 @@ public class ExpenseClaim {
 	 * Get item by id from item list.
 	 * 
 	 * @param ID
-	 * @return
+	 * @return Itemlist.get(ID)
 	 */
 	public Item getItemById(int ID) {
 		return Itemlist.get(ID);
@@ -192,8 +191,12 @@ public class ExpenseClaim {
 	// startDate
 	/**
 	 * Get start date.
+<<<<<<< HEAD
 	 * 
 	 * @return
+=======
+	 * @return startDate
+>>>>>>> 94234a816e20a22e94c146a07eb455e3ad11d5dc
 	 */
 	public Calendar getStartDate() {
 		return startDate;
@@ -322,17 +325,31 @@ public class ExpenseClaim {
 		this.tagList = tagList;
 	}
 
+	/**
+	 * get comments
+	 * @return comments
+	 */
 	public String getComments() {
 		return comments;
 	}
-
+	/**
+	 * set comments
+	 * @param comments
+	 */
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-
+	/**
+	 * get comments date
+	 * @return commentsDate
+	 */
 	public Calendar getCommentsDate() {
 		return commentsDate;
 	}
+	/**
+	 * set comments date
+	 * @param commentsDate
+	 */
 
 	public void setCommentsDate(Calendar commentsDate) {
 		this.commentsDate = commentsDate;

@@ -7,7 +7,12 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ImageView;
-
+/**
+ * This activity displays the photo receipt for the expense item.
+ * It is only invoked in the event that there is a photo present.
+ * @author Stin
+ *
+ */
 public class ViewPhotoActivity extends Activity {
 
 	ImageView receiptPhoto;
@@ -15,7 +20,7 @@ public class ViewPhotoActivity extends Activity {
 	byte[] photo;
 	Bitmap bitmap;
 
-	/* This activity displays the photo receipt for the expense item.
+	/** This activity displays the photo receipt for the expense item.
 	 * It is only invoked in the event that there is a photo present.
 	 */
 	@Override

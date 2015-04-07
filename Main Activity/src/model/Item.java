@@ -16,12 +16,13 @@ public class Item {
 	private String amount;
 	private String unit;
 	private String description;
-	private Boolean indicator = false;
-	private Boolean hasPhoto = false;
-	private byte[] photo = null;
+	private Boolean indicator=false;
+	private Boolean hasPhoto=false;
+	private String photo;
+
 	/**
 	 * get item name
-	 * @return
+	 * @return item
 	 */
 	public String getItem() {
 		return item;
@@ -35,7 +36,7 @@ public class Item {
 	}
 	/**
 	 * get item date
-	 * @return
+	 * @return date
 	 */
 	public Calendar getDate() {
 		return date;
@@ -49,7 +50,7 @@ public class Item {
 	}
 	/**
 	 * get item category
-	 * @return
+	 * @return category
 	 */
 	public String getCategory() {
 		return category;
@@ -63,7 +64,7 @@ public class Item {
 	}
 	/**
 	 * get item amount spent
-	 * @return
+	 * @return amount
 	 */
 	public String getAmount() {
 		return amount;
@@ -77,7 +78,7 @@ public class Item {
 	}
 	/**
 	 * get item unit of currency
-	 * @return
+	 * @return unit
 	 */
 	public String getUnit() {
 		return unit;
@@ -91,7 +92,7 @@ public class Item {
 	}
 	/**
 	 * get item description
-	 * @return
+	 * @return description
 	 */
 	public String getDescription() {
 		return description;
@@ -105,7 +106,7 @@ public class Item {
 	}
 	/**
 	 * get item indicator
-	 * @return
+	 * @return indicator
 	 */
 	public Boolean getIndecator(){
 		return indicator;
@@ -118,7 +119,8 @@ public class Item {
 		this.indicator = indicator;
 	}
 	/**
-	 * @return the hasPhoto
+	 * get indicator if has photo or not
+	 * @return hasPhoto
 	 */
 	public Boolean getHasPhoto() {
 		return hasPhoto;
@@ -130,21 +132,30 @@ public class Item {
 		this.hasPhoto = hasPhoto;
 	}
 	/**
+	 * get the photo
 	 * @return the photo
 	 */
-	public byte[] getPhoto() {
+	public String getPhoto() {
 		return photo;
 	}
 	/**
+	 * set photo
 	 * @param photo the photo to set
 	 */
-	public void setPhoto(byte[] photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-
+	/**
+	 * get location of the item
+	 * @return location
+	 */
 	public String getLocation() {
 		return location;
 	}
+	/**
+	 * set location of the item
+	 * @param location
+	 */
 	public void setLocation(String location) {
 		this.location = location;
 	}
