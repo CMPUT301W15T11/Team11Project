@@ -12,6 +12,7 @@ public class Item {
 	private String item;
 	private Calendar date;
 	private String category;
+	private String location;
 	private String amount;
 	private String unit;
 	private String description;
@@ -141,4 +142,11 @@ public class Item {
 		this.photo = photo;
 	}
 
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
 }
