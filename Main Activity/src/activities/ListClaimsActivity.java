@@ -22,6 +22,7 @@ import model.ClaimListController;
 import model.ClaimsList;
 import model.ExpenseClaim;
 import model.GeoLocation;
+import model.ListClaimsAdapter;
 import model.Listener;
 import model.SubmittedClaimController;
 import model.UserController;
@@ -244,8 +245,10 @@ public class ListClaimsActivity extends Activity {
 	public void claimant_init() {
 		// Setup adapter for list so claims can be displayed
 		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);
-		final ArrayAdapter<ExpenseClaim> claimAdapter = new ArrayAdapter<ExpenseClaim>(this,
-				R.layout.claimlist_item, list);
+		final ArrayAdapter<ExpenseClaim> claimAdapter = new ListClaimsAdapter(this, list);
+		
+
+		
 		claimsListView.setAdapter(claimAdapter);
 
 		indexCorrector = new ArrayList<Integer>();
