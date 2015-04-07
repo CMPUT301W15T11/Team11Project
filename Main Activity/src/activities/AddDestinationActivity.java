@@ -16,6 +16,7 @@ import model.ClaimsList;
 import model.DestListAdapter;
 import model.Destination;
 import model.ExpenseClaim;
+import model.GeoLocation;
 import model.Item;
 import model.ItemlistAdapter;
 import model.SubmittedClaimController;
@@ -35,6 +36,7 @@ import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.view.Menu;
 import android.view.View;
+import android.webkit.GeolocationPermissions;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,19 +57,25 @@ public class AddDestinationActivity extends Activity {
 	private Button addDestButton;
 	private ArrayList<Destination> list;
 	private DestListAdapter listAdapter;
-	
+
 	private Client client;
+	private String locationStr;
+	private TextView locationView;
+	private Button addMapButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_destionation);
-		
-		dataList=this.loadFromFile();
+
+		dataList = this.loadFromFile();
 		ClaimListController.setClaimsList(dataList);
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", -1);
-		//Toast.makeText(this, "Claim: " + (new Integer(claimID).toString()), Toast.LENGTH_SHORT).show();
+		locationStr = intent.getStringExtra("locationStr");
+
+		// Toast.makeText(this, "Claim: " + (new Integer(claimID).toString()),
+		// Toast.LENGTH_SHORT).show();
 		if (claimID >= 0) {
 
 			if (UserController.getUserType().equals("Claimant")) {
@@ -76,13 +84,21 @@ public class AddDestinationActivity extends Activity {
 				currentClaim = SubmittedClaimController.getSubmittedClaimById(claimID);
 			}
 		}
-		
+
 		addDestButton = (Button) findViewById(R.id.addDest);
 		newDestEditText = (EditText) findViewById(R.id.newDestEditText);
 		newReasonEditText = (EditText) findViewById(R.id.newReasonEditText);
 		existingDestsListView = (ListView) findViewById(R.id.existingDestsListView);
-		
-		if(currentClaim.getStatus().equals("Submitted")||currentClaim.getStatus().equals("Approved")){
+		locationView = (TextView) findViewById(R.id.destLocation);
+		addMapButton = (Button) findViewById(R.id.destMap);
+
+		if (locationStr != null) {
+			GeoLocation temp = GeoLocation.toGeoLocation(locationStr);
+			locationView.setText("Latitude: " + String.valueOf(temp.getLatitude()) + "\nLongitude: "
+					+ String.valueOf(temp.getLongitude()));
+		}
+
+		if (currentClaim.getStatus().equals("Submitted") || currentClaim.getStatus().equals("Approved")) {
 			newDestEditText.setFocusable(false);
 			newDestEditText.setFocusableInTouchMode(false);
 			newDestEditText.setHint(R.string.status_lock);
@@ -90,95 +106,113 @@ public class AddDestinationActivity extends Activity {
 			newReasonEditText.setFocusableInTouchMode(false);
 			newReasonEditText.setHint(R.string.status_lock);
 		}
-		client=new Client();
+		client = new Client();
 		// get ids
-		
-		
-		list= currentClaim.getDestinations();
+
+		list = currentClaim.getDestinations();
 		listAdapter = new DestListAdapter(this, list);
 		existingDestsListView.setAdapter(listAdapter);
-		
+
 		// create listeners
-		addDestButton.setOnClickListener(new View.OnClickListener() {	
-	
+
+		addMapButton.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				
+				Intent intent = new Intent();
+				intent.setClass(AddDestinationActivity.this, MapActivity.class);
+				intent.putExtra("claimID", claimID);
+				intent.putExtra("mapMode", 2);
+				AddDestinationActivity.this.startActivity(intent);
+
+			}
+
+		});
+
+		addDestButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
 				String newName = newDestEditText.getText().toString();
 				String newReason = newReasonEditText.getText().toString();
-				
-				if(newName.equals("")||newReason.equals("")){
-					Toast.makeText(AddDestinationActivity.this, "Information is not completed", Toast.LENGTH_SHORT).show();
+
+				if (newName.equals("") || newReason.equals("")) {
+					Toast.makeText(AddDestinationActivity.this, "Information is not completed", Toast.LENGTH_SHORT)
+							.show();
 					return;
 				}
-				
+
 				Destination newDest = new Destination(newName);
 				newDest.setReason(newReason);
-				
+				if (locationStr != null) {
+					newDest.setLocationStr(locationStr);
+				}
+				else{
+					newDest.setLocationStr("53.526546,-113.528155");
+				}
 				list.add(newDest);
-				
+
 				saveInFile();
-				
+
 				if (new ConnectionChecker().netConnected(AddDestinationActivity.this) == true) {
 					client.addClaim(currentClaim);
 				} else {
-					Toast.makeText(AddDestinationActivity.this, "No network connected, saving file locally", Toast.LENGTH_SHORT).show();
+					Toast.makeText(AddDestinationActivity.this, "No network connected, saving file locally",
+							Toast.LENGTH_SHORT).show();
 				}
-				
-				dataList=loadFromFile();
+
+				dataList = loadFromFile();
 				ClaimListController.setClaimsList(dataList);
 				newDestEditText.setText("");
 				newReasonEditText.setText("");
-				
+
 				listAdapter.notifyDataSetChanged();
-				
+
 			}
-			
+
 		});
-		
-		
-		
+
 		existingDestsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
 			private int onLongClickPos;
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 				// TODO Auto-generated method stub
 				onLongClickPos = position;
 				AlertDialog.Builder adb = new AlertDialog.Builder(AddDestinationActivity.this);
 				adb.setMessage("Delete?");
 				adb.setCancelable(true);
-				adb.setPositiveButton("Delete", new OnClickListener(){
+				adb.setPositiveButton("Delete", new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						list.remove(onLongClickPos);
-						
+
 						saveInFile();
-						dataList=loadFromFile();
+						dataList = loadFromFile();
 						ClaimListController.setClaimsList(dataList);
-					
+
 						listAdapter.notifyDataSetChanged();
-						
+
 					}
-					
+
 				});
-				adb.setNegativeButton("Cancel", new OnClickListener(){
+				adb.setNegativeButton("Cancel", new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						
+
 					}
-					
+
 				});
 				adb.show();
 				return true;
 			}
 		});
-		
+
 	}
 
 	@Override
@@ -187,22 +221,21 @@ public class AddDestinationActivity extends Activity {
 		getMenuInflater().inflate(R.menu.add_destionation, menu);
 		return true;
 	}
-	
-	
+
 	@Override
-	public void onBackPressed(){
+	public void onBackPressed() {
 		Intent intentBackPressed = new Intent();
 		intentBackPressed.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentBackPressed.setClass(AddDestinationActivity.this, ViewClaimActivity.class);
 		intentBackPressed.putExtra("claimID", claimID);
 		AddDestinationActivity.this.startActivity(intentBackPressed);
 	}
-	
-	//Populate the listView with the destinations in the claim
-	//If an item in the list gets hold-clicked it should be deleted
-	//if an item gets clicked should bring to a destination detail view
-	//Also need somewhere to add "Reason for Travel"
-	
+
+	// Populate the listView with the destinations in the claim
+	// If an item in the list gets hold-clicked it should be deleted
+	// if an item gets clicked should bring to a destination detail view
+	// Also need somewhere to add "Reason for Travel"
+
 	private ClaimsList loadFromFile() {
 		Gson gson = new Gson();
 		dataList = new ClaimsList();

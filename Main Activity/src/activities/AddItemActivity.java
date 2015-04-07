@@ -88,6 +88,7 @@ public class AddItemActivity extends Activity {
 	private byte[] pressedPhoto = new byte[65536];
 	private String photo;
 	private Button mapButton;
+	private String locationStr;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,12 @@ public class AddItemActivity extends Activity {
 		setContentView(R.layout.activity_add_item);
 		Intent intent = getIntent();
 		claimID = intent.getIntExtra("claimID", 0);
+		locationStr = intent.getStringExtra("locationStr");
+		itemnamestr = intent.getStringExtra("itemnamestr");
+		itemdescriptionstr = intent.getStringExtra("itemdescriptionstr");
+		itemamountstr = intent.getStringExtra("itemamountstr");
+
+
 		if (claimID >= 0) {
 			// new ClaimListController();
 			currentClaim = ClaimListController.getClaimsList().getClaimById(claimID);
@@ -148,7 +155,16 @@ public class AddItemActivity extends Activity {
 		categoryspinner = (Spinner) findViewById(R.id.additemcategory);
 		itemamount = (EditText) findViewById(R.id.addamountspent);
 		itemdescription = (EditText) findViewById(R.id.adddescription);
-
+		
+		if (locationStr != null) {
+			itemname.setText(itemnamestr);
+			itemdescription.setText(itemdescriptionstr);
+			itemamount.setText(itemamountstr);
+			
+			
+		}
+		
+		
 		// button add date
 		adddate = Calendar.getInstance();
 		additemdate = (Button) findViewById(R.id.additemdate);
@@ -174,6 +190,9 @@ public class AddItemActivity extends Activity {
 		});
 
 		mapButton = (Button) findViewById(R.id.addgeolocation);
+		if (locationStr != null) {
+			mapButton.setText("Change Location");
+		}
 
 		mapButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -181,7 +200,24 @@ public class AddItemActivity extends Activity {
 				Intent intent = new Intent();
 				intent.setClass(AddItemActivity.this, MapActivity.class);
 				intent.putExtra("claimID", claimID);
+
+				itemnamestr = itemname.getText().toString();
+				itemunitstr = unitspinner.getSelectedItem().toString();
+				itemcategorystr = categoryspinner.getSelectedItem().toString();
+				itemdescriptionstr = itemdescription.getText().toString();
+				itemamountstr = itemamount.getText().toString();
+				intent.putExtra("mapMode", 3);
+				intent.putExtra("itemnamestr", itemnamestr);
+				intent.putExtra("itemunitstr", itemunitstr);
+				intent.putExtra("itemcategorystr", itemcategorystr);
+				intent.putExtra("itemdescriptionstr", itemdescriptionstr);
+				intent.putExtra("itemamountstr", itemamountstr);
+				if (locationStr != null) {
+					intent.putExtra("locationStr",locationStr);
+				}
+
 				startActivity(intent);
+
 			}
 		});
 
@@ -216,12 +252,16 @@ public class AddItemActivity extends Activity {
 				newItem.setDescription(itemdescriptionstr);
 				newItem.setDate(adddate);
 				newItem.setHasPhoto(hasPhoto);
+
 				if (hasPhoto == true) {
 					//newItem.setPhoto("123");
 					newItem.setPhoto(photo);
 				}
 				
 				Toast.makeText(AddItemActivity.this, newItem.getPhoto(), Toast.LENGTH_LONG).show();
+
+				newItem.setLocation(locationStr);
+
 				currentClaim.addItem(newItem);
 				saveInFile();
 

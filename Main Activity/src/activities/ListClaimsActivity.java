@@ -21,6 +21,8 @@ import model.ApproverClaimListAdapter;
 import model.ClaimListController;
 import model.ClaimsList;
 import model.ExpenseClaim;
+import model.GeoLocation;
+import model.ListClaimsAdapter;
 import model.Listener;
 import model.SubmittedClaimController;
 import model.TagListController;
@@ -68,6 +70,7 @@ public class ListClaimsActivity extends Activity {
 	private ArrayList<ExpenseClaim> screenList;
 	private ApproverClaimListAdapter claimAdapter2;
 	private ArrayList<ExpenseClaim> localList;
+	private Button setHomeButton;
 
 	private void claimantRefreshData() {
 		dataList = this.loadFromFile();
@@ -117,6 +120,7 @@ public class ListClaimsActivity extends Activity {
 		searchImage = (ImageView) findViewById(R.id.tag_search);
 		tagSearchEdit = (EditText) findViewById(R.id.tag_filter);
 		addClaimButton = (Button) findViewById(R.id.addClaimButton);
+		setHomeButton = (Button) findViewById(R.id.setHomeButton);
 		// Load in claims from disk, give them to the claimsListController
 
 		client = new Client();
@@ -141,6 +145,16 @@ public class ListClaimsActivity extends Activity {
 			approver_init();
 
 		}
+		
+		
+		setHomeButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.putExtra("mapMode", 1);
+				intent.setClass(ListClaimsActivity.this, MapActivity.class);
+				startActivity(intent);
+			}});
 
 	}
 
@@ -236,8 +250,10 @@ public class ListClaimsActivity extends Activity {
 	public void claimant_init() {
 		// Setup adapter for list so claims can be displayed
 		final ArrayList<ExpenseClaim> list = new ArrayList<ExpenseClaim>(claims);
-		final ArrayAdapter<ExpenseClaim> claimAdapter = new ArrayAdapter<ExpenseClaim>(this,
-				R.layout.claimlist_item, list);
+		final ArrayAdapter<ExpenseClaim> claimAdapter = new ListClaimsAdapter(this, list);
+		
+
+		
 		claimsListView.setAdapter(claimAdapter);
 
 		indexCorrector = new ArrayList<Integer>();

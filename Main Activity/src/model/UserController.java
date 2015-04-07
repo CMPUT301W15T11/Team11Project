@@ -4,6 +4,16 @@ public class UserController {
 	
 	private static String userName;
 	private static String userType;
+	private static String homeLocation;
+	
+	public static String getHomeLocation() {
+		return homeLocation;
+	}
+
+	public static void setHomeLocation(String homeLocation) {
+		UserController.homeLocation = homeLocation;
+	}
+
 	private static String FILENAME;
 	
 	public static void setUserName(String userName){

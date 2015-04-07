@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * 
- * The controller used to save all tags downloaded from online database
+ * The controller used to save all tags download from online database
  * @author Mingtuo
  *
  */

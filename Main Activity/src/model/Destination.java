@@ -9,6 +9,15 @@ package model;
 public class Destination {
 	protected String destinationName;
 	protected String reasonForTravel;
+	protected String locationStr;
+
+	public String getLocationStr() {
+		return locationStr;
+	}
+
+	public void setLocationStr(String locationStr) {
+		this.locationStr = locationStr;
+	}
 
 	// Constructor. Sets destination name
 	public Destination(String name){

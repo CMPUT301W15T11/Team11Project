@@ -2,6 +2,7 @@ package activities;
 
 import model.GeoLocation;
 import model.MapViewController;
+import model.UserController;
 
 import org.osmdroid.api.IMapController;
 
@@ -30,14 +31,54 @@ public class MapActivity extends Activity {
 	private GeoLocation currentLocation;
 	private GeoPoint currentGeoPoint;
 	private GeoPoint currentPoint;
+	private int mapMode;
+	private int claimID;
+	private int itemID;
+	private int destID;
+	private String itemnamestr;
+	private String itemunitstr;
+	private String itemcategorystr;
+	private String itemdescriptionstr;
+	private String itemamountstr;
+	private String locationStr;
 
+	/*
+	 * Map Picker:
+	 * mode 1:pick home location
+	 * mode 2:pick expense item location
+	 * mode 3:pick destination location
+	 * 
+	 */
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
-
 		
 		
+		Intent intent = getIntent();
+		mapMode = intent.getIntExtra("mapMode", 0);
+		
+		
+		if (mapMode == 2){
+			claimID = intent.getIntExtra("claimID", -1);
+			destID = intent.getIntExtra("destID", -1);
+		}
+		
+		if (mapMode == 3){
+			claimID = intent.getIntExtra("claimID", -1);
+			itemnamestr = intent.getStringExtra("itemnamestr");
+			itemunitstr = intent.getStringExtra("itemunitstr");
+			itemcategorystr = intent.getStringExtra("itemcategorystr");
+			itemdescriptionstr = intent.getStringExtra("itemdescriptionstr");
+			itemamountstr = intent.getStringExtra("itemamountstr");
+			locationStr = intent.getStringExtra("locationStr");
+		}
+		if (mapMode == 4){
+			claimID = intent.getIntExtra("claimID", -1);
+			itemID = intent.getIntExtra("itemID", -1);
+			locationStr = intent.getStringExtra("locationStr");
+		}
 		
 		
 		map = (MapView) findViewById(R.id.mapview);
@@ -52,7 +93,43 @@ public class MapActivity extends Activity {
 		mapController.setZoom(30);
 		
 		MapViewController.initializeLocationManager(this);
-		currentLocation = MapViewController.getLocation();
+		
+		if (mapMode == 1){
+			if (UserController.getHomeLocation()!=null){
+				currentLocation = GeoLocation.toGeoLocation(UserController.getHomeLocation());
+				//Toast.makeText(getApplicationContext(), UserController.getHomeLocation(), Toast.LENGTH_LONG).show();
+			}
+			else{
+				currentLocation = MapViewController.getLocation();
+			}
+		}
+		else if (mapMode == 2){
+			currentLocation = MapViewController.getLocation();
+		}
+		else if (mapMode == 3){
+			if (locationStr!=null){
+				GeoLocation temp = GeoLocation.toGeoLocation(locationStr);
+				currentLocation = temp;
+			}
+			else{
+				currentLocation = MapViewController.getLocation();
+			}
+			
+
+		}
+		else if (mapMode == 4){
+			if (locationStr!=null){
+				GeoLocation temp = GeoLocation.toGeoLocation(locationStr);
+				currentLocation = temp;
+			}
+			else{
+				currentLocation = MapViewController.getLocation();
+			}
+		}
+		else{
+			currentLocation = MapViewController.getLocation();
+		}
+		
 		
 		currentPoint = new GeoPoint(currentLocation.getLatitude(),currentLocation.getLongitude());
 
@@ -71,11 +148,44 @@ public class MapActivity extends Activity {
 			public void onClick(View v) {
 				currentPoint = current.getPosition();
 				currentLocation.setLatLng(currentPoint.getLatitude(), currentPoint.getLongitude());
-				GeoLocation test = new GeoLocation(53.526546, -113.528155);
-				Toast.makeText(getApplicationContext(), String.valueOf(GeoLocation.distanceBetween(test,currentLocation)), Toast.LENGTH_LONG).show();
-				/*Intent backIntent = new Intent(MapActivity.this, AddItemActivity.class);
-				startActivity(backIntent);
-				finish();*/
+				
+				Intent jump = new Intent();
+				switch (mapMode){
+				
+				case 1:
+					
+					jump.setClass(MapActivity.this, ListClaimsActivity.class);
+					UserController.setHomeLocation(GeoLocation.toString(currentLocation));
+					MapActivity.this.startActivity(jump);
+					break;
+					
+				case 2:
+					
+					jump.setClass(MapActivity.this, AddDestinationActivity.class);
+					jump.putExtra("claimID", claimID);
+					jump.putExtra("locationStr", GeoLocation.toString(currentLocation));
+					MapActivity.this.startActivity(jump);
+					break;
+				case 3:
+					jump.setClass(MapActivity.this, AddItemActivity.class);
+					jump.putExtra("locationStr", GeoLocation.toString(currentLocation));
+					jump.putExtra("itemnamestr", itemnamestr);
+					jump.putExtra("itemunitstr", itemunitstr);
+					jump.putExtra("claimID", claimID);
+					jump.putExtra("itemcategorystr", itemcategorystr);
+					jump.putExtra("itemdescriptionstr", itemdescriptionstr);
+					jump.putExtra("itemamountstr", itemamountstr);
+					MapActivity.this.startActivity(jump);
+					break;
+					
+				case 4:
+					jump.setClass(MapActivity.this, EditItemActivity.class);
+					jump.putExtra("claimID", claimID);
+					jump.putExtra("itemID", itemID);
+					jump.putExtra("locationStr", GeoLocation.toString(currentLocation));
+					MapActivity.this.startActivity(jump);
+					break;
+				}
 			}
 
 		});

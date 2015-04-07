@@ -48,7 +48,6 @@ public class AddClaimActivity extends Activity {
 	private Button endDatePickerButton;
 	private Button doneButton;
 	private EditText editTextEnterName;
-	private ClaimListController claimListController;
 	private int claimID;
 
 	private ClaimsList dataList;
@@ -56,8 +55,6 @@ public class AddClaimActivity extends Activity {
 	private ClaimListController clc;
 
 	private Client client;
-	private UserController userController;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

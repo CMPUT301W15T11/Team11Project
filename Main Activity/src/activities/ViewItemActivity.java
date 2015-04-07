@@ -16,7 +16,11 @@ import java.util.Calendar;
 import network.Client;
 import model.ClaimListController;
 import model.ClaimsList;
+
 import model.ExpenseClaim;
+
+import model.GeoLocation;
+
 import model.Item;
 
 import com.example.team11xtremexpensetracker.R;
@@ -59,6 +63,8 @@ public class ViewItemActivity extends Activity{
 	private static final String FILENAME = "datafile.sav";
 	private ClaimListController clc;
 	private int claimID;
+	private String itemlocation;
+	private TextView geolocationView;
 	
 	private Client client;
 	
@@ -109,6 +115,16 @@ public class ViewItemActivity extends Activity{
 		itemdescription = (TextView)findViewById(R.id.descriptionView);
 		itemdescription.setText(itemdescriptionstr);
 		
+		itemlocation = list.getLocation();
+		geolocationView = (TextView)findViewById(R.id.geolocationView);
+		if (itemlocation !=null){
+		GeoLocation temp = GeoLocation.toGeoLocation(itemlocation);
+		
+		geolocationView.setText("Latitude: "+String.valueOf(temp.getLatitude())+"  Longitude: "+String.valueOf(temp.getLongitude()));
+		}
+		else{
+			geolocationView.setText("None");
+		}
 		itemdatestr = list.getDate();
 		String textString_start = String.format("%d/%d/%d", itemdatestr.get(Calendar.MONTH) + 1,itemdatestr.get(Calendar.DATE), itemdatestr.get(Calendar.YEAR));
 		itemdate = (TextView)findViewById(R.id.itemdateview);
